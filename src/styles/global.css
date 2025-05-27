@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --photo-blue: #3b82f6;
+    --photo-purple: #8b5cf6;
+    --photo-dark: #1f2937;
+    --photo-darkblue: #111827;
+    --photo-green: #10b981;
+  }
+}
+
+.section-heading {
+  @apply text-3xl md:text-4xl font-bold text-center mb-12;
+}
+
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-photo-blue to-photo-purple;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
