@@ -64,17 +64,17 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				orange: {
-					50: '#fff7ed',   // Very light, creamy orange (unchanged, soft background)
-					100: '#ffedd5',  // Light peach-orange (unchanged, subtle)
-					200: '#fed7aa',  // Soft orange (unchanged, warm)
-					300: '#fdba74',  // Muted orange (unchanged, balanced)
-					400: '#fb923c',  // Bright orange (unchanged, vibrant)
-					500: '#f97316',  // Strong orange (unchanged, core orange)
-					600: '#ff4500',  // Vivid orange-red (replaces #ff0000, blends better)
-					700: '#e03c00',  // Deeper orange-red (darker, smoother transition)
-					800: '#b2320a',  // Rich, burnt orange (slightly lighter than original 800)
-					900: '#8c2a08',  // Dark orange-brown (brighter than original 900)
-					950: '#5c1c05'   // Deepest orange-brown (less muddy than original 950)
+					50: '#fff4f0',
+					100: '#ffe0d6',
+					200: '#ffc0ad',
+					300: '#ff9966',
+					400: '#ff6f33',
+					500: '#ff471a',
+					600: '#ff0000', // Pure red as the focus
+					700: '#cc0000',
+					800: '#990000',
+					900: '#660000',
+					950: '#330000',
 				},
 				blue: {
 					50: '#eff6ff',
