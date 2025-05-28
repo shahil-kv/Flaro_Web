@@ -21,6 +21,7 @@ import {
     Shield,
     Phone
 } from 'lucide-react';
+import Image from 'next/image';
 
 const ModernDashboard = () => {
     const { scrollY } = useScroll();
@@ -72,18 +73,107 @@ const ModernDashboard = () => {
     ];
 
     return (
-        <section className="py-24 px-4 md:px-6 relative overflow-hidden">
+
+
+        <section className="md:py-24 py-0 md:pt-6 px-4 md:px-6 relative h-full md:mb-16">
+
+            {/* <div className="timeline">
+                <div className="line"></div>
+            </div> */}
+
+
             {/* Professional Background */}
-            <div className="absolute inset-0">
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-50/30 via-white/20 to-orange-50/30 dark:from-gray-900/30 dark:via-gray-800/20 dark:to-blue-950/30" />
+            <div className="absolute inset-0 hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-orange-100/30 via-white/20 to-orange-50/30 dark:from-gray-900/30 dark:via-gray-800/20 dark:to-blue-950/30" />
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_70%,rgba(59,130,246,0.1),transparent_50%)] dark:bg-[radial-gradient(circle_at_30%_70%,rgba(59,130,246,0.05),transparent_50%)]" />
 
                 {/* Floating Elements */}
-                <div className="absolute top-20 right-20 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl floating-animation" />
-                <div className="absolute bottom-20 left-20 w-80 h-80 bg-purple-500/5 rounded-full blur-3xl floating-animation-delayed" />
+                <div className="absolute top-20 right-20 w-64 h-64 bg-blue-200/50 rounded-full blur-3xl floating-animation" />
+                <div className="absolute bottom-20 left-20 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl floating-animation-delayed" />
             </div>
 
-            <div className="container mx-auto relative z-10">
+            <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+                className="text-center mb-20"
+            >
+                <Badge className="mb-6 glass-effect bg-blue-100 text-orange-600 dark:text-orange-400 border-orange-200 dark:border-orange-800 text-lg px-8 py-3 rounded-full shadow-lg shine-effect">
+                    {/* <motion.div
+                            className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-500/20 to-transparent"
+                            animate={{ x: ['-100%', '100%'] }}
+                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                        /> */}
+                    <Activity className="w-5 h-5 mr-3" />
+                    Real-time Call Analytics
+                </Badge>
+                <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight">
+                    <span className="text-gray-900 dark:text-white">
+                        Calling Campaign
+                    </span>
+                    <span className="block bg-gradient-to-r from-orange-500 via-orange-600 to-orange-700 bg-clip-text text-transparent mt-2">Dashboard</span>
+                </h2>
+                <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                    Monitor your bulk calling campaigns with <span className="text-blue-600 dark:text-blue-400 font-semibold">real-time insights</span>.
+                    Track call volumes, connection rates, and campaign performance.
+                </p>
+            </motion.div>
+
+            {/* dashboard svg  */}
+            <div className="animation-container md:scale-150 h-full top-7 hidden md:block">
+                <div className="circle"></div>
+                <div className="circle"></div>
+                <div className="circle"></div>
+                <div className="circle"></div>
+                <div className="circle"></div>
+                <div className="circle"></div>
+
+
+                <Image
+                    src="/images/dashboard.svg"
+                    alt="Dashboard Illustration"
+                    width={840}
+                    height={600}
+                    className="dashboard"
+                />
+
+                <Image
+                    src="/images/activity.svg"
+                    alt="Activity Illustration"
+                    width={520}
+                    height={400}
+                    className="activity"
+                />
+
+
+                <Image
+                    src="/images/menu.svg"
+                    alt="Menu Illustration"
+                    width={340}
+                    height={520}
+                    className="menu"
+                />
+
+                <Image
+                    src="/images/compliance.svg"
+                    alt="Compliance Illustration"
+                    width={420}
+                    height={446}
+                    className="compliance"
+                />
+
+                <Image
+                    src="/images/cursor.svg"
+                    alt="Cursor Illustration"
+                    width={24}
+                    height={24}
+                    className="cursor"
+                />
+
+            </div>
+
+            <div className="container mx-auto relative hidden z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -91,7 +181,12 @@ const ModernDashboard = () => {
                     viewport={{ once: true }}
                     className="text-center mb-20"
                 >
-                    <Badge className="mb-6 glass-effect text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-800 text-lg px-8 py-3 rounded-full shadow-lg shine-effect">
+                    <Badge className="mb-6 glass-effect bg-blue-100 text-orange-600 dark:text-orange-400 border-orange-200 dark:border-orange-800 text-lg px-8 py-3 rounded-full shadow-lg shine-effect">
+                        {/* <motion.div
+                            className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-500/20 to-transparent"
+                            animate={{ x: ['-100%', '100%'] }}
+                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                        /> */}
                         <Activity className="w-5 h-5 mr-3" />
                         Real-time Call Analytics
                     </Badge>
@@ -145,7 +240,7 @@ const ModernDashboard = () => {
                         initial={{ opacity: 0, y: 40 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.4 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: true }} className='mb-12'
                     >
                         <Card className="glass-card shadow-2xl hover:shadow-3xl transition-all duration-300 ">
                             <CardHeader className="pb-6">
@@ -246,6 +341,8 @@ const ModernDashboard = () => {
                 </motion.div>
             </div>
         </section>
+
+
     );
 };
 

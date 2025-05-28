@@ -213,7 +213,7 @@ const ModernHero = () => {
                             <motion.div
                                 className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-500/20 to-transparent"
                                 animate={{ x: ['-100%', '100%'] }}
-                                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
                             />
                             <Phone className="w-4 h-4 mr-2 relative z-10" />
                             <span className="relative z-10">Bulk Calling Platform</span>

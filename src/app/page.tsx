@@ -156,7 +156,7 @@ export default function Home() {
       <ModernDashboard />
 
       {/* Enhanced Features Section */}
-      <section id="features" className="py-24 px-6 bg-gradient-to-br from-gray-50/30 to-orange-50/30 dark:from-gray-900/30 dark:to-blue-950/30">
+      <section id="features" className="md:py-24 md:px-6 bg-gradient-to-br from-gray-50/30 to-orange-50/30 dark:from-gray-900/30 dark:to-blue-950/30">
         <div className="container mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -185,7 +185,7 @@ export default function Home() {
               >
                 <Card className="h-full transition-all duration-500 border-0 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 cursor-pointer relative overflow-hidden bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
                   <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
-                  <CardContent className="p-8 text-center relative z-10">
+                  <CardContent className="md:p-8 px-2 py-4 text-center relative z-10">
                     <div className={`rounded-2xl w-20 h-20 flex items-center justify-center mx-auto mb-6 transition-all duration-500 transform group-hover:scale-110 bg-gradient-to-r ${feature.gradient}`}>
                       <feature.icon className="h-10 w-10 text-white" />
                     </div>
@@ -203,7 +203,7 @@ export default function Home() {
       </section>
 
       {/* Enhanced Use Cases Section */}
-      <section id="use-cases" className="py-20 px-4">
+      <section id="use-cases" className="md:py-20 py-10 md:px-4">
         <div className="container mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -213,7 +213,7 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold mb-4">
-              Perfect for <span className="bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">Every Team</span>
+              Perfect for <span className="bg-gradient-to-r from-orange-400 to-orange-600/70 bg-clip-text text-transparent">Every Team</span>
             </h2>
             <p className="text-xl text-muted-foreground">
               See how different teams use Flaro to achieve their goals
@@ -230,7 +230,7 @@ export default function Home() {
                 viewport={{ once: true }}
               >
                 <Card className="h-full text-center hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-0 bg-gradient-to-br from-background to-background/50 backdrop-blur-sm">
-                  <CardContent className="p-8">
+                  <CardContent className="md:p-8 px-1 py-4">
                     <div className={`rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 bg-gradient-to-r ${useCase.gradient}`}>
                       <useCase.icon className="h-10 w-10 text-white" />
                     </div>
@@ -248,7 +248,7 @@ export default function Home() {
       </section>
 
       {/* Enhanced Testimonials Section */}
-      <section id="testimonials" className="py-20 px-4 bg-gradient-to-br from-gray-50/30 to-gray-100/30 dark:from-gray-900/30 dark:to-gray-800/30">
+      <section id="testimonials" className="md:py-20 py-10 md:px-4 bg-gradient-to-br from-gray-50/30 to-gray-100/30 dark:from-gray-900/30 dark:to-gray-800/30">
         <div className="container mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -302,7 +302,7 @@ export default function Home() {
       </section>
 
       {/* Enhanced Pricing Section */}
-      <section id="pricing" className="py-20 px-4">
+      <section id="pricing" className="md:py-20 py-10 md:px-4">
         <div className="container mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -312,7 +312,7 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold mb-4">
-              Simple, <span className="bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">Transparent Pricing</span>
+              Simple, <span className="bg-gradient-to-r from-orange-600 to-orange-700 bg-clip-text text-transparent">Transparent Pricing</span>
             </h2>
             <p className="text-xl text-muted-foreground">
               Choose the plan that fits your team&apos;s needs
@@ -328,8 +328,8 @@ export default function Home() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <Card className={`h-full relative border-0 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2
-                  ${plan.popular ? 'ring-2 ring-blue-500 shadow-blue-500/20 scale-105' : ''}`}>
+                <Card className={`h-full relative border-0 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:ring-2
+                  ${plan.popular ? ' ring-blue-500 shadow-blue-500/20 scale-105' : ''}`}>
                   {plan.popular && (
                     <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0">
                       Most Popular
@@ -355,7 +355,7 @@ export default function Home() {
                       ))}
                     </ul>
                     <Button
-                      className={`w-full transition-all duration-300 ${plan.popular
+                      className={`w-full  transition-all duration-300 hover:bg-gradient-to-t from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700  shadow-lg ${plan.popular
                         ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg'
                         : 'border-2 hover:bg-accent/10'
                         }`}
@@ -373,7 +373,7 @@ export default function Home() {
       </section>
 
       {/* Enhanced CTA Section */}
-      <section className="py-24 px-6 bg-gradient-to-r from-orange-600 via-orange-500 to-orange-400 text-white relative overflow-hidden">
+      <section className="py-24 md:px-6 bg-gradient-to-r from-orange-600 via-orange-500 to-orange-400 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="container mx-auto text-center relative z-10">
           <motion.div
@@ -382,17 +382,17 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-5xl md:text-6xl font-bold mb-6">Ready to Transform Your Business?</h2>
+            <h2 className="text-4xl md:text-6xl font-bold mb-6">Ready to Transform Your Business?</h2>
             <p className="text-xl opacity-90 mb-8 max-w-3xl mx-auto">
               Join thousands of enterprises already using Flaro to revolutionize their operations.
               Start your enterprise trial today.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Button size="lg" className="text-xl px-12 py-8 bg-white text-orange-600 hover:bg-gray-100 shadow-2xl rounded-2xl">
+              <Button size="lg" variant="outline" className="text-xl px-12 py-8 border-white text-primary hover:bg-white/10 shadow-xl rounded-2xl">
                 <Sparkles className="mr-3 h-6 w-6" />
                 Start Enterprise Trial
               </Button>
-              <Button size="lg" variant="outline" className="text-xl px-12 py-8 border-white text-white hover:bg-white/10 shadow-xl rounded-2xl">
+              <Button size="lg" variant="outline" className="text-xl px-12 py-8 border-white text-primary hover:bg-white/10 shadow-xl rounded-2xl">
                 <Headphones className="mr-3 h-6 w-6" />
                 Contact Sales
               </Button>
@@ -402,7 +402,7 @@ export default function Home() {
       </section>
 
       {/* Enhanced Footer */}
-      <footer className="py-16 px-6 bg-gray-900 text-white">
+      <footer className="py-16 md:px-6 bg-gray-900 text-white">
         <div className="container mx-auto">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
