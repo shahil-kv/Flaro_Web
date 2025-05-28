@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center space-y-6">
+    <div className=" bg-gray-900 text-white flex flex-col items-center justify-center space-y-6">
       <h1 className="text-4xl font-bold">Welcome to CoinVerse</h1>
       <p className="text-gray-400">Access your dashboard sections below:</p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
