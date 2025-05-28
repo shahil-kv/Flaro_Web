@@ -6,6 +6,7 @@ import { useTheme } from 'next-themes';
 import { Button } from '@/components/ui/button';
 import { Sun, Moon, Menu, X, Sparkles } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const ModernHeader = () => {
     const { theme, setTheme } = useTheme();
@@ -117,15 +118,16 @@ const ModernHeader = () => {
                         </motion.div>
                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                             <Button className="bg-orange-600 hover:bg-orange-700 font-medium shadow-lg relative overflow-hidden">
-                                <motion.div
-                                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                                    animate={{ x: ['-100%', '100%'] }}
-                                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                                />
-                                <span className="relative z-10 flex items-center">
-                                    <Sparkles className="mr-2 h-4 w-4" />
-                                    Get Started
-                                </span>
+                                <Link href="/register">
+                                    <motion.div
+                                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                                        animate={{ x: ['-100%', '100%'] }}
+                                        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                                    />
+                                    <span className="relative z-10 flex items-center">
+                                        <Sparkles className="mr-2 h-4 w-4" />
+                                        Get Started
+                                    </span></Link>
                             </Button>
                         </motion.div>
                     </div>
