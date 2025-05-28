@@ -1,34 +1,33 @@
+// app/layout.tsx
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import { ClientProviders } from "@/context/ClientProviders";
 
-// Font setup
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const openSans = Open_Sans({
+  variable: "--font-open-sans",
   subsets: ["latin"],
-  display: "swap", // Improve font loading performance
+  weight: ["300", "400", "600", "700"],
+  style: ["normal", "italic"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: "swap", // Improve font loading performance
-});
-
-// Best-in-Class Metadata for SEO
+// Updated Metadata for SEO and Consistency
 export const metadata: Metadata = {
-  title: "Flaro | Best Application For B2B ",
+  title: {
+    default: "Flaro | Best B2B Application",
+    template: "%s | Flaro",
+  },
   description:
-    "Flaro, founded by Adhil Ansari PV and co-founded by Shahil KV, offers the best Tool for teams worldwide.",
+    "Flaro, founded by Adhil Ansari PV and co-founded by Shahil KV, offers a leading B2B platform for seamless business communication and productivity.",
   keywords: [
     "Flaro",
-    "Calling Platform",
-    "productivity platform",
-    "Muhammed Shahil KV",
+    "B2B platform",
+    "productivity tools",
     "Adhil Ansari PV",
-    "Mass Caller",
+    "Shahil KV",
+    "business communication",
     "remote work",
+    "mass caller",
   ],
   robots: {
     index: true,
@@ -41,11 +40,10 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
-  // Open Graph metadata for social sharing
   openGraph: {
-    title: "Flaro | Best Collaboration & Productivity Platform",
+    title: "Flaro | Best B2B Collaboration Platform",
     description:
-      "Flaro, founded by Muhammed Shahil KV and co-founded by Adhil Ansari PV, offers the best collaboration and productivity tools for teams worldwide.",
+      "Flaro, founded by Adhil Ansari PV and co-founded by Shahil KV, provides top-tier tools for B2B communication and team productivity worldwide.",
     url: "https://www.flaro.co",
     siteName: "Flaro",
     images: [
@@ -53,112 +51,102 @@ export const metadata: Metadata = {
         url: "https://www.flaro.co/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Flaro Collaboration Platform",
+        alt: "Flaro B2B Platform",
       },
     ],
     locale: "en_US",
     type: "website",
   },
-  // Twitter Card metadata
   twitter: {
     card: "summary_large_image",
-    title: "Flaro | Best Collaboration & Productivity Platform",
+    title: "Flaro | Best B2B Collaboration Platform",
     description:
-      "Flaro, founded by Adhil Ansari PV and co-founded by Shahil KV, offers the best Tool for teams worldwide.",
-    images: ["https://www.flaro.com/og-image.jpg"],
+      "Flaro, founded by Adhil Ansari PV and co-founded by Shahil KV, offers innovative B2B tools for teams.",
+    images: ["https://www.flaro.co/og-image.jpg"],
     creator: "@flaro",
   },
-  // Canonical URL
   alternates: {
     canonical: "https://www.flaro.co",
     languages: {
       "en-US": "https://www.flaro.co/en",
-      // Add more languages if applicable, e.g., "es-ES": "https://www.flaro.com/es"
     },
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  verification: {
+    google: "your-google-site-verification-code", // Add if available
   },
 };
 
-// RootLayout as a Server Component
+// Structured Data (JSON-LD)
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      name: "Flaro",
+      description:
+        "Flaro is a leading B2B platform simplifying business communication and boosting productivity, founded by Adhil Ansari PV and co-founded by Shahil KV.",
+      url: "https://www.flaro.co",
+      logo: "https://www.flaro.co/logo.png",
+      founder: [
+        {
+          "@type": "Person",
+          name: "Adhil Ansari PV",
+          jobTitle: "Founder",
+        },
+        {
+          "@type": "Person",
+          name: "Shahil KV",
+          jobTitle: "Co-Founder",
+        },
+      ],
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "Customer Support",
+        email: "support@flaro.co",
+        url: "https://www.flaro.co/contact",
+      },
+      sameAs: [
+        "https://twitter.com/flaro",
+        "https://www.linkedin.com/company/flaro",
+        "https://facebook.com/flaro",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      name: "Flaro",
+      url: "https://www.flaro.co",
+      potentialAction: {
+        "@type": "SearchAction",
+        target: "https://www.flaro.co/search?q={search_term_string}",
+        "query-input": "required name=search_term_string",
+      },
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Structured Data (JSON-LD) for Schema.org
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@graph": [
-      // Organization Schema
-      {
-        "@type": "Organization",
-        name: "Flaro",
-        description:
-          "Flaro is a leading Platform for making b2b business simple and more customers means more money, founded by Adhil Ansari P V and co-founded by Shahil K V.",
-        url: "https://www.flaro.com",
-        logo: "https://www.flaro.com/logo.png",
-        founder: [
-          {
-            "@type": "Person",
-            name: "Shahil KV",
-            jobTitle: "Co-Founder",
-          },
-          {
-            "@type": "Person",
-            name: "Adhil Ansari PV",
-            jobTitle: "Founder",
-          },
-        ],
-        contactPoint: {
-          "@type": "ContactPoint",
-          contactType: "Customer Support",
-          email: "support@flaro.com",
-          url: "https://www.flaro.co/contact",
-        },
-        sameAs: [
-          "https://twitter.com/flaro",
-          "https://linkedin.com/company/flaro",
-          "https://facebook.com/flaro",
-        ],
-      },
-      // WebSite Schema
-      {
-        "@type": "WebSite",
-        name: "Flaro",
-        url: "https://www.flaro.co",
-        potentialAction: {
-          "@type": "SearchAction",
-          target: "https://www.flaro.com/search?q={search_term_string}",
-          "query-input": "required name=search_term_string",
-        },
-      },
-    ],
-  };
-
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
-        {/* Structured Data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
-        {/* Preload critical resources */}
         <link rel="preload" href="/globals.css" as="style" />
         <link rel="preload" href="/favicon.ico" as="image" />
-        {/* Viewport for mobile responsiveness */}
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        {/* Theme color for mobile browsers */}
         <meta name="theme-color" content="#ffffff" />
-        {/* Security: Referrer policy */}
         <meta name="referrer" content="strict-origin-when-cross-origin" />
-        {/* Favicon */}
-        <link rel="icon" href="/favicon.ico" />
-        {/* Apple Touch Icon for iOS */}
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${openSans.variable} antialiased font-sans`}>
         <ClientProviders>
           <main role="main">{children}</main>
         </ClientProviders>

@@ -211,8 +211,7 @@ export default function RegisterPage() {
             {/* Brand Header */}
             <div className="flex items-center space-x-4 mb-12">
               <Image
-                src="/lovable-uploads/e484c832-94f1-4bf4-9bc7-bd61a3a9a93a.png"
-                alt="Flaro Logo"
+                src="/images/flaro-logo.svg" alt="Flaro Logo"
                 width={48}
                 height={48}
                 className="object-contain"
@@ -290,7 +289,7 @@ export default function RegisterPage() {
             <CardHeader className="text-center  ">
               <div className="flex justify-center mb-4 mt-2 lg:hidden">
                 <Image
-                  src="/lovable-uploads/e484c832-94f1-4bf4-9bc7-bd61a3a9a93a.png"
+                  src="/images/flaro-logo.svg"
                   alt="Flaro Logo"
                   width={48}
                   height={48}
@@ -319,9 +318,8 @@ export default function RegisterPage() {
                         type="submit"
                         disabled={isSignupLoading}
                         onClick={handleSubmit}
-                        className={`w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-4 rounded-xl transition-all duration-300 text-lg group ${
-                          isSignupLoading ? "opacity-50 cursor-not-allowed" : ""
-                        }`}
+                        className={`w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-4 rounded-xl transition-all duration-300 text-lg group ${isSignupLoading ? "opacity-50 cursor-not-allowed" : ""
+                          }`}
                       >
                         {isSignupLoading ? (
                           <motion.div
@@ -386,9 +384,8 @@ export default function RegisterPage() {
                     type="button"
                     disabled={isVerifyLoading}
                     onClick={handleOTPSubmit}
-                    className={`w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-4 rounded-xl transition-all duration-300 text-lg group ${
-                      isVerifyLoading ? "opacity-50 cursor-not-allowed" : ""
-                    }`}
+                    className={`w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-4 rounded-xl transition-all duration-300 text-lg group ${isVerifyLoading ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
                   >
                     {isVerifyLoading ? (
                       <motion.div

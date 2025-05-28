@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { DynamicForm, FormField } from "@/components/DynamicForm";
 import { useAuth } from "../../context/AuthContext";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 // Validation schema for form inputs
 const schema = yup.object({
@@ -126,6 +127,15 @@ export default function LoginPage() {
                 <div className="absolute -top-1 -right-1 w-6 h-6 bg-green-400 rounded-full flex items-center justify-center">
                   <div className="w-2 h-2 bg-white rounded-full animate-ping" />
                 </div>
+                <div className="flex justify-center mb-4 mt-2 ">
+                  <Image
+                    src="/images/flaro-logo.svg"
+                    alt="Flaro Logo"
+                    width={48}
+                    height={48}
+                    className="object-contain"
+                  />
+                </div>
               </div>
               <div>
                 <span className="text-3xl font-bold text-gray-900">Flaro</span>
@@ -216,9 +226,8 @@ export default function LoginPage() {
                     type="submit"
                     disabled={isLoading}
                     onClick={handleSubmit}
-                    className={`w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-4 rounded-xl transition-all duration-300 text-lg group ${
-                      isLoading ? "opacity-50 cursor-not-allowed" : ""
-                    }`}
+                    className={`w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-4 rounded-xl transition-all duration-300 text-lg group ${isLoading ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
                   >
                     {isLoading ? (
                       <motion.div
