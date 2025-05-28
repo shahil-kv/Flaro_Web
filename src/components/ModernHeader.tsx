@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import { Button } from '@/components/ui/button';
-import { Phone, Sun, Moon, Menu, X, Sparkles } from 'lucide-react';
+import { Sun, Moon, Menu, X, Sparkles } from 'lucide-react';
+import Image from 'next/image';
 
 const ModernHeader = () => {
     const { theme, setTheme } = useTheme();
@@ -48,10 +49,8 @@ const ModernHeader = () => {
         >
             <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
                 {/* Logo */}
-                <motion.div
+                <div
                     className="flex items-center space-x-3"
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
                     <motion.div
                         className="w-10 h-10 bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg"
@@ -61,12 +60,12 @@ const ModernHeader = () => {
                         }}
                         transition={{ duration: 2, repeat: Infinity }}
                     >
-                        <Phone className="h-5 w-5 text-white" />
+                        <Image src="/images/flaro-logo.svg" alt="Flaro Logo" width={32} height={32} />
                     </motion.div>
                     <span className="text-2xl font-bold text-gray-900 dark:text-white">
-                        BulkCall
+                        Flaro
                     </span>
-                </motion.div>
+                </div>
 
                 {/* Desktop Navigation */}
                 <nav className="hidden md:flex items-center space-x-8">

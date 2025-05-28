@@ -17,7 +17,8 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Open Sans', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+				// sans: ['Open Sans', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],s
+				sans: ["var(--font-open-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

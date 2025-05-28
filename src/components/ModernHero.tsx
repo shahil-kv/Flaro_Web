@@ -209,7 +209,7 @@ const ModernHero = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                        <Badge className="mb-8 glass-effect text-orange-600 dark:text-orange-400 border-orange-200 dark:border-orange-800 text-base px-6 py-3 hover:scale-105 transition-transform shadow-lg rounded-full font-medium relative overflow-hidden">
+                        <Badge className="mb-8 glass-effect text-orange-600 hover:bg-transparent dark:text-orange-400 border-orange-200 dark:border-orange-800 text-base px-6 py-3  transition-transform shadow-lg rounded-full font-medium relative overflow-hidden">
                             <motion.div
                                 className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-500/20 to-transparent"
                                 animate={{ x: ['-100%', '100%'] }}
@@ -222,7 +222,7 @@ const ModernHero = () => {
 
                     {/* Enhanced Main Headline */}
                     <motion.h1
-                        className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight tracking-tight"
+                        className="text-4xl md:text-6xl font-bold mb-6 md:leading-[1.2] leading-snug tracking-tight"
                         initial={{ opacity: 0, y: 40 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.3 }}
@@ -230,14 +230,14 @@ const ModernHero = () => {
                         <span className="text-gray-900 dark:text-white block font-bold">
                             Transform Your Outreach with
                         </span>
-                        <span className="bg-gradient-to-r from-orange-600 via-orange-500 to-orange-400 bg-clip-text text-transparent block mt-2 font-bold">
+                        <span className="bg-gradient-to-r from-orange-600 via-orange-500 to-orange-400 bg-clip-text text-transparent block my-2 font-bold">
                             Smart Bulk Calling
                         </span>
                     </motion.h1>
 
                     {/* Enhanced Description */}
                     <motion.p
-                        className="text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-4xl mx-auto leading-relaxed font-medium"
+                        className="text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-8  max-w-4xl mx-auto leading-relaxed font-medium"
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.5 }}
@@ -273,7 +273,7 @@ const ModernHero = () => {
                             </Button>
                         </motion.div>
                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                            <Button size="lg" variant="outline" className="text-lg px-8 py-6 glass-effect hover:bg-orange-50/50 dark:hover:bg-gray-800/20 shadow-lg transition-all duration-300 rounded-xl font-semibold border-2 border-orange-200 dark:border-gray-700">
+                            <Button size="lg" variant="outline" className="text-lg px-8 py-6 glass-effect hover:bg-orange-50/90 dark:hover:bg-gray-800/20 shadow-lg transition-all duration-300 rounded-xl font-semibold border-2 border-orange-200 dark:border-gray-700">
                                 <Play className="mr-2 h-5 w-5" />
                                 Watch Demo
                             </Button>
@@ -296,7 +296,7 @@ const ModernHero = () => {
                                 transition={{ duration: 0.6, delay: 1 + index * 0.1 }}
                                 whileHover={{ y: -5 }}
                             >
-                                <div className="glass-card rounded-2xl p-6 hover:shadow-xl transition-all duration-300 relative overflow-hidden border border-white/20 dark:border-gray-700/30">
+                                <div className="glass-card rounded-2xl p-6 hover:shadow-xl transition-all duration-300 relative overflow-hidden border border-white/20 dark:border-gray-700/30 min-h-48">
                                     <motion.div
                                         className={`rounded-xl w-12 h-12 flex items-center justify-center mx-auto mb-4 ${stat.color.includes('orange') ? 'bg-gradient-to-r from-orange-500 to-orange-600' :
                                             'bg-gradient-to-r from-gray-500 to-gray-600'
@@ -305,8 +305,8 @@ const ModernHero = () => {
                                     >
                                         <stat.icon className="h-6 w-6 text-white" />
                                     </motion.div>
-                                    <div className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2 relative z-10">{stat.value}</div>
-                                    <div className="text-sm text-gray-600 dark:text-gray-400 font-medium relative z-10">{stat.label}</div>
+                                    <div className="text-xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2 relative z-10">{stat.value}</div>
+                                    <div className="text-sm md:text-base text-gray-600 dark:text-gray-400 font-medium relative z-10">{stat.label}</div>
                                 </div>
                             </motion.div>
                         ))}

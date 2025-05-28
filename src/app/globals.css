@@ -44,6 +44,8 @@
     --sidebar-accent-foreground: 210 40% 10%;
     --sidebar-border: 210 40% 91%;
     --sidebar-ring: 24 100% 50%;
+
+    --font-sans: var(--font-open-sans), ui-sans-serif, system-ui, sans-serif;
   }
 
   .dark {
@@ -96,6 +98,9 @@
     font-family: "Open Sans", system-ui, -apple-system, sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+  body::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @layer utilities {
@@ -146,6 +151,11 @@
     overflow: hidden;
   }
 
+  .shine-effect {
+    position: relative;
+    overflow: hidden;
+  }
+
   .shine-effect::before {
     content: "";
     position: absolute;
@@ -159,11 +169,20 @@
       rgba(255, 102, 0, 0.15),
       transparent
     );
-    transition: left 0.6s;
+    animation: none;
   }
 
   .shine-effect:hover::before {
-    left: 100%;
+    animation: shine 2s both;
+  }
+
+  @keyframes shine {
+    0% {
+      left: -100%;
+    }
+    100% {
+      left: 100%;
+    }
   }
 
   .animated-texture {
