@@ -113,7 +113,9 @@ const ModernHeader = () => {
                     <div className="hidden md:flex items-center space-x-3">
                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                             <Button variant="ghost" className="font-medium hover:bg-orange-50 dark:hover:bg-orange-950/20 text-gray-700 dark:text-gray-300">
-                                Sign In
+                                <Link href="/login">
+                                    Sign In
+                                </Link>
                             </Button>
                         </motion.div>
                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
