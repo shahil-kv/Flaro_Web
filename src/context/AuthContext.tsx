@@ -16,17 +16,20 @@ import {
   User,
 } from "@/types/auth.types";
 
+// Define the shape of the AuthContext
 interface AuthContextType {
   user: User | null;
   tokens: AuthTokens | null;
   isLoading: boolean;
-  signIn: (email: string, password: string) => Promise<void>;
+  signIn: (phoneNumber: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   refreshAccessToken: () => Promise<AuthTokens>;
 }
 
+// Create the AuthContext
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// AuthProvider component to manage authentication state
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
@@ -35,12 +38,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
+  // Hook to make POST requests for login
   const { mutateAsync: login } = usePost<LoginResponse>("/user/login", {
     invalidateQueriesOnSuccess: ["users", "auth"],
     showErrorToast: true,
     showSuccessToast: true,
   });
 
+  // Hook to make POST requests for refreshing tokens
   const { mutateAsync: refreshToken } = usePost<RefreshTokenResponse>(
     "/user/refresh-token",
     {
@@ -50,41 +55,68 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   );
 
+  // Hook to make POST requests for logout
   const { mutateAsync: logout } = usePost<null>("/user/logout", {
     invalidateQueriesOnSuccess: ["users", "auth"],
     showErrorToast: true,
     showSuccessToast: true,
   });
 
+  // Function to load stored authentication data on mount
   const loadStoredAuth = useCallback(async () => {
     try {
+      // Retrieve refresh token, user data, and token expiry from localStorage
       const storedRefreshToken = localStorage.getItem("refresh_token");
       const storedUserData = localStorage.getItem("user_data");
+      const tokenExpiry = localStorage.getItem("token_expiry");
 
-      if (!storedRefreshToken) {
+      // If no refresh token exists, clear the auth state
+      if (!storedRefreshToken || !tokenExpiry) {
+        console.log("No refresh token or expiry found, clearing auth state");
         setUser(null);
         setTokens(null);
-        router.push(AUTH_CONFIG.ROUTES.LOGIN);
+        return;
+      }
+
+      // Check if the token is expired
+      const expiryDate = new Date(tokenExpiry);
+      const now = new Date();
+      const isExpired = now >= expiryDate;
+
+      if (!isExpired) {
+        // Token is still valid, use the existing access token
+        console.log("Access token is still valid, loading auth state");
+        const accessToken = localStorage.getItem("access_token");
+        if (accessToken) {
+          setTokens({ accessToken, refreshToken: storedRefreshToken });
+          if (storedUserData) {
+            const userData = JSON.parse(storedUserData);
+            setUser(userData);
+          }
+        }
         return;
       }
 
       try {
+        // Token is expired, attempt to refresh the access token
+        console.log("Access token expired, attempting to refresh");
         const response = await refreshToken({
           refreshToken: storedRefreshToken,
         });
         const { tokens: newTokens } = response.data;
 
-        const tokenExpiry = new Date(Date.now() + 15 * 60 * 1000);
+        // Set the new tokens in localStorage and cookies
+        const newExpiry = new Date(Date.now() + 15 * 60 * 1000);
         localStorage.setItem("access_token", newTokens.accessToken);
         localStorage.setItem("refresh_token", newTokens.refreshToken);
-        localStorage.setItem("token_expiry", tokenExpiry.toISOString());
+        localStorage.setItem("token_expiry", newExpiry.toISOString());
         document.cookie = `access_token=${newTokens.accessToken}; path=/; secure; samesite=strict`;
         setTokens(newTokens);
 
+        // If user data exists in localStorage, parse and set it
         if (storedUserData) {
           const userData = JSON.parse(storedUserData);
           setUser(userData);
-          router.push(AUTH_CONFIG.ROUTES.DASHBOARD);
         }
       } catch (error) {
         console.error("Token refresh failed:", error);
@@ -94,6 +126,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         localStorage.removeItem("user_data");
         document.cookie =
           "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        setUser(null);
+        setTokens(null);
         router.push(AUTH_CONFIG.ROUTES.LOGIN);
       }
     } catch (error) {
@@ -104,15 +138,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       localStorage.removeItem("user_data");
       document.cookie =
         "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      setUser(null);
+      setTokens(null);
       router.push(AUTH_CONFIG.ROUTES.LOGIN);
     } finally {
       setIsLoading(false);
     }
   }, [refreshToken, router]);
 
-  const signIn = async (email: string, password: string) => {
+  // Function to handle user sign-in
+  const signIn = async (phoneNumber: string, password: string) => {
     try {
-      const response = await login({ email, password });
+      const response = await login({ phoneNumber, password });
       if (!response?.data) throw new Error("Invalid response structure");
       const { user, tokens: newTokens } = response.data;
       if (!user || !newTokens) throw new Error("Missing user or tokens");
@@ -125,24 +162,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       document.cookie = `access_token=${newTokens.accessToken}; path=/; secure; samesite=strict`;
       setUser(user);
       setTokens(newTokens);
+      // Redirect to dashboard after successful login
       router.push(AUTH_CONFIG.ROUTES.DASHBOARD);
     } catch (error: any) {
-      console.error("Sign-in failed:", error);
       throw new Error(error.message || "Invalid email or password");
     }
   };
 
+  // Function to handle user sign-out
   const signOut = async () => {
     try {
       await logout({});
+      // Clear all auth-related data
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token");
       localStorage.removeItem("token_expiry");
       localStorage.removeItem("user_data");
       document.cookie =
-        "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        "access_token استاد=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
       setUser(null);
       setTokens(null);
+      // Redirect to login page after logout
       router.push(AUTH_CONFIG.ROUTES.LOGIN);
     } catch (error) {
       console.error("Logout failed:", error);
@@ -150,12 +190,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  // Function to refresh the access token
   const refreshAccessToken = async () => {
     try {
+      console.log("auth refresh token");
       const storedRefreshToken = localStorage.getItem("refresh_token");
       if (!storedRefreshToken) throw new Error("No refresh token available");
+
       const response = await refreshToken({ refreshToken: storedRefreshToken });
       const { tokens: newTokens } = response.data;
+      // DEBUG: Log the new tokens
       const tokenExpiry = new Date(Date.now() + 15 * 60 * 1000);
       localStorage.setItem("access_token", newTokens.accessToken);
       localStorage.setItem("refresh_token", newTokens.refreshToken);
@@ -170,10 +214,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  // Run loadStoredAuth on component mount to initialize auth state
+  // POTENTIAL ISSUE: This runs client-side after the initial page load.
+  // The middleware might run server-side before this code sets the access_token cookie,
+  // leading to the middleware not seeing the cookie on the first request.
   useEffect(() => {
     loadStoredAuth();
   }, [loadStoredAuth]);
 
+  // Context value to provide to consumers
   const value: AuthContextType = {
     user,
     tokens,
@@ -186,6 +235,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
+// Hook to access the AuthContext
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) throw new Error("useAuth must be used within an AuthProvider");
