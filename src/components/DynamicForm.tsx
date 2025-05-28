@@ -12,6 +12,7 @@ export interface FormField {
   type: "text" | "email" | "password" | "phone";
   placeholder: string;
   defaultCode?: string; // Optional country code for phone fields
+  maxLength?: number;
 }
 
 // Define interface for country codes
