@@ -158,8 +158,6 @@ export default function RegisterPage() {
   );
 
   const handleSignup = async (data: FormData) => {
-    console.log(data);
-
     try {
       const payload = {
         ...data,
@@ -201,12 +199,6 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-red-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-20 w-[500px] h-[500px] bg-red-600/5 rounded-full blur-3xl" />
-      </div>
-
       <div className="relative z-10 min-h-screen flex">
         {/* Left Side - Features */}
         <motion.div
@@ -289,14 +281,14 @@ export default function RegisterPage() {
 
         {/* Right Side - Registration Form */}
         <motion.div
-          className="w-full lg:w-1/2 flex items-center justify-center px-6 lg:px-12"
+          className="w-full lg:w-1/2 flex items-center justify-center  lg:px-6"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
           <Card className="w-full max-w-md bg-white shadow-2xl rounded-3xl border border-gray-100">
-            <CardHeader className="text-center pb-8 pt-12">
-              <div className="flex justify-center mb-4 lg:hidden">
+            <CardHeader className="text-center  ">
+              <div className="flex justify-center mb-4 mt-2 lg:hidden">
                 <Image
                   src="/lovable-uploads/e484c832-94f1-4bf4-9bc7-bd61a3a9a93a.png"
                   alt="Flaro Logo"
@@ -315,7 +307,7 @@ export default function RegisterPage() {
               </p>
             </CardHeader>
 
-            <CardContent className="space-y-8 pb-12 px-8">
+            <CardContent className="space-y-8 pb-6 px-4">
               {!showOTP ? (
                 <>
                   <DynamicForm
@@ -383,7 +375,7 @@ export default function RegisterPage() {
                   </div>
                 </>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-4 ">
                   <CustomOTPInput
                     value={otp}
                     onChange={setOtp}

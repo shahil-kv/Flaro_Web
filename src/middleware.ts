@@ -7,11 +7,9 @@ const landingPath = "/";
 
 export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
-
     const isProtectedPath = protectedPaths.some((path) => pathname.startsWith(path));
     const isPublicPath = publicPaths.some((path) => pathname.startsWith(path));
     const isLandingPath = pathname === landingPath;
-
     const accessToken = request.cookies.get("access_token")?.value;
     const isAuthenticated = !!accessToken;
 
@@ -26,11 +24,6 @@ export async function middleware(request: NextRequest) {
 
     if (!isAuthenticated) {
         if (isProtectedPath) {
-            const loginUrl = new URL("/login", request.url);
-            loginUrl.searchParams.set("redirect", pathname);
-            return NextResponse.redirect(loginUrl);
-        }
-        if (isLandingPath) {
             return NextResponse.redirect(new URL("/login", request.url));
         }
     }

@@ -162,7 +162,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       document.cookie = `access_token=${newTokens.accessToken}; path=/; secure; samesite=strict`;
       setUser(user);
       setTokens(newTokens);
-      // Redirect to dashboard after successful login
       router.push(AUTH_CONFIG.ROUTES.DASHBOARD);
     } catch (error: any) {
       throw new Error(error.message || "Invalid email or password");
