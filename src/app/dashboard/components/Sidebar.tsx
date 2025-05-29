@@ -1,3 +1,5 @@
+// /app/components/Sidebar.tsx
+"use client";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import {
@@ -6,10 +8,8 @@ import {
   ChevronDown,
   ChevronUp,
   MessageCircle,
-  Users,
-  BarChart,
   Settings,
-  Mail,
+  Home,
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -33,29 +33,18 @@ export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
 
   const menuItems = [
     {
+      group: "Dashboard",
+      icon: <Home className="h-5 w-5" />,
+      path: "/dashboard",
+      subItems: [],
+    },
+    {
       group: "Calls",
       icon: <MessageCircle className="h-5 w-5" />,
       path: "/dashboard/calls",
       subItems: ["All Calls", "Missed Calls", "Recent Calls"],
     },
-    {
-      group: "Groups",
-      icon: <Users className="h-5 w-5" />,
-      path: "/dashboard/groups",
-      subItems: ["Team", "Friends", "Work"],
-    },
-    {
-      group: "Analytics",
-      icon: <BarChart className="h-5 w-5" />,
-      path: "/dashboard/analytics",
-      subItems: ["Reports", "Stats", "Trends"],
-    },
-    {
-      group: "Messages",
-      icon: <Mail className="h-5 w-5" />,
-      path: "/dashboard/messages",
-      subItems: ["Inbox", "Sent"],
-    },
+
     {
       group: "Settings",
       icon: <Settings className="h-5 w-5" />,
@@ -92,40 +81,45 @@ export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
               {item.icon}
               {isOpen && (
                 <>
-                  <span className="ml-3 flex-1">{item.group}</span>
-                  {expandedItems.includes(item.group) ? (
-                    <ChevronUp className="h-5 w-5" />
-                  ) : (
-                    <ChevronDown className="h-5 w-5" />
-                  )}
+                  <span className="ml-3 flex-1">
+                    <Link href={item.path}>{item.group}</Link>
+                  </span>
+                  {item.subItems.length > 0 &&
+                    (expandedItems.includes(item.group) ? (
+                      <ChevronUp className="h-5 w-5" />
+                    ) : (
+                      <ChevronDown className="h-5 w-5" />
+                    ))}
                 </>
               )}
             </div>
-            {isOpen && expandedItems.includes(item.group) && (
-              <div className="pl-8">
-                {item.subItems.map((subItem) => (
-                  <Link
-                    key={subItem}
-                    href={`${item.path}/${subItem
-                      .toLowerCase()
-                      .replace(/\s+/g, "-")}`}
-                  >
-                    <div
-                      className={`p-2 hover:bg-gray-700 text-sm ${
-                        pathname ===
-                        `${item.path}/${subItem
-                          .toLowerCase()
-                          .replace(/\s+/g, "-")}`
-                          ? "bg-gray-700"
-                          : ""
-                      }`}
+            {isOpen &&
+              expandedItems.includes(item.group) &&
+              item.subItems.length > 0 && (
+                <div className="pl-8">
+                  {item.subItems.map((subItem) => (
+                    <Link
+                      key={subItem}
+                      href={`${item.path}/${subItem
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`}
                     >
-                      {subItem}
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            )}
+                      <div
+                        className={`p-2 hover:bg-gray-700 text-sm ${
+                          pathname ===
+                          `${item.path}/${subItem
+                            .toLowerCase()
+                            .replace(/\s+/g, "-")}`
+                            ? "bg-gray-700"
+                            : ""
+                        }`}
+                      >
+                        {subItem}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
           </div>
         ))}
       </nav>
