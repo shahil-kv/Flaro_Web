@@ -8,8 +8,8 @@ import {
   ChevronDown,
   ChevronUp,
   MessageCircle,
-  Settings,
   Home,
+  Group,
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -39,16 +39,16 @@ export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
       subItems: [],
     },
     {
+      group: "Groups",
+      icon: <Group className="h-5 w-5" />,
+      path: "/dashboard/groups",
+      subItems: ["Manage Groups", "Group History"],
+    },
+    {
       group: "Calls",
       icon: <MessageCircle className="h-5 w-5" />,
       path: "/dashboard/calls",
       subItems: ["All Calls", "Missed Calls", "Recent Calls"],
-    },
-    {
-      group: "Settings",
-      icon: <Settings className="h-5 w-5" />,
-      path: "/dashboard/settings",
-      subItems: ["Profile", "Preferences", "Logout"],
     },
   ];
 

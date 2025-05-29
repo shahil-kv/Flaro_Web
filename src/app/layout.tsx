@@ -71,10 +71,7 @@ export const metadata: Metadata = {
       "en-US": "https://www.flaro.co/en",
     },
   },
-  icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-  },
+
   verification: {
     google: "your-google-site-verification-code", // Add if available
   },

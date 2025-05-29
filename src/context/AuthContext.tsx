@@ -70,12 +70,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       const storedUserData = localStorage.getItem("user_data");
       const tokenExpiry = localStorage.getItem("token_expiry");
 
-      // If no refresh token exists, clear the auth state
+      // If no refresh token or expiry exists, clear the auth state
       if (!storedRefreshToken || !tokenExpiry) {
         console.log("No refresh token or expiry found, clearing auth state");
         setUser(null);
         setTokens(null);
         return;
+      }
+
+      // Parse user data if it exists, with error handling
+      let userData: User | null = null;
+      if (storedUserData) {
+        try {
+          userData = JSON.parse(storedUserData);
+        } catch (parseError) {
+          console.error("Failed to parse user data:", parseError);
+          // Clear auth state since user data is invalid
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+          localStorage.removeItem("token_expiry");
+          localStorage.removeItem("user_data");
+          document.cookie =
+            "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+          setUser(null);
+          setTokens(null);
+          router.push(AUTH_CONFIG.ROUTES.LOGIN);
+          return;
+        }
       }
 
       // Check if the token is expired
@@ -89,8 +110,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         const accessToken = localStorage.getItem("access_token");
         if (accessToken) {
           setTokens({ accessToken, refreshToken: storedRefreshToken });
-          if (storedUserData) {
-            const userData = JSON.parse(storedUserData);
+          if (userData) {
             setUser(userData);
           }
         }
@@ -113,9 +133,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         document.cookie = `access_token=${newTokens.accessToken}; path=/; secure; samesite=strict`;
         setTokens(newTokens);
 
-        // If user data exists in localStorage, parse and set it
-        if (storedUserData) {
-          const userData = JSON.parse(storedUserData);
+        // Set user data if it exists
+        if (userData) {
           setUser(userData);
         }
       } catch (error) {
@@ -178,7 +197,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       localStorage.removeItem("token_expiry");
       localStorage.removeItem("user_data");
       document.cookie =
-        "access_token استاد=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
       setUser(null);
       setTokens(null);
       // Redirect to login page after logout
@@ -198,7 +217,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
       const response = await refreshToken({ refreshToken: storedRefreshToken });
       const { tokens: newTokens } = response.data;
-      // DEBUG: Log the new tokens
       const tokenExpiry = new Date(Date.now() + 15 * 60 * 1000);
       localStorage.setItem("access_token", newTokens.accessToken);
       localStorage.setItem("refresh_token", newTokens.refreshToken);
@@ -214,11 +232,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   // Run loadStoredAuth on component mount to initialize auth state
-  // POTENTIAL ISSUE: This runs client-side after the initial page load.
-  // The middleware might run server-side before this code sets the access_token cookie,
-  // leading to the middleware not seeing the cookie on the first request.
   useEffect(() => {
-    loadStoredAuth();
+    // Skip running loadStoredAuth if on the login page to prevent loops
+    const currentPath = window.location.pathname;
+    if (currentPath !== AUTH_CONFIG.ROUTES.LOGIN) {
+      loadStoredAuth();
+    } else {
+      setIsLoading(false);
+    }
   }, [loadStoredAuth]);
 
   // Context value to provide to consumers

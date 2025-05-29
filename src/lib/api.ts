@@ -1,3 +1,4 @@
+// /app/lib/api.ts
 import axios, { AxiosError, AxiosInstance } from "axios";
 import { AUTH_CONFIG } from "@/utils/auth.config";
 
@@ -20,23 +21,33 @@ api.interceptors.request.use(
             const isExpired = now >= expiryDate;
 
             if (isExpired) {
-                // Token is expired, refresh it
                 try {
-                    console.log('expired');
+                    console.log("Access token expired, attempting to refresh...");
+                    const response = await axios.post(
+                        `${process.env.NEXT_PUBLIC_API_URL}/user/refresh-token`,
+                        { refreshToken }
+                    );
+                    console.log("Refresh token response:", response.data);
 
-                    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/refresh-token`, {
-                        refreshToken,
-                    });
-                    const { accessToken: newAccessToken, refreshToken: newRefreshToken } = response.data.tokens;
-                    const newExpiry = new Date(Date.now() + 15 * 60 * 1000); // 15-minute expiry
+                    if (!response.data || (!response.data.accessToken && !response.data.tokens)) {
+                        throw new Error("Invalid refresh token response: missing accessToken");
+                    }
 
+                    const newAccessToken = response.data.accessToken || response.data.tokens?.accessToken;
+                    const newRefreshToken = response.data.refreshToken || response.data.tokens?.refreshToken;
+
+                    if (!newAccessToken || !newRefreshToken) {
+                        throw new Error("Refresh token response does not contain valid tokens");
+                    }
+
+                    const newExpiry = new Date(Date.now() + 15 * 60 * 1000);
                     localStorage.setItem("access_token", newAccessToken);
                     localStorage.setItem("refresh_token", newRefreshToken);
                     localStorage.setItem("token_expiry", newExpiry.toISOString());
                     document.cookie = `access_token=${newAccessToken}; path=/; secure; samesite=strict`;
-
                     config.headers.Authorization = `Bearer ${newAccessToken}`;
                 } catch (refreshError) {
+                    console.error("Token refresh failed in request interceptor:", refreshError);
                     localStorage.removeItem("access_token");
                     localStorage.removeItem("refresh_token");
                     localStorage.removeItem("token_expiry");
@@ -46,7 +57,6 @@ api.interceptors.request.use(
                     return Promise.reject(refreshError);
                 }
             } else {
-                // Token is still valid
                 config.headers.Authorization = `Bearer ${accessToken}`;
             }
         }
@@ -55,6 +65,7 @@ api.interceptors.request.use(
     (error) => Promise.reject(error)
 );
 
+// Response interceptor remains the same as previously fixed
 api.interceptors.response.use(
     (response) => response,
     async (error: AxiosError) => {
@@ -63,21 +74,36 @@ api.interceptors.response.use(
             originalRequest._retry = true;
             try {
                 const storedRefreshToken = localStorage.getItem("refresh_token");
-                if (!storedRefreshToken) throw new Error("No refresh token available");
-                console.log('users refresh token');
+                if (!storedRefreshToken) {
+                    throw new Error("No refresh token available");
+                }
+                console.log("401 error, attempting to refresh token...");
+                const response = await axios.post(
+                    `${process.env.NEXT_PUBLIC_API_URL}/user/refresh-token`,
+                    { refreshToken: storedRefreshToken }
+                );
+                console.log("Refresh token response:", response.data);
 
-                const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/refresh-token`, {
-                    refreshToken: storedRefreshToken,
-                });
-                const { accessToken, refreshToken } = response.data.tokens;
-                const newExpiry = new Date(Date.now() + 15 * 60 * 1000); // 15-minute expiry
-                localStorage.setItem("access_token", accessToken);
-                localStorage.setItem("refresh_token", refreshToken);
+                if (!response.data || (!response.data.accessToken && !response.data.tokens)) {
+                    throw new Error("Invalid refresh token response: missing accessToken");
+                }
+
+                const newAccessToken = response.data.accessToken || response.data.tokens?.accessToken;
+                const newRefreshToken = response.data.refreshToken || response.data.tokens?.refreshToken;
+
+                if (!newAccessToken || !newRefreshToken) {
+                    throw new Error("Refresh token response does not contain valid tokens");
+                }
+
+                const newExpiry = new Date(Date.now() + 15 * 60 * 1000);
+                localStorage.setItem("access_token", newAccessToken);
+                localStorage.setItem("refresh_token", newRefreshToken);
                 localStorage.setItem("token_expiry", newExpiry.toISOString());
-                document.cookie = `access_token=${accessToken}; path=/; secure; samesite=strict`;
-                originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+                document.cookie = `access_token=${newAccessToken}; path=/; secure; samesite=strict`;
+                originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
                 return api(originalRequest);
             } catch (refreshError) {
+                console.error("Token refresh failed in response interceptor:", refreshError);
                 localStorage.removeItem("access_token");
                 localStorage.removeItem("refresh_token");
                 localStorage.removeItem("token_expiry");
