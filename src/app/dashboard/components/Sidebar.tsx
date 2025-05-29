@@ -44,7 +44,6 @@ export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
       path: "/dashboard/calls",
       subItems: ["All Calls", "Missed Calls", "Recent Calls"],
     },
-
     {
       group: "Settings",
       icon: <Settings className="h-5 w-5" />,
@@ -72,27 +71,27 @@ export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
       <nav className="flex-1">
         {menuItems.map((item) => (
           <div key={item.group} className="mb-2">
-            <div
-              className={`flex items-center p-4 hover:bg-gray-800 ${
-                pathname === item.path ? "bg-gray-800" : ""
-              } cursor-pointer`}
-              onClick={() => toggleExpand(item.group)}
-            >
-              {item.icon}
-              {isOpen && (
-                <>
-                  <span className="ml-3 flex-1">
-                    <Link href={item.path}>{item.group}</Link>
-                  </span>
-                  {item.subItems.length > 0 &&
-                    (expandedItems.includes(item.group) ? (
-                      <ChevronUp className="h-5 w-5" />
-                    ) : (
-                      <ChevronDown className="h-5 w-5" />
-                    ))}
-                </>
-              )}
-            </div>
+            <Link href={item.path}>
+              <div
+                className={`flex items-center p-4 hover:bg-gray-800 ${
+                  pathname === item.path ? "bg-gray-800" : ""
+                } cursor-pointer`}
+                onClick={() => toggleExpand(item.group)}
+              >
+                {item.icon}
+                {isOpen && (
+                  <>
+                    <span className="ml-3 flex-1">{item.group}</span>
+                    {item.subItems.length > 0 &&
+                      (expandedItems.includes(item.group) ? (
+                        <ChevronUp className="h-5 w-5" />
+                      ) : (
+                        <ChevronDown className="h-5 w-5" />
+                      ))}
+                  </>
+                )}
+              </div>
+            </Link>
             {isOpen &&
               expandedItems.includes(item.group) &&
               item.subItems.length > 0 && (
