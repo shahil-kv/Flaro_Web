@@ -211,7 +211,8 @@ export default function RegisterPage() {
             {/* Brand Header */}
             <div className="flex items-center space-x-4 mb-12">
               <Image
-                src="/images/flaro-logo.svg" alt="Flaro Logo"
+                src="/images/flaro-logo.svg"
+                alt="Flaro Logo"
                 width={48}
                 height={48}
                 className="object-contain"
@@ -318,26 +319,19 @@ export default function RegisterPage() {
                         type="submit"
                         disabled={isSignupLoading}
                         onClick={handleSubmit}
-                        className={`w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-4 rounded-xl transition-all duration-300 text-lg group ${isSignupLoading ? "opacity-50 cursor-not-allowed" : ""
-                          }`}
+                        className={`w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-4 rounded-xl transition-all duration-300 text-lg group ${
+                          isSignupLoading ? "opacity-50 cursor-not-allowed" : ""
+                        }`}
                       >
                         {isSignupLoading ? (
-                          <motion.div
-                            animate={{ rotate: 360 }}
-                            transition={{
-                              duration: 1,
-                              repeat: Infinity,
-                              ease: "linear",
-                            }}
-                            className="flex items-center"
-                          >
+                          <motion.div className="flex items-center">
                             <Loader2 className="w-5 h-5 mr-2" />
                             Creating Account...
                           </motion.div>
                         ) : (
                           <>
                             <span>Create Account</span>
-                            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                            <ArrowRight className="ml-2 w-5 h-5 " />
                           </>
                         )}
                       </Button>
@@ -384,8 +378,9 @@ export default function RegisterPage() {
                     type="button"
                     disabled={isVerifyLoading}
                     onClick={handleOTPSubmit}
-                    className={`w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-4 rounded-xl transition-all duration-300 text-lg group ${isVerifyLoading ? "opacity-50 cursor-not-allowed" : ""
-                      }`}
+                    className={`w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-4 rounded-xl transition-all duration-300 text-lg group ${
+                      isVerifyLoading ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
                   >
                     {isVerifyLoading ? (
                       <motion.div
