@@ -1,5 +1,7 @@
 "use client";
-import { useState } from "react";
+import * as React from "react";
+import { useState, useCallback } from "react";
+import { toast } from "sonner";
 import {
   Table,
   TableHeader,
@@ -21,7 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Search, Plus, Pencil, Trash2, Upload, X } from "lucide-react";
 import * as XLSX from "xlsx";
 
-// Define the Contact type
+// Types
 interface Contact {
   id: string;
   name: string;
@@ -37,7 +39,6 @@ interface Contact {
   isContactFromDevice: boolean;
 }
 
-// Define the Group type
 interface Group {
   id: number;
   name: string;
@@ -45,7 +46,7 @@ interface Group {
   contacts: Contact[];
 }
 
-// Mock contacts for selection (replace with API data)
+// Mock contacts (replace with API call)
 const mockContacts: Contact[] = [
   {
     id: "1",
@@ -97,8 +98,7 @@ export default function GroupsPage() {
     },
   ]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isGroupDialogOpen, setIsGroupDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
   const [formData, setFormData] = useState({
@@ -107,203 +107,239 @@ export default function GroupsPage() {
     contacts: [] as Contact[],
   });
   const [showContactSelection, setShowContactSelection] = useState(false);
-  // const [showImportedContacts, setShowImportedContacts] = useState(false);
   const [importedContacts, setImportedContacts] = useState<Contact[]>([]);
+  const [sortField, setSortField] = useState<keyof Group>("name");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
-  // Filter groups based on search query
-  const filteredGroups = groups.filter(
-    (group) =>
-      group.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      group.description.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Filter and sort groups
+  const filteredGroups = useCallback(() => {
+    return [...groups]
+      .filter(
+        (group) =>
+          group.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          group.description.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+      .sort((a, b) => {
+        const aValue = a[sortField];
+        const bValue = b[sortField];
+        if (typeof aValue === "string" && typeof bValue === "string") {
+          return sortOrder === "asc"
+            ? aValue.localeCompare(bValue)
+            : bValue.localeCompare(aValue);
+        }
+        return sortOrder === "asc"
+          ? Number(aValue) - Number(bValue)
+          : Number(bValue) - Number(aValue);
+      });
+  }, [groups, searchQuery, sortField, sortOrder])();
 
-  // Handle Create Group
-  const handleCreateGroup = () => {
-    if (!formData.name.trim()) {
-      // toast({ variant: "destructive", title: "Error", description: "Group name is required." });
-      return;
-    }
-    if (formData.contacts.length === 0) {
-      // toast({ variant: "destructive", title: "Error", description: "At least one contact is required." });
-      return;
-    }
-
-    const newGroup: Group = {
-      id: groups.length + 1,
-      name: formData.name,
-      description: formData.description,
-      contacts: formData.contacts,
-    };
-
-    // TODO: Replace with API call
-    // await api.post("/group/manage-group", { groupName: formData.name, description: formData.description, contacts: formData.contacts, opsMode: "INSERT" });
-
-    setGroups([...groups, newGroup]);
-    setIsCreateDialogOpen(false);
-    resetForm();
-    // toast({ title: "Success", description: "Group created successfully." });
-  };
-
-  // Handle Edit Group
-  const handleEditGroup = () => {
-    if (!selectedGroup || !formData.name.trim()) {
-      // toast({ variant: "destructive", title: "Error", description: "Group name is required." });
-      return;
-    }
-    if (formData.contacts.length === 0) {
-      // toast({ variant: "destructive", title: "Error", description: "At least one contact is required." });
-      return;
-    }
-
-    const updatedGroups = groups.map((group) =>
-      group.id === selectedGroup.id
-        ? {
-            ...group,
-            name: formData.name,
-            description: formData.description,
-            contacts: formData.contacts,
-          }
-        : group
-    );
-
-    // TODO: Replace with API call
-    // await api.put(`/group/manage-group`, { groupId: selectedGroup.id, groupName: formData.name, description: formData.description, contacts: formData.contacts, opsMode: "UPDATE" });
-
-    setGroups(updatedGroups);
-    setIsEditDialogOpen(false);
-    setSelectedGroup(null);
-    resetForm();
-    // toast({ title: "Success", description: "Group updated successfully." });
-  };
-
-  // Handle Delete Group
-  const handleDeleteGroup = () => {
-    if (!selectedGroup) return;
-
-    const updatedGroups = groups.filter(
-      (group) => group.id !== selectedGroup.id
-    );
-
-    // TODO: Replace with API call
-    // await api.post("/group/manage-group", { groupId: selectedGroup.id, opsMode: "DELETE" });
-
-    setGroups(updatedGroups);
-    setIsDeleteDialogOpen(false);
-    setSelectedGroup(null);
-    // toast({ title: "Success", description: "Group deleted successfully." });
-  };
-
-  // Open Edit Dialog
-  const openEditDialog = (group: Group) => {
-    setSelectedGroup(group);
-    setFormData({
-      name: group.name,
-      description: group.description,
-      contacts: group.contacts,
-    });
-    setImportedContacts(group.contacts.filter((c) => !c.isContactFromDevice));
-    setIsEditDialogOpen(true);
-  };
-
-  // Open Delete Dialog
-  const openDeleteDialog = (group: Group) => {
-    setSelectedGroup(group);
-    setIsDeleteDialogOpen(true);
-  };
-
-  // Reset Form
-  const resetForm = () => {
+  // Reset form
+  const resetForm = useCallback(() => {
     setFormData({ name: "", description: "", contacts: [] });
     setImportedContacts([]);
     setShowContactSelection(false);
-    // setShowImportedContacts(false);
-  };
+  }, []);
 
-  // Handle File Import
-  const handleFileImport = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
+  // Handle group operation (create/edit)
+  const handleGroupOperation = useCallback(async () => {
+    if (!formData.name.trim()) {
+      toast.error("Error", { description: "Group name is required." });
+      return;
+    }
+    if (formData.contacts.length === 0) {
+      toast.error("Error", {
+        description: "At least one contact is required.",
+      });
+      return;
+    }
 
     try {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const data = e.target?.result;
-        const workbook = XLSX.read(data, { type: "binary" });
-        const sheet = workbook.Sheets[workbook.SheetNames[0]];
-        const jsonData = XLSX.utils.sheet_to_json(sheet);
+      // const payload = {
+      //   groupName: formData.name,
+      //   description: formData.description,
+      //   contacts: formData.contacts,
+      //   opsMode: selectedGroup ? "UPDATE" : "INSERT",
+      //   groupId: selectedGroup?.id,
+      //   userId: "1", // Replace with actual user ID
+      // };
 
-        const contacts = jsonData
-          .map((row: any) => {
-            const name = row.name || row.Name || "";
-            const phone =
-              row.phone ||
-              row.Phone ||
-              row.phoneNumber ||
-              row.PhoneNumber ||
-              "";
-            if (!name || !phone) return null;
+      // TODO: Replace with actual API call
+      // const response = await api.post("/group/manage-group", payload);
 
-            const normalizedPhone = phone.startsWith("+")
-              ? phone
-              : `+91${phone}`;
-            const digits = normalizedPhone.replace(/\D/g, "");
-            const [firstName = "", ...lastNameParts] = name.trim().split(" ");
-            const lastName = lastNameParts.join(" ");
+      if (selectedGroup) {
+        setGroups((prev) =>
+          prev.map((group) =>
+            group.id === selectedGroup.id
+              ? {
+                  ...group,
+                  name: formData.name,
+                  description: formData.description,
+                  contacts: formData.contacts,
+                }
+              : group
+          )
+        );
+        toast.success("Success", {
+          description: "Group updated successfully.",
+        });
+      } else {
+        const newGroup: Group = {
+          id: groups.length + 1,
+          name: formData.name,
+          description: formData.description,
+          contacts: formData.contacts,
+        };
+        setGroups((prev) => [...prev, newGroup]);
+        toast.success("Success", {
+          description: "Group created successfully.",
+        });
+      }
 
-            return {
-              id: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
-              name,
-              firstName,
-              lastName,
-              phoneNumbers: [
-                {
-                  id: `${Date.now()}`,
-                  label: "mobile",
-                  number: normalizedPhone,
-                  digits,
-                  countryCode: "+91",
-                },
-              ],
-              isContactFromDevice: false,
-            };
-          })
-          .filter((contact): contact is Contact => contact !== null);
-
-        if (contacts.length === 0) {
-          // toast({ variant: "destructive", title: "Warning", description: "No valid contacts found in the file." });
-          return;
-        }
-
-        setImportedContacts(contacts);
-        setFormData((prev) => ({
-          ...prev,
-          contacts: [
-            ...prev.contacts.filter((c) => c.isContactFromDevice),
-            ...contacts,
-          ],
-        }));
-        // toast({ title: "Success", description: `${contacts.length} contacts imported.` });
-      };
-      reader.readAsBinaryString(file);
-    } catch (err) {
-      console.error("File import error:", err);
-      // toast({ variant: "destructive", title: "Error", description: "Failed to import contacts. Please check the file format." });
+      setIsGroupDialogOpen(false);
+      setSelectedGroup(null);
+      resetForm();
+    } catch (error: any) {
+      toast.error("Operation Failed", {
+        description: error?.message || "Please try again",
+      });
     }
-  };
+  }, [formData, selectedGroup, groups, resetForm]);
 
-  // Handle Clear Imported Contacts
-  const handleClearImported = () => {
+  // Handle delete group
+  const handleDeleteGroup = useCallback(async () => {
+    if (!selectedGroup) return;
+
+    try {
+      // TODO: Replace with API call
+      // await api.post("/group/manage-group", { groupId: selectedGroup.id, opsMode: "DELETE", userId: "1" });
+
+      setGroups((prev) =>
+        prev.filter((group) => group.id !== selectedGroup.id)
+      );
+      setIsDeleteDialogOpen(false);
+      setSelectedGroup(null);
+      toast.success("Success", { description: "Group deleted successfully." });
+    } catch (error: any) {
+      toast.error("Delete Failed", {
+        description: error.message || "Please try again",
+      });
+    }
+  }, [selectedGroup]);
+
+  // Open group dialog (create/edit)
+  const openGroupDialog = useCallback(
+    (group?: Group) => {
+      if (group) {
+        setSelectedGroup(group);
+        setFormData({
+          name: group.name,
+          description: group.description,
+          contacts: group.contacts,
+        });
+        setImportedContacts(
+          group.contacts.filter((c) => !c.isContactFromDevice)
+        );
+      } else {
+        resetForm();
+      }
+      setIsGroupDialogOpen(true);
+    },
+    [resetForm]
+  );
+
+  // Handle file import
+  const handleFileImport = useCallback(
+    async (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      if (!file) return;
+
+      try {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const data = e.target?.result;
+          const workbook = XLSX.read(data, { type: "binary" });
+          const sheet = workbook.Sheets[workbook.SheetNames[0]];
+          const jsonData = XLSX.utils.sheet_to_json(sheet);
+
+          const contacts = jsonData
+            .map((row: any) => {
+              const name = row.name || row.Name || "";
+              const phone =
+                row.phone ||
+                row.Phone ||
+                row.phoneNumber ||
+                row.PhoneNumber ||
+                "";
+              if (!name || !phone) return null;
+
+              const normalizedPhone = phone.startsWith("+")
+                ? phone
+                : `+91${phone}`;
+              const digits = normalizedPhone.replace(/\D/g, "");
+              const [firstName = "", ...lastNameParts] = name.trim().split(" ");
+              const lastName = lastNameParts.join(" ");
+
+              return {
+                id: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+                name,
+                firstName,
+                lastName,
+                phoneNumbers: [
+                  {
+                    id: `${Date.now()}`,
+                    label: "mobile",
+                    number: normalizedPhone,
+                    digits,
+                    countryCode: "+91",
+                  },
+                ],
+                isContactFromDevice: false,
+              };
+            })
+            .filter((contact): contact is Contact => contact !== null);
+
+          if (contacts.length === 0) {
+            toast.error("Warning", {
+              description: "No valid contacts found in the file.",
+            });
+            return;
+          }
+
+          setImportedContacts(contacts);
+          setFormData((prev) => ({
+            ...prev,
+            contacts: [
+              ...prev.contacts.filter((c) => c.isContactFromDevice),
+              ...contacts,
+            ],
+          }));
+          toast.success("Success", {
+            description: `${contacts.length} contacts imported.`,
+          });
+        };
+        reader.readAsBinaryString(file);
+      } catch (err) {
+        console.error("File import error:", err);
+        toast.error("Error", {
+          description:
+            "Failed to import contacts. Please check the file format.",
+        });
+      }
+    },
+    []
+  );
+
+  // Handle clear imported contacts
+  const handleClearImported = useCallback(() => {
     setImportedContacts([]);
     setFormData((prev) => ({
       ...prev,
       contacts: prev.contacts.filter((c) => c.isContactFromDevice),
     }));
-  };
+  }, []);
 
-  // Handle Contact Selection
-  const handleContactsSelected = (contact: Contact) => {
+  // Handle contact selection
+  const handleContactsSelected = useCallback((contact: Contact) => {
     setFormData((prev) => {
       const isSelected = prev.contacts.find((c) => c.id === contact.id);
       if (isSelected) {
@@ -314,18 +350,20 @@ export default function GroupsPage() {
       }
       return { ...prev, contacts: [...prev.contacts, contact] };
     });
-  };
+  }, []);
+
+  // Handle sort
+  const handleSort = useCallback((field: keyof Group) => {
+    setSortField(field);
+    setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
+  }, []);
 
   return (
     <section className="p-4 md:p-6 lg:p-8 bg-gray-50 min-h-screen">
-      {/* Header Section */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl md:text-3xl font-bold text-gray-800">Groups</h1>
         <Button
-          onClick={() => {
-            resetForm();
-            setIsCreateDialogOpen(true);
-          }}
+          onClick={() => openGroupDialog()}
           className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white"
         >
           <Plus className="w-4 h-4" />
@@ -333,7 +371,6 @@ export default function GroupsPage() {
         </Button>
       </div>
 
-      {/* Search Bar */}
       <div className="mb-6">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -346,14 +383,28 @@ export default function GroupsPage() {
         </div>
       </div>
 
-      {/* Table Section */}
       <div className="bg-white shadow-sm rounded-lg border border-gray-200">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[50px]">#</TableHead>
-              <TableHead>Group Name</TableHead>
-              <TableHead>Contacts</TableHead>
+              <TableHead className="w-[50px]">
+                <Button variant="ghost" onClick={() => handleSort("id")}>
+                  # {sortField === "id" && (sortOrder === "asc" ? "↑" : "↓")}
+                </Button>
+              </TableHead>
+              <TableHead>
+                <Button variant="ghost" onClick={() => handleSort("name")}>
+                  Group Name{" "}
+                  {sortField === "name" && (sortOrder === "asc" ? "↑" : "↓")}
+                </Button>
+              </TableHead>
+              <TableHead>
+                <Button variant="ghost" onClick={() => handleSort("contacts")}>
+                  Contacts{" "}
+                  {sortField === "contacts" &&
+                    (sortOrder === "asc" ? "↑" : "↓")}
+                </Button>
+              </TableHead>
               <TableHead>Description</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
@@ -401,7 +452,7 @@ export default function GroupsPage() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => openEditDialog(group)}
+                      onClick={() => openGroupDialog(group)}
                       className="text-blue-600 hover:text-blue-800"
                     >
                       <Pencil className="w-4 h-4 mr-1" />
@@ -410,7 +461,10 @@ export default function GroupsPage() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => openDeleteDialog(group)}
+                      onClick={() => {
+                        setSelectedGroup(group);
+                        setIsDeleteDialogOpen(true);
+                      }}
                       className="text-red-600 hover:text-red-800"
                     >
                       <Trash2 className="w-4 h-4 mr-1" />
@@ -424,19 +478,25 @@ export default function GroupsPage() {
         </Table>
       </div>
 
-      {/* Create Group Dialog */}
       <Dialog
-        open={isCreateDialogOpen}
+        open={isGroupDialogOpen}
         onOpenChange={(open) => {
-          if (!open) resetForm();
-          setIsCreateDialogOpen(open);
+          if (!open) {
+            resetForm();
+            setSelectedGroup(null);
+          }
+          setIsGroupDialogOpen(open);
         }}
       >
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
-            <DialogTitle>Create New Group</DialogTitle>
+            <DialogTitle>
+              {selectedGroup ? "Edit Group" : "Create New Group"}
+            </DialogTitle>
             <DialogDescription>
-              Fill in the details to create a new group.
+              {selectedGroup
+                ? `Update the details for ${selectedGroup.name}.`
+                : "Fill in the details to create a new group."}
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -528,129 +588,17 @@ export default function GroupsPage() {
           <DialogFooter>
             <Button
               variant="outline"
-              onClick={() => setIsCreateDialogOpen(false)}
+              onClick={() => setIsGroupDialogOpen(false)}
             >
               Cancel
             </Button>
-            <Button onClick={handleCreateGroup}>Create</Button>
+            <Button onClick={handleGroupOperation}>
+              {selectedGroup ? "Save" : "Create"}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
-      {/* Edit Group Dialog */}
-      <Dialog
-        open={isEditDialogOpen}
-        onOpenChange={(open) => {
-          if (!open) resetForm();
-          setIsEditDialogOpen(open);
-        }}
-      >
-        <DialogContent className="sm:max-w-[600px]">
-          <DialogHeader>
-            <DialogTitle>Edit Group</DialogTitle>
-            <DialogDescription>
-              Update the details for {selectedGroup?.name}.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid gap-2">
-              <label
-                htmlFor="name"
-                className="text-sm font-medium text-gray-700"
-              >
-                Group Name
-              </label>
-              <Input
-                id="name"
-                value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-                placeholder="Enter group name"
-              />
-            </div>
-            <div className="grid gap-2">
-              <label
-                htmlFor="description"
-                className="text-sm font-medium text-gray-700"
-              >
-                Description (Optional)
-              </label>
-              <Input
-                id="description"
-                value={formData.description}
-                onChange={(e) =>
-                  setFormData({ ...formData, description: e.target.value })
-                }
-                placeholder="Enter description"
-              />
-            </div>
-            <div className="grid gap-2">
-              <label className="text-sm font-medium text-gray-700">
-                Add Contacts
-              </label>
-              <Button
-                variant="outline"
-                onClick={() => setShowContactSelection(true)}
-                className="flex justify-between"
-              >
-                <span>
-                  {formData.contacts.filter((c) => c.isContactFromDevice)
-                    .length > 0
-                    ? `${
-                        formData.contacts.filter((c) => c.isContactFromDevice)
-                          .length
-                      } contacts selected`
-                    : "Select contacts"}
-                </span>
-                <ChevronRight className="w-4 h-4" />
-              </Button>
-              <div className="flex items-center justify-between border border-gray-200 rounded-lg p-3">
-                <div className="flex items-center gap-2">
-                  <Upload className="w-5 h-5 text-gray-500" />
-                  <span>
-                    {importedContacts.length > 0
-                      ? `${importedContacts.length} contacts imported`
-                      : "Import from Excel/CSV"}
-                  </span>
-                </div>
-                {importedContacts.length > 0 ? (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleClearImported}
-                  >
-                    <X className="w-4 h-4 text-red-600" />
-                  </Button>
-                ) : (
-                  <Button variant="ghost" size="sm" asChild>
-                    <label>
-                      <input
-                        type="file"
-                        accept=".xlsx, .xls, .csv"
-                        onChange={handleFileImport}
-                        className="hidden"
-                      />
-                      <Upload className="w-4 h-4 text-gray-500" />
-                    </label>
-                  </Button>
-                )}
-              </div>
-            </div>
-          </div>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setIsEditDialogOpen(false)}
-            >
-              Cancel
-            </Button>
-            <Button onClick={handleEditGroup}>Save</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      {/* Contact Selection Dialog */}
       <Dialog
         open={showContactSelection}
         onOpenChange={setShowContactSelection}
@@ -690,7 +638,6 @@ export default function GroupsPage() {
         </DialogContent>
       </Dialog>
 
-      {/* Delete Confirmation Dialog */}
       <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -717,7 +664,6 @@ export default function GroupsPage() {
   );
 }
 
-// Placeholder ChevronRight icon (since it's not in lucide-react by default)
 const ChevronRight = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
