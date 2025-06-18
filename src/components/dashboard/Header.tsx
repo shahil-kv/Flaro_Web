@@ -10,6 +10,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { AUTH_CONFIG } from "@/utils/auth.config";
 
 // Define props for the Header component
 interface HeaderProps {
@@ -28,6 +29,17 @@ export default function Header({ toggleSidebar }: HeaderProps) {
       .split("-") // Split on hyphens (e.g., "all-calls" -> ["all", "calls"])
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize each word
       .join(" "); // Join with a space (e.g., "All Calls")
+  };
+
+  // Function to log out the user
+  const LogOut = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("token_expiry");
+    localStorage.removeItem("user_data");
+    document.cookie =
+      "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    window.location.href = AUTH_CONFIG.ROUTES.LOGIN;
   };
 
   // Generate breadcrumb items dynamically
@@ -91,10 +103,13 @@ export default function Header({ toggleSidebar }: HeaderProps) {
         </Breadcrumb>
       </div>
       {/* Right side of the header: displays static financial data */}
-      <div className="flex items-center space-x-2">
-        <span>USD: $946,256.25</span>
-        <span>BTC: 3,254.84</span>
-        <span className="text-green-400">Synced</span>
+      <div>
+        <button
+          className="p-4 me-2 bg-red-500 border-white border rounded-full"
+          onClick={LogOut}
+        >
+          Logout
+        </button>
       </div>
     </header>
   );

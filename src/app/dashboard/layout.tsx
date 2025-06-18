@@ -2,7 +2,6 @@
 import { useState } from "react";
 import Sidebar from "@/components/dashboard/Sidebar";
 import Header from "@/components/dashboard/Header";
-import Footer from "@/components/dashboard/Footer";
 
 export default function DashboardLayout({
   children,
@@ -27,7 +26,7 @@ export default function DashboardLayout({
         >
           {children}
         </main>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </div>
   );
