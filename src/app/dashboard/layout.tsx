@@ -21,7 +21,7 @@ export default function DashboardLayout({
       <div className="flex-1 flex flex-col">
         <Header toggleSidebar={toggleSidebar} />
         <main
-          className={`flex-1 p-6 ${
+          className={`flex-1  ${
             isSidebarOpen ? "ml-0" : "ml-0"
           } transition-all duration-300`}
         >
