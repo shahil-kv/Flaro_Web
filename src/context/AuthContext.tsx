@@ -18,7 +18,6 @@ interface AuthContextType {
   isLoading: boolean;
   signIn: (phoneNumber: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
-  refreshAccessToken: () => Promise<AuthTokens>;
 }
 
 // Create the AuthContext
@@ -36,13 +35,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     invalidateQueriesOnSuccess: ['users', 'auth'],
     showErrorToast: true,
     showSuccessToast: true,
-  });
-
-  // Hook to make POST requests for refreshing tokens (only used manually)
-  const { mutateAsync: refreshToken } = usePost<any>('/user/refresh-token', {
-    invalidateQueriesOnSuccess: ['users', 'auth'],
-    showErrorToast: false,
-    showSuccessToast: false,
   });
 
   // Hook to make POST requests for logout
@@ -160,44 +152,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Manual token refresh function (for explicit calls only)
-  const refreshAccessToken = async () => {
-    try {
-      console.log('[AuthContext] Manual token refresh requested');
-      const storedRefreshToken = localStorage.getItem('refresh_token');
-      if (!storedRefreshToken) throw new Error('No refresh token available');
-
-      const response = await refreshToken({ refreshToken: storedRefreshToken });
-
-      if (!response.data?.data?.tokens) {
-        throw new Error('Invalid refresh token response: missing tokens structure');
-      }
-
-      const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
-        response.data.data.tokens;
-
-      if (!newAccessToken || !newRefreshToken) {
-        throw new Error('Refresh token response does not contain valid tokens');
-      }
-
-      const tokenExpiry = new Date(Date.now() + 1 * 60 * 1000); // 1 minute for debugging
-      localStorage.setItem('access_token', newAccessToken);
-      localStorage.setItem('refresh_token', newRefreshToken);
-      localStorage.setItem('token_expiry', tokenExpiry.toISOString());
-      document.cookie = `access_token=${newAccessToken}; path=/; secure; samesite=strict`;
-
-      const newTokens = { accessToken: newAccessToken, refreshToken: newRefreshToken };
-      setTokens(newTokens);
-
-      console.log('[AuthContext] Manual token refresh successful');
-      return newTokens;
-    } catch (error) {
-      console.error('[AuthContext] Manual token refresh failed:', error);
-      await signOut();
-      throw error;
-    }
-  };
-
   // Run loadStoredAuth on component mount to initialize auth state
   useEffect(() => {
     // Skip running loadStoredAuth if on the login page to prevent loops
@@ -216,7 +170,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     isLoading,
     signIn,
     signOut,
-    refreshAccessToken,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
