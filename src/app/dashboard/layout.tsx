@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Sidebar from "@/components/dashboard/Sidebar";
 import Header from "@/components/dashboard/Header";
+// import { AuthProvider } from "@/context/AuthContext";
 
 export default function DashboardLayout({
   children,
@@ -15,6 +16,7 @@ export default function DashboardLayout({
   };
 
   return (
+    // <AuthProvider>
     <div className="flex min-h-screen bg-gray-900">
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       <div className="flex-1 flex flex-col">
@@ -29,5 +31,6 @@ export default function DashboardLayout({
         {/* <Footer /> */}
       </div>
     </div>
+    // </AuthProvider>
   );
 }
