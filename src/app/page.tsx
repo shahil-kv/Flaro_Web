@@ -402,11 +402,10 @@ export default function Home() {
               >
                 <Card
                   className={`h-full relative border-0 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:ring-2
-                  ${
-                    plan.popular
+                  ${plan.popular
                       ? " ring-blue-500 shadow-blue-500/20 scale-105"
                       : ""
-                  }`}
+                    }`}
                 >
                   {plan.popular && (
                     <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0">
@@ -440,11 +439,10 @@ export default function Home() {
                       ))}
                     </ul>
                     <Button
-                      className={`w-full  transition-all duration-300 hover:bg-gradient-to-t from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700  shadow-lg ${
-                        plan.popular
+                      className={`w-full  transition-all duration-300 hover:bg-gradient-to-t from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700  shadow-lg ${plan.popular
                           ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg"
                           : "border-2 hover:bg-accent/10"
-                      }`}
+                        }`}
                       variant={plan.popular ? "default" : "outline"}
                     >
                       Get Started
