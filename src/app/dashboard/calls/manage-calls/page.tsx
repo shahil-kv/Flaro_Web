@@ -36,7 +36,6 @@ const API_URL = 'http://localhost:8080';
 
 export default function CallsPage() {
   const { user } = useAuth();
-  // const queryClient = useQueryClient();
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
   const [selectedContacts, setSelectedContacts] = useState<any[]>([]);
   const [isContactDialogOpen, setIsContactDialogOpen] = useState(false);
