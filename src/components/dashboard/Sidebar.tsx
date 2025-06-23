@@ -46,7 +46,7 @@ export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
       group: 'Calls',
       icon: <MessageCircle className='h-5 w-5' />,
       path: '/dashboard/calls',
-      subItems: ['All Calls', 'Missed Calls', 'Recent Calls'],
+      subItems: ['Manage Calls'],
     },
   ];
 

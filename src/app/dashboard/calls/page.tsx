@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation';
 
-export default function CallsPage() {
-  redirect("/dashboard/calls/all-calls");
+export default function ManageCallsPage() {
+  redirect('/dashboard/calls/manage-calls');
 }
