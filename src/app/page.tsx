@@ -440,8 +440,8 @@ export default function Home() {
                     </ul>
                     <Button
                       className={`w-full  transition-all duration-300 hover:bg-gradient-to-t from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700  shadow-lg ${plan.popular
-                          ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg"
-                          : "border-2 hover:bg-accent/10"
+                        ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg"
+                        : "border-2 hover:bg-accent/10"
                         }`}
                       variant={plan.popular ? "default" : "outline"}
                     >
@@ -509,7 +509,7 @@ export default function Home() {
                   height={40}
                 />
                 <span className="text-3xl font-bold bg-gradient-to-r from-orange-400 to-orange-300 bg-clip-text text-transparent">
-                  Flaro
+                  flaro
                 </span>
               </div>
               <p className="text-gray-400 mb-6 leading-relaxed">

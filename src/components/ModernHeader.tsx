@@ -51,20 +51,15 @@ const ModernHeader = () => {
             <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
                 {/* Logo */}
                 <div
-                    className="flex items-center space-x-3"
+                    className="flex items-center space-x-2 "
                 >
-                    <motion.div
-                        className="w-10 h-10 bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg"
-                        whileHover={{ rotate: 5 }}
-                        animate={{
-                            boxShadow: ['0 4px 20px rgba(249, 115, 22, 0.3)', '0 4px 25px rgba(249, 115, 22, 0.4)', '0 4px 20px rgba(249, 115, 22, 0.3)']
-                        }}
-                        transition={{ duration: 2, repeat: Infinity }}
+                    <div
+                        className="w-10 h-10 rounded flex items-center justify-center shadow-sm bg-orange-600"
                     >
-                        <Image src="/images/flaro-logo.svg" alt="Flaro Logo" width={32} height={32} />
-                    </motion.div>
-                    <span className="text-2xl font-bold text-gray-900 dark:text-white">
-                        Flaro
+                        <Image src="/images/flaro-logo-white.svg" alt="Flaro Logo" width={32} height={32} />
+                    </div>
+                    <span className="text-4xl font-bold text-orange-600 dark:text-white">
+                        flaro
                     </span>
                 </div>
 

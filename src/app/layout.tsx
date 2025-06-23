@@ -1,16 +1,27 @@
 // app/layout.tsx
 import type { Metadata } from "next";
-import { Open_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 
 import { ClientProviders } from "@/context/ClientProviders";
 
-const openSans = Open_Sans({
-  variable: "--font-open-sans",
-  subsets: ["latin"],
-  weight: ["300", "400", "600", "700"],
-  style: ["normal", "italic"],
+const openSauceOne = localFont({
+  src: [
+    {
+      path: "../../public/fonts/OpenSauceOne-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+    // Add more font variants if you have them
+    // {
+    //   path: "./fonts/OpenSauceOne-Regular.woff2",
+    //   weight: "400",
+    //   style: "normal",
+    // },
+  ],
+  variable: "--font-open-sauce-one",
+  display: "swap",
 });
 
 // Updated Metadata for SEO and Consistency
@@ -139,13 +150,12 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
-        <link rel="preload" href="/globals.css" as="style" />
         <link rel="preload" href="/favicon.ico" as="image" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content="#ffffff" />
         <meta name="referrer" content="strict-origin-when-cross-origin" />
       </head>
-      <body className={`${openSans.variable} antialiased font-sans`}>
+      <body className={`${openSauceOne.variable} antialiased font-sans`}>
         <Analytics />
         <ClientProviders>
           <main role="main">{children}</main>

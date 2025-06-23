@@ -17,8 +17,20 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				// sans: ['Open Sans', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],s
-				sans: ["var(--font-open-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+				'sans': ['var(--font-open-sauce-one)', 'sans-serif'],
+				'open-sauce': ['var(--font-open-sauce-one)', 'sans-serif'],
+			},
+			backgroundImage: {
+				'animated-texture': `
+				  radial-gradient(circle at 25% 25%, rgba(255, 0, 0, 0.12) 0%, transparent 50%),
+				  radial-gradient(circle at 75% 75%, rgba(255, 0, 0, 0.08) 0%, transparent 50%)`,
+				'animated-texture-dark': `
+				  radial-gradient(circle at 25% 25%, rgba(255, 0, 0, 0.18) 0%, transparent 50%),
+				  radial-gradient(circle at 75% 75%, rgba(255, 0, 0, 0.15) 0%, transparent 50%)`,
+				'bg-texture': `
+				  radial-gradient(circle at 20% 30%, rgba(255, 0, 0, 0.08) 0%, transparent 40%),
+				  radial-gradient(circle at 80% 70%, rgba(255, 0, 0, 0.06) 0%, transparent 40%),
+				  radial-gradient(circle at 60% 20%, rgba(255, 0, 0, 0.07) 0%, transparent 30%)`
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -146,13 +158,28 @@ export default {
 				'float': {
 					'0%, 100%': { transform: 'translateY(0px)' },
 					'50%': { transform: 'translateY(-20px)' }
-				}
+				},
+				'spinCustom': {
+					'0%': { transform: 'rotate(0deg) scale(1)' },
+					'50%': { transform: 'rotate(360deg) scale(2)' },
+					'100%': { transform: 'rotate(0deg) scale(1)' },
+				},
+				'wave': {
+					'0%, 100%': {
+						transform: 'scaleY(0.4)',
+					},
+					'50%': {
+						transform: 'scaleY(1.2)',
+					},
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.8s ease-out',
-				'float': 'float 6s ease-in-out infinite'
+				'float': 'float 6s ease-in-out infinite',
+				'spinCustom': 'spinCustom 2s infinite',
+				'wave': 'wave 1.2s ease-in-out infinite',
 			}
 		}
 	},
