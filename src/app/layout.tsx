@@ -2,6 +2,8 @@
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
+
 import { ClientProviders } from "@/context/ClientProviders";
 
 const openSans = Open_Sans({
@@ -144,6 +146,7 @@ export default function RootLayout({
         <meta name="referrer" content="strict-origin-when-cross-origin" />
       </head>
       <body className={`${openSans.variable} antialiased font-sans`}>
+        <Analytics />
         <ClientProviders>
           <main role="main">{children}</main>
         </ClientProviders>
