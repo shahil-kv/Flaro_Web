@@ -1,36 +1,28 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 
 export default {
-	darkMode: ["class"],
+	darkMode: 'class',
 	content: [
-		"./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-		"./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-		"./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+		'./src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+		'./src/components/**/*.{js,ts,jsx,tsx,mdx}',
+		'./src/app/**/*.{js,ts,jsx,tsx,mdx}',
 	],
 	theme: {
 		container: {
 			center: true,
 			padding: '2rem',
 			screens: {
-				'2xl': '1400px'
-			}
+				'2xl': '1400px',
+			},
 		},
 		extend: {
 			fontFamily: {
-				'sans': ['var(--font-open-sauce-one)', 'sans-serif'],
+				sans: ['var(--font-open-sauce-one)', 'Open Sans', 'system-ui', '-apple-system', 'sans-serif'],
 				'open-sauce': ['var(--font-open-sauce-one)', 'sans-serif'],
 			},
-			backgroundImage: {
-				'animated-texture': `
-				  radial-gradient(circle at 25% 25%, rgba(255, 0, 0, 0.12) 0%, transparent 50%),
-				  radial-gradient(circle at 75% 75%, rgba(255, 0, 0, 0.08) 0%, transparent 50%)`,
-				'animated-texture-dark': `
-				  radial-gradient(circle at 25% 25%, rgba(255, 0, 0, 0.18) 0%, transparent 50%),
-				  radial-gradient(circle at 75% 75%, rgba(255, 0, 0, 0.15) 0%, transparent 50%)`,
-				'bg-texture': `
-				  radial-gradient(circle at 20% 30%, rgba(255, 0, 0, 0.08) 0%, transparent 40%),
-				  radial-gradient(circle at 80% 70%, rgba(255, 0, 0, 0.06) 0%, transparent 40%),
-				  radial-gradient(circle at 60% 20%, rgba(255, 0, 0, 0.07) 0%, transparent 30%)`
+			textColor: {
+				primary: 'hsl(var(--primary-foreground))',
+				secondary: 'hsl(var(--secondary-foreground))',
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -38,33 +30,34 @@ export default {
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
+
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					foreground: 'hsl(var(--primary-foreground))',
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
-					foreground: 'hsl(var(--secondary-foreground))'
+					foreground: 'hsl(var(--secondary-foreground))',
 				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
-					foreground: 'hsl(var(--destructive-foreground))'
+					foreground: 'hsl(var(--destructive-foreground))',
 				},
 				muted: {
 					DEFAULT: 'hsl(var(--muted))',
-					foreground: 'hsl(var(--muted-foreground))'
+					foreground: 'hsl(var(--muted-foreground))',
 				},
 				accent: {
 					DEFAULT: 'hsl(var(--accent))',
-					foreground: 'hsl(var(--accent-foreground))'
+					foreground: 'hsl(var(--accent-foreground))',
 				},
 				popover: {
 					DEFAULT: 'hsl(var(--popover))',
-					foreground: 'hsl(var(--popover-foreground))'
+					foreground: 'hsl(var(--popover-foreground))',
 				},
 				card: {
 					DEFAULT: 'hsl(var(--card))',
-					foreground: 'hsl(var(--card-foreground))'
+					foreground: 'hsl(var(--card-foreground))',
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
@@ -74,7 +67,7 @@ export default {
 					accent: 'hsl(var(--sidebar-accent))',
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
+					ring: 'hsl(var(--sidebar-ring))',
 				},
 				orange: {
 					50: '#fff4f0',
@@ -83,7 +76,7 @@ export default {
 					300: '#ff9966',
 					400: '#ff6f33',
 					500: '#ff471a',
-					600: '#ff0000', // Pure red as the focus
+					600: '#ff0000',
 					700: '#cc0000',
 					800: '#990000',
 					900: '#660000',
@@ -100,7 +93,7 @@ export default {
 					700: '#1d4ed8',
 					800: '#1e40af',
 					900: '#1e3a8a',
-					950: '#172554'
+					950: '#172554',
 				},
 				purple: {
 					50: '#faf5ff',
@@ -113,7 +106,7 @@ export default {
 					700: '#7c3aed',
 					800: '#6b21a8',
 					900: '#581c87',
-					950: '#3b0764'
+					950: '#3b0764',
 				},
 				gray: {
 					50: '#f9fafb',
@@ -126,63 +119,63 @@ export default {
 					700: '#374151',
 					800: '#1f2937',
 					900: '#111827',
-					950: '#030712'
-				}
+					950: '#030712',
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				sm: 'calc(var(--radius) - 4px)',
+			},
+			backgroundImage: {
+				'animated-texture': `
+          radial-gradient(circle at 25% 25%, rgba(255, 0, 0, 0.12) 0%, transparent 50%),
+          radial-gradient(circle at 75% 75%, rgba(255, 0, 0, 0.08) 0%, transparent 50%)`,
+				'animated-texture-dark': `
+          radial-gradient(circle at 25% 25%, rgba(255, 0, 0, 0.18) 0%, transparent 50%),
+          radial-gradient(circle at 75% 75%, rgba(255, 0, 0, 0.15) 0%, transparent 50%)`,
+				'bg-texture': `
+          radial-gradient(circle at 20% 30%, rgba(255, 0, 0, 0.08) 0%, transparent 40%),
+          radial-gradient(circle at 80% 70%, rgba(255, 0, 0, 0.06) 0%, transparent 40%),
+          radial-gradient(circle at 60% 20%, rgba(255, 0, 0, 0.07) 0%, transparent 30%)`,
 			},
 			keyframes: {
 				'accordion-down': {
-					from: {
-						height: '0'
-					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
-					}
+					from: { height: '0' },
+					to: { height: 'var(--radix-accordion-content-height)' },
 				},
 				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
-					},
-					to: {
-						height: '0'
-					}
+					from: { height: 'var(--radix-accordion-content-height)' },
+					to: { height: '0' },
 				},
 				'fade-in': {
 					'0%': { opacity: '0', transform: 'translateY(20px)' },
-					'100%': { opacity: '1', transform: 'translateY(0)' }
+					'100%': { opacity: '1', transform: 'translateY(0)' },
 				},
-				'float': {
+				float: {
 					'0%, 100%': { transform: 'translateY(0px)' },
-					'50%': { transform: 'translateY(-20px)' }
+					'50%': { transform: 'translateY(-20px)' },
 				},
-				'spinCustom': {
+				spinCustom: {
 					'0%': { transform: 'rotate(0deg) scale(1)' },
 					'50%': { transform: 'rotate(360deg) scale(2)' },
 					'100%': { transform: 'rotate(0deg) scale(1)' },
 				},
-				'wave': {
-					'0%, 100%': {
-						transform: 'scaleY(0.4)',
-					},
-					'50%': {
-						transform: 'scaleY(1.2)',
-					},
+				wave: {
+					'0%, 100%': { transform: 'scaleY(0.4)' },
+					'50%': { transform: 'scaleY(1.2)' },
 				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.8s ease-out',
-				'float': 'float 6s ease-in-out infinite',
-				'spinCustom': 'spinCustom 2s infinite',
-				'wave': 'wave 1.2s ease-in-out infinite',
-			}
-		}
+				float: 'float 6s ease-in-out infinite',
+				spinCustom: 'spinCustom 2s infinite',
+				wave: 'wave 1.2s ease-in-out infinite',
+			},
+		},
 	},
 	// eslint-disable-next-line @typescript-eslint/no-require-imports
-	plugins: [require("tailwindcss-animate")],
+	plugins: [require('tailwindcss-animate')],
 } satisfies Config;

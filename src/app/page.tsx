@@ -9,16 +9,20 @@ import {
 import {
   ArrowRight,
   BarChart3,
-  Bot,
   Check,
   ChevronRight,
+  Clock,
   Headphones,
-  Phone,
+  Languages,
+  MessageSquare,
+  Mic,
+  MousePointer,
   Smartphone,
   Sparkles,
   Star,
   Target,
   TrendingUp,
+  Upload,
   Users,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -26,183 +30,334 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import ModernHeader from "@/components/ModernHeader";
-import ModernDashboard from "@/components/ModernDashboard";
 import ModernHero from "@/components/ModernHero";
+import LPDashboard from "@/components/LPDashboard";
 
 export default function Home() {
   const features = [
     {
-      icon: Phone,
-      title: "Enterprise Calling",
-      description:
-        "Scale your communication with advanced calling features designed for modern businesses.",
+      icon: Upload,
+      title: "Smart Contact Management",
+      description: "Import thousands of contacts instantly from Excel, CSV, or your phone. Organize with intelligent grouping and advanced filtering for precise targeting.",
       image: "/placeholder.svg",
-      stats: "300% faster outreach",
-      gradient: "from-orange-500 to-orange-600",
+      stats: "Instant import",
+      gradient: "from-emerald-500 to-emerald-600"
     },
     {
-      icon: Users,
-      title: "Smart Management",
-      description:
-        "Organize contacts, manage campaigns, and track engagement across all segments seamlessly.",
+      icon: Mic,
+      title: "AI Voice Campaign Builder",
+      description: "Create engaging voice messages with our AI-powered text-to-speech or record your own voice. Perfect quality, natural delivery, every time.",
       image: "/placeholder.svg",
-      stats: "99% organized data",
-      gradient: "from-blue-500 to-blue-600",
+      stats: "Human-like quality",
+      gradient: "from-blue-500 to-blue-600"
     },
     {
-      icon: BarChart3,
-      title: "Advanced Analytics",
-      description:
-        "Get detailed insights with real-time performance metrics and conversion tracking.",
+      icon: MousePointer,
+      title: "One-Click Mass Campaigns",
+      description: "Launch sophisticated campaigns to thousands of contacts instantly. Smart scheduling, automated retry logic, and real-time progress tracking.",
       image: "/placeholder.svg",
-      stats: "Real-time insights",
-      gradient: "from-indigo-500 to-indigo-600",
+      stats: "5000+ calls/hour",
+      gradient: "from-purple-500 to-purple-600"
     },
     {
-      icon: Bot,
-      title: "AI Integration",
-      description:
-        "AI-powered assistant handles calls, analyzes conversations, and provides intelligent insights.",
+      icon: Languages,
+      title: "AI Voice Agent (Coming Soon!)",
+      description: "Revolutionary AI voice agent that handles conversations like a human with native language support. Perfect for customer service, surveys, and interactive campaigns.",
       image: "/placeholder.svg",
-      stats: "Coming Soon",
-      gradient: "from-gray-500 to-gray-600",
-    },
+      stats: "Multi-language support",
+      gradient: "from-orange-500 to-red-600",
+      comingSoon: true
+    }
   ];
 
   const useCases = [
     {
-      title: "Marketing Teams",
-      description:
-        "Launch comprehensive marketing campaigns and track performance across thousands of leads.",
+      title: "Marketing & Sales Teams",
+      description: "Launch high-converting campaigns, nurture leads, and drive sales with personalized voice outreach that cuts through the noise of digital marketing.",
       icon: Target,
-      stats: "10x more reach",
-      gradient: "from-orange-500 to-orange-600",
+      stats: "3x higher conversion",
+      gradient: "from-emerald-500 to-emerald-600"
     },
     {
-      title: "Enterprise Sales",
-      description:
-        "Connect with prospects at scale while maintaining personalized communication strategies.",
+      title: "Event Organizers",
+      description: "Boost attendance with personal invitations, send timely reminders, and manage RSVPs efficiently. Perfect for conferences, webinars, and community events.",
       icon: TrendingUp,
-      stats: "3x more conversions",
-      gradient: "from-blue-500 to-blue-600",
+      stats: "85% attendance rate",
+      gradient: "from-blue-500 to-blue-600"
     },
     {
-      title: "Customer Success",
-      description:
-        "Manage customer relationships and provide exceptional support at enterprise scale.",
+      title: "Community Managers",
+      description: "Keep your community engaged with important announcements, gather feedback, and strengthen relationships through authentic voice communication.",
       icon: Users,
-      stats: "95% satisfaction rate",
-      gradient: "from-indigo-500 to-indigo-600",
-    },
+      stats: "92% engagement rate",
+      gradient: "from-purple-500 to-purple-600"
+    }
   ];
 
   const testimonials = [
     {
-      name: "Sarah Johnson",
-      role: "VP of Marketing",
-      company: "TechCorp Enterprise",
-      content:
-        "Flaro transformed our enterprise outreach strategy. We now reach 10,000+ leads daily with incredible efficiency and precision.",
+      name: "Sarah Chen",
+      role: "Marketing Director",
+      company: "TechFlow Solutions",
+      content: "Flaro revolutionized our lead generation. We're now reaching 15,000+ prospects weekly with personalized voice messages. Our conversion rate increased by 340%.",
       rating: 5,
-      avatar: "/placeholder.svg",
+      avatar: "/placeholder.svg"
     },
     {
-      name: "Michael Chen",
-      role: "Head of Sales",
-      company: "Global Solutions Inc",
-      content:
-        "The professional dashboard and analytics give us insights we never had before. Our ROI increased by 400% in just three months.",
+      name: "Marcus Rodriguez",
+      role: "Event Manager",
+      company: "Global Events Network",
+      content: "The IVR workflows are game-changing. We automated our entire RSVP process and increased event attendance by 85%. The AI voice quality amazes our attendees.",
       rating: 5,
-      avatar: "/placeholder.svg",
+      avatar: "/placeholder.svg"
     },
     {
-      name: "Lisa Rodriguez",
-      role: "Customer Success Director",
-      company: "Enterprise Pro",
-      content:
-        "The AI integration and professional tools saved us hundreds of hours. Customer satisfaction improved dramatically.",
+      name: "Jennifer Park",
+      role: "Community Lead",
+      company: "Innovation Hub",
+      content: "Managing 25,000+ community members became effortless with Flaro. The real-time analytics help us understand engagement patterns and optimize our outreach strategy.",
       rating: 5,
-      avatar: "/placeholder.svg",
-    },
+      avatar: "/placeholder.svg"
+    }
   ];
+
 
   const pricingPlans = [
     {
-      name: "Professional",
-      price: "$99",
+      name: "Growth",
+      price: "$149",
       period: "/month",
-      description: "Perfect for growing businesses",
+      description: "Perfect for growing teams",
       features: [
-        "Up to 5,000 calls/month",
-        "Advanced analytics dashboard",
-        "Priority support",
-        "Contact segmentation",
-        "Custom campaigns",
+        "Up to 10,000 calls/month",
+        "AI voice generation",
+        "Basic IVR workflows",
+        "Real-time analytics",
+        "Email & chat support",
+        "Contact management tools"
       ],
       popular: false,
-      gradient: "from-gray-500 to-gray-600",
+      gradient: "from-emerald-500 to-emerald-600"
+    },
+    {
+      name: "Professional",
+      price: "$399",
+      period: "/month",
+      description: "Best for scaling businesses",
+      features: [
+        "Unlimited voice calls",
+        "Advanced AI voice cloning",
+        "Complex IVR automation",
+        "Advanced analytics & insights",
+        "24/7 priority support",
+        "API access & integrations",
+        "Custom voice training"
+      ],
+      popular: true,
+      gradient: "from-blue-500 to-blue-600"
     },
     {
       name: "Enterprise",
-      price: "$299",
-      period: "/month",
-      description: "Best for large organizations",
-      features: [
-        "Unlimited calls",
-        "Full analytics suite",
-        "24/7 dedicated support",
-        "API access",
-        "Custom integrations",
-        "White-label options",
-      ],
-      popular: true,
-      gradient: "from-orange-500 to-orange-600",
-    },
-    {
-      name: "Custom",
-      price: "Contact",
-      period: "us",
+      price: "Custom",
+      period: "pricing",
       description: "Tailored enterprise solutions",
       features: [
-        "Custom deployment",
+        "White-label deployment",
         "Dedicated infrastructure",
         "SLA guarantees",
-        "Custom features",
-        "Training & onboarding",
-        "Compliance & security",
+        "Custom AI development",
+        "Advanced security compliance",
+        "Dedicated success manager",
+        "Custom integrations"
       ],
       popular: false,
-      gradient: "from-blue-500 to-blue-600",
+      gradient: "from-purple-500 to-purple-600"
+    }
+  ];
+
+  const howItWorksSteps = [
+    {
+      step: "1",
+      title: "Import & Organize",
+      description: "Upload your contact lists from any source. Our AI automatically cleans and organizes data, removing duplicates and invalid numbers.",
+      icon: Upload
     },
+    {
+      step: "2",
+      title: "Create & Customize",
+      description: "Build your voice campaign with AI-generated speech or record your own message. Set up smart IVR flows for interactive responses.",
+      icon: Mic
+    },
+    {
+      step: "3",
+      title: "Launch & Track",
+      description: "Deploy your campaign with one click and monitor real-time performance. Get detailed analytics on delivery, engagement, and conversions.",
+      icon: BarChart3
+    }
   ];
 
   return (
     <div className="min-h-screen bg-background dark:bg-gray-950 overflow-x-hidden">
       <ModernHeader />
       <ModernHero />
-      <ModernDashboard />
+      {/* <ModernDashboard /> */}
+      <LPDashboard />
 
-      {/* Enhanced Features Section */}
-      <section
-        id="features"
-        className="md:py-24 md:px-6 bg-gradient-to-br from-gray-50/30 to-orange-50/30 dark:from-gray-900/30 dark:to-blue-950/30"
-      >
-        <div className="container mx-auto">
+      {/* How It Works Section */}
+      <section id="how-it-works" className="relative py-24 px-6 ">
+
+        <div className="absolute inset-0 overflow-hidden">
+
+          {/* Medium Gradient Orbs */}
+          <motion.div
+            className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-gradient-to-r from-orange-500/15 via-red-500/12 to-red-600/8 rounded-full blur-3xl"
+          // animate={{
+          //   x: [0, 80, 0],
+          //   y: [0, -60, 0],
+          //   scale: [1, 1.2, 1],
+          // }}
+          // transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 5 }}
+          />
+
+          <motion.div
+            className="absolute bottom-1/4 right-1/5 w-[550px] h-[550px] bg-gradient-to-bl from-red-400/20 via-orange-600/15 to-red-500/12 rounded-full blur-3xl"
+          // animate={{
+          //   x: [0, -100, 0],
+          //   y: [0, 80, 0],
+          //   scale: [1, 1.1, 1],
+          // }}
+          // transition={{ duration: 22, repeat: Infinity, ease: "easeInOut", delay: 8 }}
+          />
+
+
+        </div>
+
+        <div className="container px-2 md:px-8 mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.1 }}
             className="text-center mb-20"
           >
             <h2 className="text-5xl md:text-6xl font-bold mb-6">
-              Enterprise{" "}
-              <span className="bg-gradient-to-r from-orange-600 to-orange-500 bg-clip-text text-transparent">
-                Features
-              </span>
+              How Flaro <span className="bg-gradient-to-r from-orange-600 to-red-400 bg-clip-text text-transparent">Works</span>
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Professional-grade tools designed for modern enterprises
+              Transform your outreach in three simple steps
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8 ">
+            {howItWorksSteps.map((step, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                viewport={{ once: true, amount: 0.1 }}
+                className="text-center glass-effect-dark p-4 rounded-md"
+              >
+                <div className="relative mb-8">
+                  <div className="w-20 h-20 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <step.icon className="h-10 w-10 text-white" />
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-8 h-8 glass-effect  text-primary rounded-full flex items-center justify-center text-sm font-bold">
+                    {step.step}
+                  </div>
+                </div>
+                <h3 className="text-2xl font-semibold mb-4">{step.title}</h3>
+                <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{step.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Enhanced Features Section */}
+      <section id="features" className="py-24 px-6 relative">
+        <div className="container px-2 md:px-8 mx-auto">
+
+
+          <div className="absolute inset-0 overflow-hidden">
+            {/* Large Pink/Purple Gradient Orbs */}
+            <div
+              className="absolute -top-40 -left-40 w-[900px] h-[900px] bg-gradient-to-br from-pink-500/22 via-purple-500/18 to-pink-600/14 rounded-full blur-3xl"
+            // animate={{
+            //   x: [0, 160, 0],
+            //   y: [0, -120, 0],
+            //   scale: [1, 1.6, 1],
+            //   rotate: [0, 180, 360],
+            // }}
+            // transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
+            />
+
+            <div
+              className="absolute -bottom-52 -right-52 w-[1100px] h-[1100px] bg-gradient-to-tl from-purple-600/25 via-pink-500/20 to-purple-400/16 rounded-full blur-3xl"
+            // animate={{
+            //   x: [0, -200, 0],
+            //   y: [0, 140, 0],
+            //   scale: [1, 1.4, 1],
+            //   rotate: [0, -270, 0],
+            // }}
+            // transition={{ duration: 26, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+            />
+
+            {/* Medium Gradient Orbs */}
+            <div
+              className="absolute top-1/3 right-1/5 w-[600px] h-[600px] bg-gradient-to-l from-pink-400/20 via-purple-500/16 to-pink-600/12 rounded-full blur-3xl"
+            // animate={{
+            //   x: [0, -100, 0],
+            //   y: [0, 80, 0],
+            //   scale: [1, 1.3, 1],
+            // }}
+            // transition={{ duration: 22, repeat: Infinity, ease: "easeInOut", delay: 5 }}
+            />
+
+            <div
+              className="absolute bottom-1/4 left-1/4 w-[550px] h-[550px] bg-gradient-to-r from-purple-500/24 via-pink-400/19 to-purple-600/15 rounded-full blur-3xl"
+            // animate={{
+            //   x: [0, 130, 0],
+            //   y: [0, -70, 0],
+            //   scale: [1, 1.25, 1],
+            // }}
+            // transition={{ duration: 24, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            />
+
+            {/* Small Accent Orbs */}
+            <div
+              className="absolute top-1/5 left-1/3 w-[350px] h-[350px] bg-gradient-to-br from-pink-300/28 to-purple-400/22 rounded-full blur-2xl"
+            // animate={{
+            //   x: [0, 70, 0],
+            //   y: [0, -55, 0],
+            //   scale: [1, 1.35, 1],
+            // }}
+            // transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+            />
+
+            <div
+              className="absolute bottom-1/6 right-1/6 w-[320px] h-[320px] bg-gradient-to-tl from-purple-300/26 to-pink-400/20 rounded-full blur-2xl"
+            // animate={{
+            //   x: [0, -85, 0],
+            //   y: [0, 60, 0],
+            //   scale: [1, 1.3, 1],
+            // }}
+            // transition={{ duration: 19, repeat: Infinity, ease: "easeInOut", delay: 8 }}
+            />
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true, amount: 0.1 }}
+            className="text-center mb-20"
+          >
+            <h2 className="text-5xl md:text-6xl font-bold mb-6">
+              Powerful <span className="bg-gradient-to-r from-indigo-600 to-pink-600 bg-clip-text text-transparent">AI Features</span>
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+              Everything you need for successful AI-powered voice campaigns, including our upcoming AI voice agent
             </p>
           </motion.div>
 
@@ -213,29 +368,27 @@ export default function Home() {
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.1 }}
                 className="group"
               >
-                <Card className="h-full transition-all duration-500 border-0 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 cursor-pointer relative overflow-hidden bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
-                  ></div>
-                  <CardContent className="md:p-8 px-2 py-4 text-center relative z-10">
-                    <div
-                      className={`rounded-2xl w-20 h-20 flex items-center justify-center mx-auto mb-6 transition-all duration-500 transform group-hover:scale-110 bg-gradient-to-r ${feature.gradient}`}
-                    >
+                <Card className={`h-full transition-all duration-500 border-0 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 cursor-pointer relative overflow-hidden bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm ${feature.comingSoon ? 'ring-2 ring-orange-500/50 shadow-orange-500/20' : ''
+                  }`}>
+                  <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
+                  {feature.comingSoon && (
+                    <div className="absolute top-4 right-4 z-20">
+                      <Badge className="bg-gradient-to-r from-orange-500 to-red-600 text-white border-0 text-xs px-3 py-1">
+                        <Clock className="w-3 h-3 mr-1" />
+                        Coming Soon
+                      </Badge>
+                    </div>
+                  )}
+                  <CardContent className="p-8 text-center relative z-10">
+                    <div className={`rounded-2xl w-20 h-20 flex items-center justify-center mx-auto mb-6 transition-all duration-500 transform group-hover:scale-110 bg-gradient-to-r ${feature.gradient}`}>
                       <feature.icon className="h-10 w-10 text-white" />
                     </div>
-                    <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
-                      {feature.title}
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
-                      {feature.description}
-                    </p>
-                    <Badge
-                      variant="secondary"
-                      className={`bg-gradient-to-r ${feature.gradient} text-white border-0 text-sm px-4 py-2`}
-                    >
+                    <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">{feature.title}</h3>
+                    <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">{feature.description}</p>
+                    <Badge variant="secondary" className={`bg-gradient-to-r ${feature.gradient} text-white border-0 text-sm px-4 py-2`}>
                       {feature.stats}
                     </Badge>
                   </CardContent>
@@ -247,23 +400,20 @@ export default function Home() {
       </section>
 
       {/* Enhanced Use Cases Section */}
-      <section id="use-cases" className="md:py-20 py-10 md:px-4">
-        <div className="container mx-auto">
+      <section id="use-cases" className="py-20 px-4 bg-gradient-to-br from-gray-50/30 to-blue-50/30 dark:from-gray-900/30 dark:to-blue-950/30">
+        <div className="container px-2 md:px-8 mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.1 }}
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold mb-4">
-              Perfect for{" "}
-              <span className="bg-gradient-to-r from-orange-400 to-orange-600/70 bg-clip-text text-transparent">
-                Every Team
-              </span>
+              Built for <span className="bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">Every Team</span>
             </h2>
             <p className="text-xl text-muted-foreground">
-              See how different teams use Flaro to achieve their goals
+              See how different teams use Flaro&apos;s AI voice platform to achieve breakthrough results
             </p>
           </motion.div>
 
@@ -274,24 +424,16 @@ export default function Home() {
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.1 }}
               >
                 <Card className="h-full text-center hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-0 bg-gradient-to-br from-background to-background/50 backdrop-blur-sm">
-                  <CardContent className="md:p-8 px-1 py-4">
-                    <div
-                      className={`rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 bg-gradient-to-r ${useCase.gradient}`}
-                    >
+                  <CardContent className="p-8">
+                    <div className={`rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 bg-gradient-to-r ${useCase.gradient}`}>
                       <useCase.icon className="h-10 w-10 text-white" />
                     </div>
-                    <h3 className="text-2xl font-semibold mb-4">
-                      {useCase.title}
-                    </h3>
-                    <p className="text-muted-foreground mb-6">
-                      {useCase.description}
-                    </p>
-                    <Badge
-                      className={`bg-gradient-to-r ${useCase.gradient} text-white border-0 text-lg px-4 py-2`}
-                    >
+                    <h3 className="text-2xl font-semibold mb-4">{useCase.title}</h3>
+                    <p className="text-muted-foreground mb-6">{useCase.description}</p>
+                    <Badge className={`bg-gradient-to-r ${useCase.gradient} text-white border-0 text-lg px-4 py-2`}>
                       {useCase.stats}
                     </Badge>
                   </CardContent>
@@ -302,193 +444,218 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Enhanced Testimonials Section */}
-      <section
-        id="testimonials"
-        className="md:py-20 py-10 md:px-4 bg-gradient-to-br from-gray-50/30 to-gray-100/30 dark:from-gray-900/30 dark:to-gray-800/30"
-      >
-        <div className="container mx-auto">
+      {/* Enhanced Testimonials Section with Blur Effect and Coming Soon */}
+      <section id="testimonials" className="py-20 px-4 relative">
+        <div className="container px-2 md:px-8 mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.1 }}
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold mb-4">
-              What Our{" "}
-              <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                Customers Say
-              </span>
+              Customer <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Stories</span>
             </h2>
             <p className="text-xl text-muted-foreground">
-              Join thousands of teams already using Flaro
+              Real results from teams transforming their outreach
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
+          {/* Blurred Testimonials Cards with Coming Soon Overlay */}
+          <div className="relative ">
+            <div className="flex overflow-x-auto gap-8 md:grid md:grid-cols-3 md:overflow-x-visible filter opacity-60">
+              {testimonials.map((testimonial, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                >
+                  <Card className="h-full min-w-[20rem] border-0 shadow-xl hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-background to-background/50 backdrop-blur-sm">
+                    <CardContent className="p-6 blur-sm">
+                      <div className="flex mb-4">
+                        {[...Array(testimonial.rating)].map((_, i) => (
+                          <Star key={i} className="h-5 w-5 fill-current text-yellow-500" />
+                        ))}
+                      </div>
+                      <p className="text-muted-foreground mb-6 italic">&quot;{testimonial.content}&quot;</p>
+                      <div className="flex items-center space-x-3">
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-semibold">
+                          {testimonial.name.split(' ').map(n => n[0]).join('')}
+                        </div>
+                        <div>
+                          <p className="font-semibold">{testimonial.name}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {testimonial.role} at {testimonial.company}
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Coming Soon Overlay */}
+            <div className="absolute inset-0 flex items-center justify-center z-10">
               <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
+                className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-md rounded-3xl md:p-12 p-8 text-center shadow-2xl border border-red-500/30"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true, amount: 0.1 }}
               >
-                <Card className="h-full border-0 shadow-xl hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-background to-background/50 backdrop-blur-sm">
-                  <CardContent className="p-6">
-                    <div className="flex mb-4">
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className="h-5 w-5 fill-current text-yellow-500"
-                        />
-                      ))}
-                    </div>
-                    <p className="text-muted-foreground mb-6 italic">
-                      &quot;{testimonial.content}&quot;
+                <div className="flex items-center justify-center mb-6">
+                  <MessageSquare className="w-16 h-16 text-red-500 mr-4" />
+                  <div>
+                    <h3 className="md:text-3xl text-xl font-bold text-gray-900 dark:text-white mb-2">Stories Coming Soon!</h3>
+                    <p className="text-lg text-gray-600 dark:text-gray-400">
+                      We&apos;re collecting amazing success stories
                     </p>
-                    <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-semibold">
-                        {testimonial.name
-                          .split(" ")
-                          .map((n) => n[0])
-                          .join("")}
-                      </div>
-                      <div>
-                        <p className="font-semibold">{testimonial.name}</p>
-                        <p className="text-sm text-muted-foreground">
-                          {testimonial.role} at {testimonial.company}
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
+                <p className="text-gray-500 dark:text-gray-400 mb-8 max-w-md">
+                  Join our growing community of teams already achieving incredible results with Flaro&apos;s AI voice platform.
+                </p>
+                <Button className="bg-gradient-to-r from-red-500 to-orange-600 hover:from-red-600 hover:to-orange-700 text-white md:px-8 px-4 py-4 text-lg">
+                  <Users className="mr-3 h-5 w-5" />
+                  Be Our First Story
+                </Button>
               </motion.div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Enhanced Pricing Section */}
-      <section id="pricing" className="md:py-20 py-10 md:px-4">
-        <div className="container mx-auto">
+      {/* Enhanced Pricing Section with Blur Effect and Coming Soon */}
+      <section id="pricing" className="py-20 px-4 bg-gradient-to-br from-gray-50/30 to-purple-50/30 dark:from-gray-900/30 dark:to-purple-950/30 relative">
+        <div className="container px-2 md:px-8 mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.1 }}
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold mb-4">
-              Simple,{" "}
-              <span className="bg-gradient-to-r from-orange-600 to-orange-700 bg-clip-text text-transparent">
-                Transparent Pricing
-              </span>
+              Pricing <span className="bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">Coming Soon</span>
             </h2>
             <p className="text-xl text-muted-foreground">
-              Choose the plan that fits your team&apos;s needs
+              We&apos;re finalizing our pricing plans to offer you the best value
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {pricingPlans.map((plan, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <Card
-                  className={`h-full relative border-0 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:ring-2
-                  ${plan.popular
-                      ? " ring-blue-500 shadow-blue-500/20 scale-105"
-                      : ""
-                    }`}
+          {/* Blurred Pricing Cards with Coming Soon Overlay */}
+          <div className="relative">
+            <div className="flex overflow-x-auto gap-8 md:grid blur-md md:grid-cols-3 md:overflow-x-visible filter opacity-60">
+              {pricingPlans.map((plan, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true, amount: 0.1 }}
                 >
-                  {plan.popular && (
-                    <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0">
-                      Most Popular
-                    </Badge>
-                  )}
-                  <CardHeader className="text-center">
-                    <div
-                      className={`w-16 h-16 rounded-full bg-gradient-to-r ${plan.gradient} flex items-center justify-center mx-auto mb-4`}
-                    >
-                      <span className="text-2xl text-white font-bold">
-                        {plan.name[0]}
-                      </span>
-                    </div>
-                    <CardTitle className="text-2xl">{plan.name}</CardTitle>
-                    <div className="text-4xl font-bold">
-                      {plan.price}
-                      <span className="text-lg text-muted-foreground">
-                        {plan.period}
-                      </span>
-                    </div>
-                    <CardDescription>{plan.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-3 mb-6">
-                      {plan.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-center">
-                          <Check className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <Button
-                      className={`w-full  transition-all duration-300 hover:bg-gradient-to-t from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700  shadow-lg ${plan.popular
-                        ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg"
-                        : "border-2 hover:bg-accent/10"
-                        }`}
-                      variant={plan.popular ? "default" : "outline"}
-                    >
-                      Get Started
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </CardContent>
-                </Card>
+                  <Card className={`h-full min-w-[20rem]  relative border-0 shadow-xl transition-all duration-300
+                    ${plan.popular ? 'ring-2 ring-blue-500 shadow-blue-500/20 scale-105' : ''}`}>
+                    {plan.popular && (
+                      <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0">
+                        Most Popular
+                      </Badge>
+                    )}
+                    <CardHeader className="text-center">
+                      <div className={`w-16 h-16 rounded-full bg-gradient-to-r ${plan.gradient} flex items-center justify-center mx-auto mb-4`}>
+                        <span className="text-2xl text-white font-bold">{plan.name[0]}</span>
+                      </div>
+                      <CardTitle className="text-2xl">{plan.name}</CardTitle>
+                      <div className="text-4xl font-bold">
+                        {plan.price}<span className="text-lg text-muted-foreground">{plan.period}</span>
+                      </div>
+                      <CardDescription>{plan.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <ul className="space-y-3 mb-6">
+                        {plan.features.map((feature, featureIndex) => (
+                          <li key={featureIndex} className="flex items-center">
+                            <Check className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <Button
+                        className={`w-full transition-all duration-300 ${plan.popular
+                          ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg'
+                          : 'border-2 hover:bg-accent/10'
+                          }`}
+                        variant={plan.popular ? "default" : "outline"}
+                        disabled
+                      >
+                        Get Started
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Coming Soon Overlay */}
+            <div className="absolute inset-0 flex items-center justify-center z-10">
+              <motion.div
+                className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-md rounded-3xl md:p-12 p-8 text-center shadow-2xl border border-orange-500/30"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true, amount: 0.1 }}
+              >
+                <div className="flex items-center justify-center mb-6">
+                  <Clock className="w-16 h-16 text-orange-500 mr-4" />
+                  <div>
+                    <h3 className="md:text-3xl text-xl font-bold text-gray-900 dark:text-white mb-2">Pricing Coming Soon!</h3>
+                    <p className="md:text-lg text-base text-gray-600 dark:text-gray-400">
+                      We&apos;re working on competitive pricing plans
+                    </p>
+                  </div>
+                </div>
+                <p className="text-gray-500 dark:text-gray-400 mb-8 max-w-md">
+                  Get notified when our pricing plans go live. Start building your voice campaigns for free during our beta period.
+                </p>
+                <Button className="bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white md:px-8 px-4 py-4 text-lg">
+                  <Sparkles className="mr-3 h-5 w-5" />
+                  Join Beta (Free)
+                </Button>
               </motion.div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* Enhanced CTA Section */}
-      <section className="py-24 md:px-6 bg-gradient-to-r from-orange-600 via-orange-500 to-orange-400 text-white relative overflow-hidden">
+      {/* Contact Section */}
+      <section id="contact" className="py-24 px-6 bg-gradient-to-r from-[#cc0000] via-[#ff0000] to-[#990000] text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>
-        <div className="container mx-auto text-center relative z-10">
+        <div className="container px-2 md:px-8 mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.1 }}
           >
-            <h2 className="text-4xl md:text-6xl font-bold mb-6">
-              Ready to Transform Your Business?
-            </h2>
+            <h2 className="text-5xl md:text-6xl font-bold mb-6">Ready to Transform Your Outreach?</h2>
             <p className="text-xl opacity-90 mb-8 max-w-3xl mx-auto">
-              Join thousands of enterprises already using Flaro to revolutionize
-              their operations. Start your enterprise trial today.
+              Join thousands of teams using Flaro&apos;s AI voice platform to reach more people,
+              drive better engagement, and achieve remarkable results. Plus, get early access to our AI voice agent!
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Button
-                size="lg"
-                variant="outline"
-                className="text-xl px-12 py-8 border-white text-primary hover:bg-white/10 shadow-xl rounded-2xl"
-              >
+              <Button size="lg" className="text-base md:text-xl px-12 py-8 bg-white text-gray-900 hover:bg-gray-100 shadow-2xl rounded-2xl">
                 <Sparkles className="mr-3 h-6 w-6" />
-                Start Enterprise Trial
+                Start Free Beta
               </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="text-xl px-12 py-8 border-white text-primary hover:bg-white/10 shadow-xl rounded-2xl"
-              >
-                <Headphones className="mr-3 h-6 w-6" />
-                Contact Sales
+              <Button size="lg" variant="outline" className="text-base md:text-xl px-12 py-8 border-white text-white hover:bg-white/10 shadow-xl rounded-2xl">
+                <Languages className="mr-3 h-6 w-6" />
+                Preview AI Agent (Soon)
               </Button>
             </div>
           </motion.div>
@@ -497,7 +664,7 @@ export default function Home() {
 
       {/* Enhanced Footer */}
       <footer className="py-16 md:px-6 bg-gray-900 text-white">
-        <div className="container mx-auto">
+        <div className="container px-2 md:px-8 mx-auto">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-3 mb-6">

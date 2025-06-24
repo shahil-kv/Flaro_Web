@@ -12,14 +12,6 @@
   }
 }
 
-.section-heading {
-  @apply text-3xl md:text-4xl font-bold text-center mb-12;
-}
-
-.gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-photo-blue to-photo-purple;
-}
-
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }

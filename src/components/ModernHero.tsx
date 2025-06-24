@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Sparkles, Phone, Bot, Zap, Volume2, Users, TrendingUp, MessageSquare } from 'lucide-react';
+import { Sparkles, Phone, Bot, Zap, Users, TrendingUp, MessageSquare, Languages } from 'lucide-react';
 
 const ModernHero = () => {
 
@@ -12,17 +12,18 @@ const ModernHero = () => {
     };
 
     const statsData = [
-        { label: "Voice Campaigns", value: "50K+", icon: MessageSquare, color: "text-red-400" },
-        { label: "Success Rate", value: "94%", icon: TrendingUp, color: "text-red-500" },
-        { label: "Response Time", value: "<2s", icon: Zap, color: "text-red-600" },
-        { label: "Happy Clients", value: "2K+", icon: Users, color: "text-red-300" }
+        { label: "Voice Campaigns", value: "50K+", icon: MessageSquare, color: "text-red-600" },
+        { label: "Success Rate", value: "94%", icon: TrendingUp, color: "text-red-600" },
+        { label: "Response Time", value: "<2s", icon: Zap, color: "text-orange-500" },
+        { label: "Happy Clients", value: "2K+", icon: Users, color: "text-red-500" }
     ];
 
     const features = [
         "AI-powered voice conversations",
         "One-click mass campaigns",
         "Smart IVR automation",
-        "Real-time analytics & insights"
+        "Real-time analytics & insights",
+        "AI Voice Agent - Coming Soon!"
     ];
 
     return (
@@ -30,24 +31,24 @@ const ModernHero = () => {
             {/* Enhanced Animated Background Elements */}
             <div className="absolute inset-0 overflow-hidden">
                 {/* Large animated gradient orbs */}
-                <motion.div
+                <div
                     className="absolute top-1/4 left-1/6 w-[600px] h-[600px] bg-gradient-to-r from-red-500/30 to-orange-500/20 rounded-full blur-3xl"
-                    animate={{
-                        x: [0, 150, 0],
-                        y: [0, -80, 0],
-                        scale: [1, 1.3, 1],
-                    }}
-                    transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+                // animate={{
+                //     x: [0, 150, 0],
+                //     y: [0, -80, 0],
+                //     scale: [1, 1.3, 1],
+                // }}
+                // transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
                 />
 
-                <motion.div
+                <div
                     className="absolute bottom-1/4 right-1/6 w-[500px] h-[500px] bg-gradient-to-r from-red-600/25 to-red-400/15 rounded-full blur-3xl"
-                    animate={{
-                        x: [0, -120, 0],
-                        y: [0, 100, 0],
-                        scale: [1, 1.2, 1],
-                    }}
-                    transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+                // animate={{
+                //     x: [0, -120, 0],
+                //     y: [0, 100, 0],
+                //     scale: [1, 1.2, 1],
+                // }}
+                // transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 3 }}
                 />
 
                 <div className="absolute  inset-0 md:bottom-10 bottom-96 flex items-center justify-center">
@@ -204,7 +205,7 @@ const ModernHero = () => {
                         className="mb-10"
                     >
                         <h1 className="text-3xl md:text-5xl lg:text-7xl font-extrabold leading-tight tracking-tight md:mb-8 mt-10">
-                            <span className="text-secondary block font-extrabold drop-shadow-2xl">
+                            <span className="text-primary block font-extrabold drop-shadow-2xl">
                                 Reach thousands
                             </span>
                             <span className="bg-gradient-to-r from-red-400 via-red-500 to-orange-500 bg-clip-text text-transparent block md:mt-4 font-extrabold drop-shadow-2xl">
@@ -215,16 +216,19 @@ const ModernHero = () => {
 
                     {/* Enhanced Description */}
                     <motion.p
-                        className="text-lg md:text-2xl text-gray-600 dark:text-gray-400 max-w-5xl mx-auto leading-relaxed font-medium mb-16"
+                        className="text-lg md:text-2xl text-text max-w-5xl mx-auto leading-relaxed font-medium mb-16"
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.5 }}
                     >
                         Flaro is the{" "}
-                        <span className="text-red-400 font-bold">smart AI voice platform</span>{" "}
+                        <span className="text-orange-500 font-extrabold">smart AI voice platform</span>{" "}
                         that simplifies large-scale outreach. Create personalized campaigns, automate call flows,{" "}
-                        <span className="text-secondary font-bold">and track every response</span>{" "}
-                        in real-time with human-like AI conversations.
+                        <span className="text-orange-500 font-bold">and track every response</span>{" "}
+                        in real-time. Plus, our upcoming{" "}
+                        <span className="text-orange-600 font-bold">AI voice agent</span>{" "}
+                        will handle conversations like a human with{" "}
+                        <span className="text-orange-500 font-bold">native language support</span>.
                     </motion.p>
 
                     {/* Enhanced CTA Buttons */}
@@ -239,7 +243,7 @@ const ModernHero = () => {
                                 onClick={handleGetStarted}
                                 size="lg"
 
-                                className="text-lg md:text-xl md:px-12 px-6 md:py-8 py-6 glass-effect-dark border-2 border-red-600/60 text-secondary hover:bg-red-950/40 shadow-xl transition-all duration-300 rounded-2xl font-bold overflow-hidden"
+                                className="text-lg md:text-xl md:px-12 px-6 md:py-8 py-6 glass-effect-dark border-2 border-red-600/60 text-primary hover:bg-orange-500 dark:hover:bg-red-950/40 shadow-xl transition-all duration-300 rounded-2xl font-bold overflow-hidden"
                             >
 
                                 <span className="relative z-10 flex items-center font-bold">
@@ -253,10 +257,10 @@ const ModernHero = () => {
                             <Button
                                 size="lg"
                                 variant="outline"
-                                className="text-lg md:text-xl md:px-12 px-6 md:py-8 py-6 glass-effect-dark border-2 border-red-600/60 text-secondary hover:bg-red-950/40 shadow-xl transition-all duration-300 rounded-2xl font-bold"
+                                className="text-lg md:text-xl md:px-12 px-6 md:py-8 py-6 glass-effect-dark border-2 border-red-600/60 text-primary hover:bg-orange-500 dark:hover:bg-red-950/40 shadow-xl transition-all duration-300 rounded-2xl font-bold overflow-hidden"
                             >
-                                <Volume2 className="mr-4 h-6 w-6" />
-                                Try AI Agent Demo
+                                <Languages className="mr-4 h-6 w-6" />
+                                Preview AI Agent (Soon)
                             </Button>
                         </motion.div>
                     </motion.div>
@@ -276,7 +280,7 @@ const ModernHero = () => {
                         >
                             <div className="glass-effect-dark border-2 border-red-700/40 rounded-3xl md:p-10 p-6 bg-gray-900/60 shadow-2xl">
                                 <div className="flex items-center justify-between mb-8">
-                                    <div className="md:text-lg text-base  text-gray-300 font-medium">Let&apos;s Talk</div>
+                                    <div className="md:text-lg text-base  text-text font-medium">Let&apos;s Talk</div>
                                     <div className="md:text-lg text-base  text-red-400 font-semibold flex items-center">
                                         <div className="w-3 h-3 bg-red-500 rounded-full mr-2 animate-pulse"></div>
                                         Ready
@@ -287,7 +291,7 @@ const ModernHero = () => {
                                     className="w-full h-14 bg-gray-800 rounded-2xl flex items-center justify-center mb-8 relative overflow-hidden"
                                     whileHover={{ backgroundColor: "rgb(55, 65, 81)" }}
                                 >
-                                    <span className="text-gray-600 dark:text-gray-400 md:text-lg text-base  font-medium">Enter Phone Number</span>
+                                    <span className="text-gray-200 dark:text-gray-400 md:text-lg text-base  font-medium">Enter Phone Number</span>
                                     <motion.div
                                         className="absolute inset-0 bg-gradient-to-r from-transparent via-red-500/20 to-transparent"
                                         animate={{ x: ['-100%', '100%'] }}
@@ -296,7 +300,7 @@ const ModernHero = () => {
                                 </motion.div>
 
                                 <motion.button
-                                    className="w-full md:py-6 py-4 bg-gradient-to-r from-red-500 to-red-600 rounded-2xl text-secondary font-bold text-xl relative overflow-hidden shadow-lg"
+                                    className="w-full md:py-6 py-4 bg-gradient-to-r from-red-500 to-red-600 rounded-2xl text-primary font-bold text-xl relative overflow-hidden shadow-lg"
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                 >
@@ -342,13 +346,12 @@ const ModernHero = () => {
                                 whileHover={{ y: -8, scale: 1.05 }}
                             >
                                 <div className="glass-effect-dark rounded-2xl p-8 hover:shadow-2xl transition-all duration-300 relative overflow-hidden border-2 border-red-700/40 bg-gray-900/40">
-                                    <motion.div
-                                        className="rounded-xl w-16 h-16 flex items-center justify-center mx-auto mb-6 bg-gradient-to-r from-red-600/30 to-red-500/20 group-hover:scale-110 transition-transform duration-300 shadow-xl relative z-10"
-                                        whileHover={{ rotate: 8 }}
+                                    <div
+                                        className="rounded-xl w-16 h-16 flex items-center justify-center mx-auto mb-6 bg-gradient-to-r from-gray-50  dark:from-red-600/40 dark:to-red-500/20   group-hover:scale-110 transition-transform duration-300 shadow-xl relative z-10"
                                     >
                                         <stat.icon className={`h-8 w-8 ${stat.color}`} />
-                                    </motion.div>
-                                    <div className="text-3xl md:text-4xl font-bold text-secondary mb-3 relative z-10">{stat.value}</div>
+                                    </div>
+                                    <div className="text-3xl md:text-4xl font-bold text-primary mb-3 relative z-10">{stat.value}</div>
                                     <div className="text-base text-gray-300 font-semibold relative z-10">{stat.label}</div>
                                 </div>
                             </motion.div>
@@ -390,7 +393,7 @@ const ModernHero = () => {
                     </motion.div>
 
                     {/* Enhanced Partner/Trust Section */}
-                    <motion.div
+                    {/* <motion.div
                         className="mt-28 text-center"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -409,7 +412,7 @@ const ModernHero = () => {
                                 </motion.div>
                             ))}
                         </div>
-                    </motion.div>
+                    </motion.div> */}
                 </div>
             </div>
         </section>
