@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Sparkles, Phone, Bot, Zap, Users, TrendingUp, MessageSquare, Languages } from 'lucide-react';
+import VoiceWaveAnimation from './ui/voiceWaveAnimation';
 
 const ModernHero = () => {
 
@@ -10,6 +11,7 @@ const ModernHero = () => {
         console.log("Get Started clicked");
 
     };
+
 
     const statsData = [
         { label: "Voice Campaigns", value: "50K+", icon: MessageSquare, color: "text-red-600" },
@@ -52,113 +54,7 @@ const ModernHero = () => {
                 />
 
                 <div className="absolute  inset-0 md:bottom-10 bottom-96 flex items-center justify-center">
-                    {/* ENHANCED Floating Voice Wave Elements - Grow Upward from Base Line */}
-                    <div className="absolute inset-0 md:bottom-10 bottom-96 flex items-center justify-center">
-                        <div >
-                            <div className="flex space-x-6 items-center h-full justify-center">
-                                {[...Array(25)].map((_, i) => (
-                                    <motion.div
-                                        key={i}
-                                        className="bg-gradient-to-t from-red-600 via-red-500 to-red-400 rounded-full shadow-lg shadow-red-500/50"
-                                        style={{
-                                            width: '8px',
-                                            transformOrigin: 'bottom center'
-                                        }}
-                                        animate={{
-                                            height: [
-                                                Math.random() * 120 + 60,
-                                                Math.random() * 200 + 100,
-                                                Math.random() * 120 + 60
-                                            ],
-                                            opacity: [0.4, 1, 0.4],
-                                            scale: [1, 1.1, 1],
-                                            boxShadow: [
-                                                '0 0 20px rgba(255, 0, 0, 0.3)',
-                                                '0 0 40px rgba(255, 0, 0, 0.8)',
-                                                '0 0 20px rgba(255, 0, 0, 0.3)'
-                                            ]
-                                        }}
-                                        transition={{
-                                            duration: 2.5,
-                                            repeat: Infinity,
-                                            delay: i * 0.15,
-                                            ease: "easeInOut"
-                                        }}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="absolute inset-0 md:bottom-10 bottom-96 flex items-center justify-center">
-                        <div >
-                            <div className="flex space-x-6 items-center h-full justify-center">
-                                {[...Array(25)].map((_, i) => (
-                                    <motion.div
-                                        key={i}
-                                        className="bg-gradient-to-t from-red-600 via-red-500 to-red-400 rounded-full shadow-lg shadow-red-500/50"
-                                        style={{
-                                            width: '8px',
-                                            transformOrigin: 'bottom center'
-                                        }}
-                                        animate={{
-                                            height: [
-                                                Math.random() * 120 + 60,
-                                                Math.random() * 200 + 100,
-                                                Math.random() * 120 + 60
-                                            ],
-                                            opacity: [0.4, 1, 0.4],
-                                            scale: [1, 1.1, 1],
-                                            boxShadow: [
-                                                '0 0 20px rgba(255, 0, 0, 0.3)',
-                                                '0 0 40px rgba(255, 0, 0, 0.8)',
-                                                '0 0 20px rgba(255, 0, 0, 0.3)'
-                                            ]
-                                        }}
-                                        transition={{
-                                            duration: 2.5,
-                                            repeat: Infinity,
-                                            delay: i * 0.15,
-                                            ease: "easeInOut"
-                                        }}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Background Layer Waves - Also Growing Upward */}
-                    <div className="absolute inset-0 md:bottom-10 bottom-96 flex items-center justify-center opacity-60">
-                        <div >
-                            <div className="flex space-x-8 items-center h-full justify-center">
-                                {[...Array(15)].map((_, i) => (
-                                    <motion.div
-                                        key={`bg-${i}`}
-                                        className="bg-gradient-to-t from-red-700/60 via-red-600/40 to-red-500/30 rounded-full"
-                                        style={{
-                                            width: '12px',
-                                            transformOrigin: 'bottom center'
-                                        }}
-                                        animate={{
-                                            height: [
-                                                Math.random() * 180 + 80,
-                                                Math.random() * 280 + 120,
-                                                Math.random() * 180 + 80
-                                            ],
-                                            opacity: [0.2, 0.6, 0.2],
-                                        }}
-                                        transition={{
-                                            duration: 3,
-                                            repeat: Infinity,
-                                            delay: i * 0.2,
-                                            ease: "easeInOut"
-                                        }}
-                                    />
-                                ))}
-                            </div>
-
-                        </div>
-                    </div>
+                    <VoiceWaveAnimation />
                 </div>
 
 
@@ -166,12 +62,12 @@ const ModernHero = () => {
 
                 <motion.div
                     className="absolute bottom-10 left-10 text-red-500/60"
-                    animate={{
-                        y: [0, 20, 0],
-                        x: [0, 15, 0],
-                        scale: [1, 1.1, 1],
-                    }}
-                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                // animate={{
+                //     y: [0, 20, 0],
+                //     x: [0, 15, 0],
+                //     scale: [1, 1.1, 1],
+                // }}
+                // transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                 >
                     <Bot className="w-14 h-14 drop-shadow-lg" />
                 </motion.div>

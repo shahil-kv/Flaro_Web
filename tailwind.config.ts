@@ -1,17 +1,42 @@
 import type { Config } from 'tailwindcss';
+import tailwindcssAnimate from 'tailwindcss-animate';
 
 export default {
 	darkMode: 'class',
+	// Optimized content paths
 	content: [
+		'./src/**/*.{js,ts,jsx,tsx,mdx}',
+		'./components/**/*.{js,ts,jsx,tsx,mdx}',
+		'./app/**/*.{js,ts,jsx,tsx,mdx}',
 		'./src/pages/**/*.{js,ts,jsx,tsx,mdx}',
 		'./src/components/**/*.{js,ts,jsx,tsx,mdx}',
 		'./src/app/**/*.{js,ts,jsx,tsx,mdx}',
 	],
+	// Safelist critical utilities for better performance
+	safelist: [
+		'mobile-container',
+		'mobile-safe',
+		'touch-target',
+		'glass',
+		'fade-in',
+		'slide-in',
+		'glow',
+	],
 	theme: {
 		container: {
 			center: true,
-			padding: '2rem',
+			padding: {
+				DEFAULT: '1rem',
+				sm: '1.5rem',
+				lg: '2rem',
+				xl: '2.5rem',
+				'2xl': '3rem',
+			},
 			screens: {
+				sm: '640px',
+				md: '768px',
+				lg: '1024px',
+				xl: '1280px',
 				'2xl': '1400px',
 			},
 		},
@@ -122,24 +147,46 @@ export default {
 					950: '#030712',
 				},
 			},
+
+			// Optimized border radius
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)',
 			},
-			backgroundImage: {
-				'animated-texture': `
-          radial-gradient(circle at 25% 25%, rgba(255, 0, 0, 0.12) 0%, transparent 50%),
-          radial-gradient(circle at 75% 75%, rgba(255, 0, 0, 0.08) 0%, transparent 50%)`,
-				'animated-texture-dark': `
-          radial-gradient(circle at 25% 25%, rgba(255, 0, 0, 0.18) 0%, transparent 50%),
-          radial-gradient(circle at 75% 75%, rgba(255, 0, 0, 0.15) 0%, transparent 50%)`,
-				'bg-texture': `
-          radial-gradient(circle at 20% 30%, rgba(255, 0, 0, 0.08) 0%, transparent 40%),
-          radial-gradient(circle at 80% 70%, rgba(255, 0, 0, 0.06) 0%, transparent 40%),
-          radial-gradient(circle at 60% 20%, rgba(255, 0, 0, 0.07) 0%, transparent 30%)`,
+
+			// Simplified spacing scale
+			spacing: {
+				'18': '4.5rem',
+				'88': '22rem',
+				'128': '32rem',
 			},
+
+			// Mobile-optimized screen sizes
+			screens: {
+				xs: '475px',
+				'3xl': '1600px',
+			},
+
+			// Optimized keyframes - fewer, simpler animations
 			keyframes: {
+				'fade-in': {
+					'0%': { opacity: '0', transform: 'translateY(10px)' },
+					'100%': { opacity: '1', transform: 'translateY(0)' },
+				},
+				'slide-in': {
+					'0%': { transform: 'translateX(-20px)', opacity: '0' },
+					'100%': { transform: 'translateX(0)', opacity: '1' },
+				},
+				'gentle-float': {
+					'0%, 100%': { transform: 'translateY(0px)' },
+					'50%': { transform: 'translateY(-10px)' },
+				},
+				'pulse-soft': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.8' },
+				},
+				// Accordion animations for UI components
 				'accordion-down': {
 					from: { height: '0' },
 					to: { height: 'var(--radix-accordion-content-height)' },
@@ -148,34 +195,96 @@ export default {
 					from: { height: 'var(--radix-accordion-content-height)' },
 					to: { height: '0' },
 				},
-				'fade-in': {
-					'0%': { opacity: '0', transform: 'translateY(20px)' },
-					'100%': { opacity: '1', transform: 'translateY(0)' },
-				},
-				float: {
-					'0%, 100%': { transform: 'translateY(0px)' },
-					'50%': { transform: 'translateY(-20px)' },
-				},
-				spinCustom: {
-					'0%': { transform: 'rotate(0deg) scale(1)' },
-					'50%': { transform: 'rotate(360deg) scale(2)' },
-					'100%': { transform: 'rotate(0deg) scale(1)' },
-				},
-				wave: {
-					'0%, 100%': { transform: 'scaleY(0.4)' },
-					'50%': { transform: 'scaleY(1.2)' },
-				},
 			},
+
+			// Optimized animations
 			animation: {
+				'fade-in': 'fade-in 0.3s ease-out',
+				'slide-in': 'slide-in 0.3s ease-out',
+				'float': 'gentle-float 4s ease-in-out infinite',
+				'pulse-soft': 'pulse-soft 2s ease-in-out infinite',
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'fade-in': 'fade-in 0.8s ease-out',
-				float: 'float 6s ease-in-out infinite',
-				spinCustom: 'spinCustom 2s infinite',
-				wave: 'wave 1.2s ease-in-out infinite',
+			},
+
+			// Optimized backdrop blur
+			backdropBlur: {
+				xs: '2px',
+				sm: '4px',
+				md: '8px',
+				lg: '12px',
+				xl: '16px',
+			},
+
+			// Box shadow optimization
+			boxShadow: {
+				'mobile': '0 2px 8px rgba(0, 0, 0, 0.1)',
+				'mobile-lg': '0 4px 16px rgba(0, 0, 0, 0.15)',
+				'glow': '0 0 20px rgba(255, 102, 0, 0.3)',
+				'glow-red': '0 0 20px rgba(255, 0, 0, 0.3)',
+			},
+
+			// Typography optimization
+			fontSize: {
+				'mobile-xs': ['0.75rem', { lineHeight: '1rem' }],
+				'mobile-sm': ['0.875rem', { lineHeight: '1.25rem' }],
+				'mobile-base': ['1rem', { lineHeight: '1.5rem' }],
+				'mobile-lg': ['1.125rem', { lineHeight: '1.75rem' }],
+				'mobile-xl': ['1.25rem', { lineHeight: '1.75rem' }],
+				'mobile-2xl': ['1.5rem', { lineHeight: '2rem' }],
 			},
 		},
 	},
-	// eslint-disable-next-line @typescript-eslint/no-require-imports
-	plugins: [require('tailwindcss-animate')],
+
+	plugins: [
+		tailwindcssAnimate,
+
+		// Custom plugin for mobile optimizations
+		function ({ addUtilities }: import('tailwindcss/types/config').PluginAPI) {
+			const mobileUtilities = {
+				'.mobile-container': {
+					width: '100%',
+					maxWidth: '100vw',
+					padding: '0 1rem',
+					overflowX: 'hidden',
+				},
+				'.mobile-safe': {
+					paddingLeft: 'max(1rem, env(safe-area-inset-left))',
+					paddingRight: 'max(1rem, env(safe-area-inset-right))',
+					paddingBottom: 'env(safe-area-inset-bottom)',
+				},
+				'.touch-target': {
+					minHeight: '44px',
+					minWidth: '44px',
+					touchAction: 'manipulation',
+				},
+				'.glass': {
+					background: 'var(--glass-bg)',
+					backdropFilter: 'blur(10px)',
+					WebkitBackdropFilter: 'blur(10px)',
+					border: '1px solid var(--glass-border)',
+					boxShadow: '0 4px 16px var(--glass-shadow)',
+				},
+				'.no-scroll': {
+					msOverflowStyle: 'none',
+					scrollbarWidth: 'none',
+					'&::-webkit-scrollbar': {
+						display: 'none',
+					},
+				},
+			};
+
+			addUtilities(mobileUtilities)
+		}
+	],
+
+	// Optimize for production
+	experimental: {
+		optimizeUniversalDefaults: true,
+	},
+
+	// Purge unused styles more aggressively
+	future: {
+		hoverOnlyWhenSupported: true,
+	},
 } satisfies Config;

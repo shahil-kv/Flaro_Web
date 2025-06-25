@@ -28,7 +28,6 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import ModernHeader from "@/components/ModernHeader";
 import ModernHero from "@/components/ModernHero";
 import LPDashboard from "@/components/LPDashboard";
@@ -197,7 +196,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-background dark:bg-gray-950 overflow-x-hidden">
+    <div className="min-h-full scroll-smooth bg-background dark:bg-gray-950 overflow-x-hidden">
       <ModernHeader />
       <ModernHero />
       {/* <ModernDashboard /> */}
@@ -209,7 +208,7 @@ export default function Home() {
         <div className="absolute inset-0 overflow-hidden">
 
           {/* Medium Gradient Orbs */}
-          <motion.div
+          <div
             className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-gradient-to-r from-orange-500/15 via-red-500/12 to-red-600/8 rounded-full blur-3xl"
           // animate={{
           //   x: [0, 80, 0],
@@ -219,7 +218,7 @@ export default function Home() {
           // transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 5 }}
           />
 
-          <motion.div
+          <div
             className="absolute bottom-1/4 right-1/5 w-[550px] h-[550px] bg-gradient-to-bl from-red-400/20 via-orange-600/15 to-red-500/12 rounded-full blur-3xl"
           // animate={{
           //   x: [0, -100, 0],
@@ -233,11 +232,7 @@ export default function Home() {
         </div>
 
         <div className="container px-2 md:px-8 mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true, amount: 0.1 }}
+          <div
             className="text-center mb-20"
           >
             <h2 className="text-5xl md:text-6xl font-bold mb-6">
@@ -246,16 +241,12 @@ export default function Home() {
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               Transform your outreach in three simple steps
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid md:grid-cols-3 gap-8 ">
             {howItWorksSteps.map((step, index) => (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true, amount: 0.1 }}
                 className="text-center glass-effect-dark p-4 rounded-md"
               >
                 <div className="relative mb-8">
@@ -268,7 +259,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-2xl font-semibold mb-4">{step.title}</h3>
                 <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{step.description}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -346,11 +337,7 @@ export default function Home() {
             />
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true, amount: 0.1 }}
+          <div
             className="text-center mb-20"
           >
             <h2 className="text-5xl md:text-6xl font-bold mb-6">
@@ -359,16 +346,12 @@ export default function Home() {
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               Everything you need for successful AI-powered voice campaigns, including our upcoming AI voice agent
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true, amount: 0.1 }}
                 className="group"
               >
                 <Card className={`h-full transition-all duration-500 border-0 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 cursor-pointer relative overflow-hidden bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm ${feature.comingSoon ? 'ring-2 ring-orange-500/50 shadow-orange-500/20' : ''
@@ -393,7 +376,7 @@ export default function Home() {
                     </Badge>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -402,11 +385,7 @@ export default function Home() {
       {/* Enhanced Use Cases Section */}
       <section id="use-cases" className="py-20 px-4 bg-gradient-to-br from-gray-50/30 to-blue-50/30 dark:from-gray-900/30 dark:to-blue-950/30">
         <div className="container px-2 md:px-8 mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true, amount: 0.1 }}
+          <div
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold mb-4">
@@ -415,16 +394,12 @@ export default function Home() {
             <p className="text-xl text-muted-foreground">
               See how different teams use Flaro&apos;s AI voice platform to achieve breakthrough results
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {useCases.map((useCase, index) => (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true, amount: 0.1 }}
               >
                 <Card className="h-full text-center hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-0 bg-gradient-to-br from-background to-background/50 backdrop-blur-sm">
                   <CardContent className="p-8">
@@ -438,7 +413,7 @@ export default function Home() {
                     </Badge>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -447,11 +422,7 @@ export default function Home() {
       {/* Enhanced Testimonials Section with Blur Effect and Coming Soon */}
       <section id="testimonials" className="py-20 px-4 relative">
         <div className="container px-2 md:px-8 mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true, amount: 0.1 }}
+          <div
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold mb-4">
@@ -460,18 +431,14 @@ export default function Home() {
             <p className="text-xl text-muted-foreground">
               Real results from teams transforming their outreach
             </p>
-          </motion.div>
+          </div>
 
           {/* Blurred Testimonials Cards with Coming Soon Overlay */}
           <div className="relative ">
             <div className="flex overflow-x-auto gap-8 md:grid md:grid-cols-3 md:overflow-x-visible filter opacity-60">
               {testimonials.map((testimonial, index) => (
-                <motion.div
+                <div
                   key={index}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true, amount: 0.1 }}
                 >
                   <Card className="h-full min-w-[20rem] border-0 shadow-xl hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-background to-background/50 backdrop-blur-sm">
                     <CardContent className="p-6 blur-sm">
@@ -494,18 +461,14 @@ export default function Home() {
                       </div>
                     </CardContent>
                   </Card>
-                </motion.div>
+                </div>
               ))}
             </div>
 
             {/* Coming Soon Overlay */}
             <div className="absolute inset-0 flex items-center justify-center z-10">
-              <motion.div
+              <div
                 className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-md rounded-3xl md:p-12 p-8 text-center shadow-2xl border border-red-500/30"
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true, amount: 0.1 }}
               >
                 <div className="flex items-center justify-center mb-6">
                   <MessageSquare className="w-16 h-16 text-red-500 mr-4" />
@@ -523,7 +486,7 @@ export default function Home() {
                   <Users className="mr-3 h-5 w-5" />
                   Be Our First Story
                 </Button>
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>
@@ -532,11 +495,7 @@ export default function Home() {
       {/* Enhanced Pricing Section with Blur Effect and Coming Soon */}
       <section id="pricing" className="py-20 px-4 bg-gradient-to-br from-gray-50/30 to-purple-50/30 dark:from-gray-900/30 dark:to-purple-950/30 relative">
         <div className="container px-2 md:px-8 mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true, amount: 0.1 }}
+          <div
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold mb-4">
@@ -545,18 +504,14 @@ export default function Home() {
             <p className="text-xl text-muted-foreground">
               We&apos;re finalizing our pricing plans to offer you the best value
             </p>
-          </motion.div>
+          </div>
 
           {/* Blurred Pricing Cards with Coming Soon Overlay */}
           <div className="relative">
             <div className="flex overflow-x-auto gap-8 md:grid blur-md md:grid-cols-3 md:overflow-x-visible filter opacity-60">
               {pricingPlans.map((plan, index) => (
-                <motion.div
+                <div
                   key={index}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true, amount: 0.1 }}
                 >
                   <Card className={`h-full min-w-[20rem]  relative border-0 shadow-xl transition-all duration-300
                     ${plan.popular ? 'ring-2 ring-blue-500 shadow-blue-500/20 scale-105' : ''}`}>
@@ -597,18 +552,14 @@ export default function Home() {
                       </Button>
                     </CardContent>
                   </Card>
-                </motion.div>
+                </div>
               ))}
             </div>
 
             {/* Coming Soon Overlay */}
             <div className="absolute inset-0 flex items-center justify-center z-10">
-              <motion.div
+              <div
                 className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-md rounded-3xl md:p-12 p-8 text-center shadow-2xl border border-orange-500/30"
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true, amount: 0.1 }}
               >
                 <div className="flex items-center justify-center mb-6">
                   <Clock className="w-16 h-16 text-orange-500 mr-4" />
@@ -626,7 +577,7 @@ export default function Home() {
                   <Sparkles className="mr-3 h-5 w-5" />
                   Join Beta (Free)
                 </Button>
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>
@@ -637,12 +588,7 @@ export default function Home() {
       <section id="contact" className="py-24 px-6 bg-gradient-to-r from-[#cc0000] via-[#ff0000] to-[#990000] text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="container px-2 md:px-8 mx-auto text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true, amount: 0.1 }}
-          >
+          <div>
             <h2 className="text-5xl md:text-6xl font-bold mb-6">Ready to Transform Your Outreach?</h2>
             <p className="text-xl opacity-90 mb-8 max-w-3xl mx-auto">
               Join thousands of teams using Flaro&apos;s AI voice platform to reach more people,
@@ -658,7 +604,7 @@ export default function Home() {
                 Preview AI Agent (Soon)
               </Button>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
