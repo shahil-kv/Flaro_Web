@@ -278,11 +278,6 @@ export default {
 		}
 	],
 
-	// Optimize for production
-	experimental: {
-		optimizeUniversalDefaults: true,
-	},
-
 	// Purge unused styles more aggressively
 	future: {
 		hoverOnlyWhenSupported: true,

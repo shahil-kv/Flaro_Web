@@ -1,5 +1,4 @@
 
-"use client";
 import React, { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import { Button } from '@/components/ui/button';
@@ -7,7 +6,7 @@ import { Sun, Moon, Menu, X, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const ModernHeader = () => {
+const LPHeader = () => {
     const { theme, setTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
@@ -156,4 +155,4 @@ const ModernHeader = () => {
     );
 };
 
-export default ModernHeader;
+export default LPHeader;
