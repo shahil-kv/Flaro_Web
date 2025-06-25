@@ -25,6 +25,7 @@ import * as XLSX from 'xlsx';
 import { useGet, usePost } from '@/lib/useApi';
 import { useAuth } from '@/context/AuthContext';
 import { Contact, Group, GroupResponse, ManageGroupPayload } from '@/types/group.tyes';
+import { WorkflowResponse } from '@/types/workflow.types';
 
 // Utility function to clean contact ID
 const cleanContactId = (id: string) => id.replace(':ABPerson', '');
@@ -49,6 +50,7 @@ export default function GroupsPage() {
     name: '',
     description: '',
     selectedContacts: [] as Contact[],
+    workflowId: undefined as number | undefined,
   });
   const [excelContacts, setExcelContacts] = useState<Contact[]>([]);
   const [sortField, setSortField] = useState<keyof Group | 'contactCount'>('name');
@@ -73,6 +75,17 @@ export default function GroupsPage() {
       showSuccessToast: false,
       showLoader: true,
       enabled: !!stableUserId,
+    },
+  );
+
+  // Fetch workflows
+  const { data: fetchedWorkflows } = useGet<{ data: WorkflowResponse[] }, object>(
+    '/workflow/get-workflows',
+    {},
+    {
+      showErrorToast: true,
+      showSuccessToast: false,
+      showLoader: true,
     },
   );
 
@@ -144,7 +157,12 @@ export default function GroupsPage() {
 
   // Reset form
   const resetForm = useCallback(() => {
-    setFormData({ name: '', description: '', selectedContacts: [] });
+    setFormData({
+      name: '',
+      description: '',
+      selectedContacts: [],
+      workflowId: undefined,
+    });
     setExcelContacts([]);
   }, []);
 
@@ -164,7 +182,7 @@ export default function GroupsPage() {
     }
 
     const allContacts = [...formData.selectedContacts, ...excelContacts];
-    const payload: ManageGroupPayload = {
+    const payload: ManageGroupPayload & { workflowId?: number } = {
       userId: stableUserId,
       groupId: opsMode === 'INSERT' ? 0 : (selectedGroup?.id as number),
       groupName: formData.name,
@@ -183,6 +201,7 @@ export default function GroupsPage() {
         isContactFromDevice: contact.isContactFromDevice ?? true,
       })),
       opsMode: opsMode,
+      workflowId: formData.workflowId,
     };
 
     manageGroup(payload, {
@@ -232,7 +251,7 @@ export default function GroupsPage() {
 
   // Open group dialog
   const openGroupDialog = useCallback(
-    (group?: Group) => {
+    (group?: Group & { workflowId?: number }) => {
       if (group) {
         setOpsMode('UPDATE');
         setSelectedGroup(group);
@@ -240,11 +259,13 @@ export default function GroupsPage() {
           name: group.name,
           description: group.description,
           selectedContacts: group.contacts.filter((c) => c.isContactFromDevice),
+          workflowId: (group as any).workflowId ?? undefined,
         });
         setExcelContacts(group.contacts.filter((c) => !c.isContactFromDevice));
       } else {
         setOpsMode('INSERT');
         resetForm();
+        setFormData((prev) => ({ ...prev, workflowId: undefined }));
       }
       setIsGroupDialogOpen(true);
     },
@@ -499,6 +520,29 @@ export default function GroupsPage() {
                 }
                 placeholder='Enter description'
               />
+            </div>
+            <div className='grid gap-2'>
+              <label htmlFor='workflow' className='text-sm font-medium text-gray-700'>
+                Workflow
+              </label>
+              <select
+                id='workflow'
+                value={formData.workflowId ?? ''}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    workflowId: e.target.value ? Number(e.target.value) : undefined,
+                  })
+                }
+                className='w-full border rounded px-3 py-2'
+              >
+                <option value=''>Select a workflow</option>
+                {fetchedWorkflows?.data?.map((wf) => (
+                  <option key={wf.id} value={wf.id}>
+                    {wf.name}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className='grid gap-2'>
               <label className='text-sm font-medium text-gray-700'>Add Contacts</label>
