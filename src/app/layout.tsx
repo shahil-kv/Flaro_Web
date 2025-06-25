@@ -1,17 +1,23 @@
 // app/layout.tsx
+import "./global.css";
 import type { Metadata } from "next";
-import { Open_Sans } from "next/font/google";
-import "./globals.css";
+import localFont from "next/font/local";
+import { Analytics } from "@vercel/analytics/next";
+
 import { ClientProviders } from "@/context/ClientProviders";
 
-const openSans = Open_Sans({
-  variable: "--font-open-sans",
-  subsets: ["latin"],
-  weight: ["300", "400", "600", "700"],
-  style: ["normal", "italic"],
+const openSauceOne = localFont({
+  src: [
+    {
+      path: "../../public/fonts/OpenSauceOne-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-open-sauce-one",
+  display: "swap",
 });
 
-// Updated Metadata for SEO and Consistency
 export const metadata: Metadata = {
   title: {
     default: "Flaro | Best B2B Application",
@@ -71,13 +77,11 @@ export const metadata: Metadata = {
       "en-US": "https://www.flaro.co/en",
     },
   },
-
   verification: {
-    google: "your-google-site-verification-code", // Add if available
+    google: "your-google-site-verification-code",
   },
 };
 
-// Structured Data (JSON-LD)
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
@@ -137,15 +141,46 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
-        <link rel="preload" href="/globals.css" as="style" />
         <link rel="preload" href="/favicon.ico" as="image" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {/* Enhanced mobile viewport with additional properties */}
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover"
+        />
         <meta name="theme-color" content="#ffffff" />
         <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+        {/* Additional mobile optimization meta tags */}
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-touch-fullscreen" content="yes" />
+
+        {/* Prevent zoom on input focus for iOS */}
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            @media screen and (max-width: 768px) {
+              input[type="text"],
+              input[type="email"],
+              input[type="password"],
+              input[type="search"],
+              input[type="tel"],
+              input[type="url"],
+              textarea,
+              select {
+                font-size: 16px !important;
+              }
+            }
+          `
+        }} />
       </head>
-      <body className={`${openSans.variable} antialiased font-sans`}>
+      <body className={`${openSauceOne.variable} antialiased font-sans min-h-screen`}>
+        <Analytics />
         <ClientProviders>
-          <main role="main">{children}</main>
+          <main role="main" className="relative">
+            {children}
+          </main>
         </ClientProviders>
       </body>
     </html>

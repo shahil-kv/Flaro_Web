@@ -96,7 +96,7 @@ const ModernDashboard = () => {
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.1 }}
                 className="text-center mb-20"
             >
                 <Badge className="mb-6 glass-effect bg-blue-100 text-orange-600 dark:text-orange-400 border-orange-200 dark:border-orange-800 text-lg px-8 py-3 rounded-full shadow-lg shine-effect">
@@ -178,7 +178,7 @@ const ModernDashboard = () => {
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.1 }}
                     className="text-center mb-20"
                 >
                     <Badge className="mb-6 glass-effect bg-blue-100 text-orange-600 dark:text-orange-400 border-orange-200 dark:border-orange-800 text-lg px-8 py-3 rounded-full shadow-lg shine-effect">
@@ -214,7 +214,7 @@ const ModernDashboard = () => {
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                                viewport={{ once: true }}
+                                viewport={{ once: true, amount: 0.1 }}
                                 whileHover={{ scale: 1.02, y: -5 }}
                             >
                                 <Card className={`glass-card hover:shadow-2xl transition-all duration-300  bg-gradient-to-br ${metric.bgGradient}`}>
@@ -240,7 +240,7 @@ const ModernDashboard = () => {
                         initial={{ opacity: 0, y: 40 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.4 }}
-                        viewport={{ once: true }} className='mb-12'
+                        viewport={{ once: true, amount: 0.1 }} className='mb-12'
                     >
                         <Card className="glass-card shadow-2xl hover:shadow-3xl transition-all duration-300 ">
                             <CardHeader className="pb-6">
@@ -318,7 +318,7 @@ const ModernDashboard = () => {
                         initial={{ opacity: 0, y: 40 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.6 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: true, amount: 0.1 }}
                         className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12"
                     >
                         {[

@@ -7,6 +7,7 @@ export interface User {
     id: string;
     email?: string;
     phoneNumber?: string;
+    is_premium: boolean;
     // Add other user properties as needed
 }
 
