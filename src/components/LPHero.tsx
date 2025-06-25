@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Sparkles, Phone, Bot, Zap, Users, TrendingUp, MessageSquare, Languages } from 'lucide-react';
 import VoiceWaveAnimation from './ui/voiceWaveAnimation';
 
-const ModernHero = () => {
+const LPHero = () => {
 
     const handleGetStarted = () => {
         // Handle the "Get Started" button click
@@ -139,7 +139,7 @@ const ModernHero = () => {
                                 onClick={handleGetStarted}
                                 size="lg"
 
-                                className="text-lg md:text-xl md:px-12 px-6 md:py-8 py-6 glass-effect-dark border-2 border-red-600/60 text-primary hover:bg-orange-500 dark:hover:bg-red-950/40 shadow-xl transition-all duration-300 rounded-2xl font-bold overflow-hidden"
+                                className="text-lg md:text-xl md:px-12 px-6 md:py-8 py-6 glass-effect-dark border-2 border-red-600/60 text-primary hover:bg-orange-600 dark:hover:bg-red-950/40 shadow-xl transition-all duration-300 rounded-2xl font-bold overflow-hidden"
                             >
 
                                 <span className="relative z-10 flex items-center font-bold">
@@ -153,7 +153,7 @@ const ModernHero = () => {
                             <Button
                                 size="lg"
                                 variant="outline"
-                                className="text-lg md:text-xl md:px-12 px-6 md:py-8 py-6 glass-effect-dark border-2 border-red-600/60 text-primary hover:bg-orange-500 dark:hover:bg-red-950/40 shadow-xl transition-all duration-300 rounded-2xl font-bold overflow-hidden"
+                                className="text-lg md:text-xl md:px-12 px-6 md:py-8 py-6 glass-effect-dark border-2 border-red-600/60 text-primary hover:bg-orange-600 dark:hover:bg-red-950/40 shadow-xl transition-all duration-300 rounded-2xl font-bold overflow-hidden"
                             >
                                 <Languages className="mr-4 h-6 w-6" />
                                 Preview AI Agent (Soon)
@@ -196,7 +196,7 @@ const ModernHero = () => {
                                 </motion.div>
 
                                 <motion.button
-                                    className="w-full md:py-6 py-4 bg-gradient-to-r from-red-500 to-red-600 rounded-2xl text-primary font-bold text-xl relative overflow-hidden shadow-lg"
+                                    className="w-full md:py-6 py-4 bg-gradient-to-r from-orange-500 to-orange-600  rounded-2xl text-primary font-bold text-xl relative overflow-hidden shadow-lg"
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                 >
@@ -205,7 +205,7 @@ const ModernHero = () => {
                                         animate={{ x: ['-100%', '100%'] }}
                                         transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                                     />
-                                    <span className="relative z-10 md:text-lg text-base flex items-center justify-center">
+                                    <span className="relative z-10 md:text-lg text-base text-white flex items-center justify-center">
                                         <Phone className="mr-3 h-6 w-6" />
                                         Coming Soon
                                     </span>
@@ -315,7 +315,7 @@ const ModernHero = () => {
     );
 };
 
-export default ModernHero;
+export default LPHero;
 
 {/* <div className="absolute left-2/4 top-2/4 -translate-x-1/2 -translate-y-1/2 rotate-45">
                     <ul className="relative [transform:rotate3d(0,1,0,30deg)]">

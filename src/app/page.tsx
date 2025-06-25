@@ -12,8 +12,11 @@ import {
   Check,
   ChevronRight,
   Clock,
+  Facebook,
   Headphones,
+  Instagram,
   Languages,
+  Linkedin,
   MessageSquare,
   Mic,
   MousePointer,
@@ -24,12 +27,13 @@ import {
   TrendingUp,
   Upload,
   Users,
+  X,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import ModernHeader from "@/components/ModernHeader";
-import ModernHero from "@/components/ModernHero";
+import LPHeader from "@/components/LPHeader";
+import LPHero from "@/components/LPHero";
 import LPDashboard from "@/components/LPDashboard";
 
 export default function Home() {
@@ -197,8 +201,8 @@ export default function Home() {
 
   return (
     <div className="min-h-full scroll-smooth bg-background dark:bg-gray-950 overflow-x-hidden">
-      <ModernHeader />
-      <ModernHero />
+      <LPHeader />
+      <LPHero />
       {/* <ModernDashboard /> */}
       <LPDashboard />
 
@@ -629,15 +633,45 @@ export default function Home() {
                 Enterprise-grade communication platform for modern businesses.
               </p>
               <div className="flex space-x-4">
-                <div className="w-12 h-12 bg-orange-600 rounded-2xl flex items-center justify-center hover:bg-orange-700 transition-colors cursor-pointer">
-                  <span className="text-lg font-bold">f</span>
-                </div>
-                <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center hover:bg-blue-700 transition-colors cursor-pointer">
-                  <span className="text-lg font-bold">t</span>
-                </div>
-                <div className="w-12 h-12 bg-blue-700 rounded-2xl flex items-center justify-center hover:bg-blue-800 transition-colors cursor-pointer">
-                  <span className="text-lg font-bold">in</span>
-                </div>
+                {/* Facebook */}
+                <a
+                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center hover:bg-blue-700 transition-colors cursor-pointer"
+                >
+                  <Facebook className="w-5 h-5 text-white" />
+                </a>
+
+                {/* X (Twitter) */}
+                <a
+                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-gray-900 rounded-2xl flex items-center justify-center hover:bg-black transition-colors cursor-pointer"
+                >
+                  <X className="w-5 h-5 text-white" />
+                </a>
+
+                {/* LinkedIn */}
+                <a
+                  href="https://www.linkedin.com/company/flaro/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-blue-700 rounded-2xl flex items-center justify-center hover:bg-blue-800 transition-colors cursor-pointer"
+                >
+                  <Linkedin className="w-5 h-5 text-white" />
+                </a>
+
+                {/* Instagram */}
+                <a
+                  href="https://www.instagram.com/flaro.co?igsh=ejFkMTRpMW1jdXY3"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-gradient-to-br from-purple-600 via-pink-600 to-orange-500 rounded-2xl flex items-center justify-center hover:from-purple-700 hover:via-pink-700 hover:to-orange-600 transition-all cursor-pointer"
+                >
+                  <Instagram className="w-5 h-5 text-white" />
+                </a>
               </div>
             </div>
 
