@@ -6,7 +6,7 @@ import ExportReports from "@/components/dashboard/ExportReports";
 import SmartInsights from "@/components/dashboard/SmartInsights";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar, Phone, Target, TrendingUp, Users } from "lucide-react";
+import { Calendar, ChartNoAxesCombined, Target, TrendingUp, Users } from "lucide-react";
 import { useState } from "react";
 
 export default function HomePage() {
@@ -14,14 +14,14 @@ export default function HomePage() {
   const [selectedCampaign, setSelectedCampaign] = useState("all");
   return (
 
-    <div className="h-full bg-gradient-to-br from-slate-100 to-slate-100 dark:from-slate-900 dark:to-slate-800 p-4 md:p-6">
+    <div className="min-h-full bg-gradient-to-br from-slate-100 to-slate-100 dark:from-slate-900 dark:to-slate-800 p-4 md:p-6">
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <h1 className="text-3xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <Phone className="w-5 h-5 text-white" />
+              <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
+                <ChartNoAxesCombined className="w-5 h-5 text-white" />
               </div>
               Flaro Analytics
             </h1>
