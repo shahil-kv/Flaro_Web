@@ -17,14 +17,13 @@ export default function DashboardLayout({
 
   return (
     // <AuthProvider>
-    <div className="flex min-h-screen bg-gray-900">
+    <div className="flex h-screen bg-gray-900 overflow-hidden">
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col overflow-hidden">
         <Header toggleSidebar={toggleSidebar} />
         <main
-          className={`flex-1  ${
-            isSidebarOpen ? "ml-0" : "ml-0"
-          } transition-all duration-300`}
+          className={`flex-1 overflow-y-auto overflow-x-hidden ${isSidebarOpen ? "ml-0" : "ml-0"
+            } transition-all duration-300`}
         >
           {children}
         </main>
