@@ -101,7 +101,7 @@ const LPHeader = () => {
                             </Button>
                         </div>
                         <div >
-                            <Button className="bg-orange-600 hover:bg-orange-700 font-medium shadow-lg relative overflow-hidden">
+                            <Button className="bg-orange-600 dark:bg-orange-600 hover:bg-orange-700 font-medium shadow-lg relative overflow-hidden">
                                 <Link href="/register">
                                     <div
                                         className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"

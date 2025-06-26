@@ -599,11 +599,11 @@ export default function Home() {
               drive better engagement, and achieve remarkable results. Plus, get early access to our AI voice agent!
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Button size="lg" className="text-base md:text-xl px-12 py-8 bg-white text-gray-900 hover:bg-gray-100 shadow-2xl rounded-2xl">
+              <Button size="lg" className="text-base md:text-xl px-12 py-8 bg-white text-gray-900 hover:bg-gray-200 dark:bg-white/80 shadow-2xl rounded-2xl">
                 <Sparkles className="mr-3 h-6 w-6" />
                 Start Free Beta
               </Button>
-              <Button size="lg" variant="outline" className="text-base md:text-xl px-12 py-8 border-white text-white hover:bg-white/10 shadow-xl rounded-2xl">
+              <Button size="lg" variant="outline" className="text-base md:text-xl px-12 py-8 border-white bg-orange-600 hover:bg-white/10 shadow-xl rounded-2xl">
                 <Languages className="mr-3 h-6 w-6" />
                 Preview AI Agent (Soon)
               </Button>
@@ -762,11 +762,11 @@ export default function Home() {
             <div>
               <h4 className="font-semibold mb-6 text-xl">Enterprise</h4>
               <div className="space-y-4">
-                <Button className="w-full justify-start bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-xl">
+                <Button className="w-full justify-start bg-gray-800 dark:bg-orange-700 hover:bg-gray-700 border border-gray-700 rounded-xl">
                   <Smartphone className="mr-3 h-5 w-5" />
                   Enterprise App
                 </Button>
-                <Button className="w-full justify-start bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-xl">
+                <Button className="w-full justify-start bg-gray-800 dark:bg-orange-700 hover:bg-gray-700 border border-gray-700 rounded-xl">
                   <Headphones className="mr-3 h-5 w-5" />
                   24/7 Support
                 </Button>

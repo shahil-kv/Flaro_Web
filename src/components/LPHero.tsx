@@ -139,7 +139,7 @@ const LPHero = () => {
                                 onClick={handleGetStarted}
                                 size="lg"
 
-                                className="text-lg md:text-xl md:px-12 px-6 md:py-8 py-6 glass-effect-dark border-2 border-red-600/60 text-primary hover:bg-orange-600 dark:hover:bg-red-950/40 shadow-xl transition-all duration-300 rounded-2xl font-bold overflow-hidden"
+                                className="text-lg md:text-xl md:px-12 px-6 md:py-8 py-6 glass-effect-dark border-2 border-red-600/60 text-primary hover:bg-orange-600 dark:hover:bg-red-950/40 shadow-xl transition-all duration-300 rounded-2xl font-bold overflow-hidden dark:bg-gray-800/60"
                             >
 
                                 <span className="relative z-10 flex items-center font-bold">
@@ -153,7 +153,7 @@ const LPHero = () => {
                             <Button
                                 size="lg"
                                 variant="outline"
-                                className="text-lg md:text-xl md:px-12 px-6 md:py-8 py-6 glass-effect-dark border-2 border-red-600/60 text-primary hover:bg-orange-600 dark:hover:bg-red-950/40 shadow-xl transition-all duration-300 rounded-2xl font-bold overflow-hidden"
+                                className="text-lg md:text-xl md:px-12 px-6 md:py-8 py-6 glass-effect-dark border-2 border-red-600/60 text-primary hover:bg-orange-600 dark:hover:bg-red-950/40 shadow-xl transition-all duration-300 rounded-2xl font-bold overflow-hidden dark:bg-gray-800/60"
                             >
                                 <Languages className="mr-4 h-6 w-6" />
                                 Preview AI Agent (Soon)
