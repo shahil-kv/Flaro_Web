@@ -9,7 +9,7 @@ import {
   ChevronUp,
   MessageCircle,
   Home,
-  Group,
+  Users,
 } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -19,6 +19,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import Image from 'next/image';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -44,7 +45,7 @@ export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
     },
     {
       group: 'Groups',
-      icon: <Group className="h-5 w-5" />,
+      icon: <Users className="h-5 w-5" />,
       path: '/dashboard/groups',
       subItems: ['Manage Groups', 'workflow'],
     },
@@ -92,14 +93,33 @@ export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
         className={`h-screen transition-all duration-300 flex flex-col border-r border-gray-200 dark:border-gray-700 ${isOpen ? 'w-64' : 'w-16'
           } bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100`}
       >
-        {/* Header */}
+        {/* Sidebar Header */}
         <div className="px-4 py-4 flex items-center justify-between border-b border-gray-200 dark:border-gray-700">
-          {isOpen && (
-            <div className="w-full text-center">
-              <span className="text-lg font-semibold">Flaro</span>
+          {isOpen ? (
+            <div className="flex items-center gap-2 w-full justify-center">
+              <Image
+                src="/images/flaro-logo.svg"
+                alt="Flaro Logo"
+                width={28}
+                height={28}
+                className="object-contain"
+                priority
+              />
+              <span className="text-xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">
+                Flaro
+              </span>
             </div>
+          ) : (
+            <div />
           )}
-          <Button variant="ghost" size="icon" onClick={toggleSidebar}>
+
+          {/* Collapse/Expand Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleSidebar}
+            className="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+          >
             {isOpen ? (
               <ChevronLeft className="h-5 w-5" />
             ) : (
