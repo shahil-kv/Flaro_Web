@@ -204,7 +204,7 @@ function WorkflowDocumentsManager({ workflowId }: { workflowId?: number }) {
               </TableRow>
             ) : (
               documents.map((doc) => (
-                <TableRow key={doc.id}>
+                <TableRow key={doc.id} className='text-white'>
                   <TableCell>
                     <a
                       href={doc.file_path}
@@ -399,7 +399,7 @@ export default function WorkflowPage() {
           </TableHeader>
           <TableBody>
             {workflows.map((wf) => (
-              <TableRow key={wf.id}>
+              <TableRow key={wf.id} className='text-white'>
                 <TableCell className='font-medium text-gray-800'>{wf.name}</TableCell>
                 <TableCell>{wf.description}</TableCell>
                 <TableCell>{wf.steps.length}</TableCell>
@@ -479,7 +479,7 @@ export default function WorkflowPage() {
                   </TableHeader>
                   <TableBody>
                     {workflowForm.steps.map((step, idx) => (
-                      <TableRow key={step.id}>
+                      <TableRow key={step.id} className='text-white'>
                         <TableCell>{idx + 1}</TableCell>
                         <TableCell>{step.question}</TableCell>
                         <TableCell>
