@@ -94,6 +94,7 @@ export default function CallsPage() {
       reconnection: true,
       reconnectionAttempts: 5,
       reconnectionDelay: 1000,
+      transportOptions: { transports: ['websocket'] },
     });
     socketInstance.on('connect', () => console.log('Socket.IO connected'));
     socketInstance.on('connect_error', (error) =>

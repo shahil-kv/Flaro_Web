@@ -16,7 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Plus, Edit, Trash2 } from 'lucide-react';
+import { Plus, Edit, Trash2, Upload, FileText } from 'lucide-react';
 import { useGet, usePost } from '@/lib/useApi';
 import {
   Workflow,
@@ -33,6 +33,210 @@ const ANSWER_TYPES = [
   { value: 'number', label: 'Number' },
   { value: 'end', label: 'End' },
 ];
+
+function WorkflowDocumentsManager({ workflowId }: { workflowId?: number }) {
+  const [selectedFiles, setSelectedFiles] = React.useState<File[]>([]);
+  const [uploading, setUploading] = React.useState(false);
+  const [uploadProgress, setUploadProgress] = React.useState<{ [key: string]: number }>(
+    {},
+  );
+  const [error, setError] = React.useState<string | null>(null);
+  const [documents, setDocuments] = React.useState<any[]>([]);
+  const { data, refetch, isFetching } = useGet<
+    { data: any[] },
+    { userId?: string | number; sessionId?: number; workflowId?: number }
+  >(
+    '/workflow-document/get-documents',
+    { workflowId },
+    {
+      enabled: !!workflowId,
+      showErrorToast: true,
+      showSuccessToast: false,
+      showLoader: false,
+    },
+  );
+  const { mutate: manageDocument } = usePost<any, any>(
+    '/workflow-document/manage-documents',
+    {
+      showErrorToast: true,
+      showSuccessToast: true,
+      showLoader: true,
+    },
+  );
+
+  React.useEffect(() => {
+    if (data?.data) setDocuments(data.data);
+  }, [data]);
+
+  // Handle file selection
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setSelectedFiles(Array.from(e.target.files));
+    }
+  };
+
+  // Handle upload
+  const handleUpload = async () => {
+    if (!workflowId || selectedFiles.length === 0) return;
+    setUploading(true);
+    setError(null);
+    for (const file of selectedFiles) {
+      const formData = new FormData();
+      formData.append('opsMode', 'INSERT');
+      formData.append('workflowId', String(workflowId));
+      formData.append('file', file);
+      try {
+        await new Promise((resolve, reject) => {
+          // Use XMLHttpRequest for progress
+          const xhr = new XMLHttpRequest();
+          xhr.open(
+            'POST',
+            'http://localhost:8080/api/v1/workflow-document/manage-documents',
+          );
+          xhr.upload.onprogress = (event) => {
+            if (event.lengthComputable) {
+              setUploadProgress((prev) => ({
+                ...prev,
+                [file.name]: Math.round((event.loaded / event.total) * 100),
+              }));
+            }
+          };
+          xhr.onload = () => {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              resolve(xhr.response);
+            } else {
+              reject(xhr.statusText);
+            }
+          };
+          xhr.onerror = () => reject(xhr.statusText);
+          xhr.send(formData);
+        });
+        toast.success(`Uploaded: ${file.name}`);
+      } catch {
+        setError(`Failed to upload ${file.name}`);
+        toast.error(`Failed to upload ${file.name}`);
+      }
+    }
+    setSelectedFiles([]);
+    setUploading(false);
+    setUploadProgress({});
+    refetch();
+  };
+
+  // Handle delete
+  const handleDelete = (documentId: number) => {
+    manageDocument(
+      { opsMode: 'DELETE', documentId },
+      {
+        onSuccess: () => {
+          toast.success('Document deleted');
+          refetch();
+        },
+        onError: () => {
+          toast.error('Failed to delete document');
+        },
+      },
+    );
+  };
+
+  return (
+    <div className='mt-6'>
+      <h3 className='font-semibold text-gray-700 mb-2 flex items-center gap-2'>
+        <FileText className='w-5 h-5' /> Documents
+      </h3>
+      <div className='flex flex-col gap-2 mb-2'>
+        <label className='flex items-center gap-2 cursor-pointer'>
+          <Upload className='w-4 h-4 text-gray-500' />
+          <span className='text-sm'>Upload files (PDF, DOCX, etc.)</span>
+          <input
+            type='file'
+            multiple
+            className='hidden'
+            onChange={handleFileChange}
+            accept='.pdf,.doc,.docx,.txt,.xlsx,.xls,.csv,.png,.jpg,.jpeg'
+            disabled={uploading}
+          />
+        </label>
+        {selectedFiles.length > 0 && (
+          <div className='flex flex-col gap-1 mt-2'>
+            {selectedFiles.map((file) => (
+              <div key={file.name} className='flex items-center gap-2 text-sm'>
+                <span>{file.name}</span>
+                {uploading && (
+                  <span className='text-xs text-gray-500'>
+                    {uploadProgress[file.name] || 0}%
+                  </span>
+                )}
+              </div>
+            ))}
+            <Button
+              size='sm'
+              onClick={handleUpload}
+              disabled={uploading}
+              className='mt-1 w-fit'
+            >
+              {uploading ? 'Uploading...' : 'Upload'}
+            </Button>
+          </div>
+        )}
+        {error && <div className='text-red-500 text-xs'>{error}</div>}
+      </div>
+      <div className='mt-2'>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>File Name</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Uploaded At</TableHead>
+              <TableHead>Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {isFetching ? (
+              <TableRow>
+                <TableCell colSpan={4}>Loading...</TableCell>
+              </TableRow>
+            ) : documents.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={4} className='text-gray-400'>
+                  No documents uploaded.
+                </TableCell>
+              </TableRow>
+            ) : (
+              documents.map((doc) => (
+                <TableRow key={doc.id} className='text-white'>
+                  <TableCell>
+                    <a
+                      href={doc.file_path}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='text-blue-600 underline'
+                    >
+                      {doc.file_name}
+                    </a>
+                  </TableCell>
+                  <TableCell>{doc.status}</TableCell>
+                  <TableCell>
+                    {doc.created_at ? new Date(doc.created_at).toLocaleString() : '-'}
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      variant='destructive'
+                      size='sm'
+                      onClick={() => handleDelete(doc.id)}
+                    >
+                      <Trash2 className='w-4 h-4' />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+  );
+}
 
 export default function WorkflowPage() {
   // API hooks
@@ -195,7 +399,7 @@ export default function WorkflowPage() {
           </TableHeader>
           <TableBody>
             {workflows.map((wf) => (
-              <TableRow key={wf.id}>
+              <TableRow key={wf.id} className='text-white'>
                 <TableCell className='font-medium text-gray-800'>{wf.name}</TableCell>
                 <TableCell>{wf.description}</TableCell>
                 <TableCell>{wf.steps.length}</TableCell>
@@ -275,7 +479,7 @@ export default function WorkflowPage() {
                   </TableHeader>
                   <TableBody>
                     {workflowForm.steps.map((step, idx) => (
-                      <TableRow key={step.id}>
+                      <TableRow key={step.id} className='text-white'>
                         <TableCell>{idx + 1}</TableCell>
                         <TableCell>{step.question}</TableCell>
                         <TableCell>
@@ -312,6 +516,9 @@ export default function WorkflowPage() {
                 </Table>
               )}
             </div>
+            {editingWorkflow || workflowForm.id ? (
+              <WorkflowDocumentsManager workflowId={editingWorkflow ?? workflowForm.id} />
+            ) : null}
           </div>
           <DialogFooter>
             <Button onClick={saveWorkflow}>
