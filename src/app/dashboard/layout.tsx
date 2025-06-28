@@ -1,5 +1,5 @@
-"use client";
-import { useState } from "react";
+'use client';
+import * as React from "react";
 import Sidebar from "@/components/dashboard/Sidebar";
 import Header from "@/components/dashboard/Header";
 // import { AuthProvider } from "@/context/AuthContext";
@@ -9,7 +9,7 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = React.useState(true);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -17,7 +17,7 @@ export default function DashboardLayout({
 
   return (
     // <AuthProvider>
-    <div className="flex h-screen bg-gray-900 overflow-hidden">
+    <div className="flex h-screen bg-gray-100 dark:bg-gray-900 overflow-hidden">
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header toggleSidebar={toggleSidebar} />
@@ -30,6 +30,6 @@ export default function DashboardLayout({
         {/* <Footer /> */}
       </div>
     </div>
-    // </AuthProvider>
+    //</div> </AuthProvider>
   );
 }

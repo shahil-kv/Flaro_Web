@@ -351,83 +351,97 @@ export default function GroupsPage() {
   }, []);
 
   return (
-    <section className='p-4 md:p-6 lg:p-8 bg-gray-50 min-h-screen'>
-      <div className='flex justify-between items-center mb-6'>
-        <h1 className='text-2xl md:text-3xl font-bold text-gray-800'>Groups</h1>
+    <section className="p-4 md:p-6 lg:p-8 min-h-screen transition-colors duration-300 bg-gray-100 dark:bg-gray-900">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Groups</h1>
         <Button
           onClick={() => openGroupDialog()}
-          className='flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white'
+          className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white dark:hover:bg-red-500"
           disabled={!stableUserId}
         >
-          <Plus className='w-4 h-4' />
+          <Plus className="w-4 h-4" />
           Create New Group
         </Button>
       </div>
 
-      <div className='mb-6'>
-        <div className='relative'>
-          <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5' />
+      <div className="mb-6">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 w-5 h-5" />
           <Input
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder='Search groups by name, description, or contact'
-            className='pl-10 border-gray-300'
+            placeholder="Search groups by name, description, or contact"
+            className="pl-10 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
           />
         </div>
       </div>
 
-      <div className='bg-white shadow-sm rounded-lg border border-gray-200'>
+      <div className="shadow-sm rounded-lg border bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
         <Table>
           <TableHeader>
-            <TableRow>
-              <TableHead className='w-[50px]'>
-                <Button variant='ghost' onClick={() => handleSort('id')}>
+            <TableRow className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
+              <TableHead className="w-[50px]">
+                <Button
+                  variant="ghost"
+                  onClick={() => handleSort('id')}
+                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                >
                   # {sortField === 'id' && (sortOrder === 'asc' ? '↑' : '↓')}
                 </Button>
               </TableHead>
               <TableHead>
-                <Button variant='ghost' onClick={() => handleSort('name')}>
+                <Button
+                  variant="ghost"
+                  onClick={() => handleSort('name')}
+                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                >
                   Group Name {sortField === 'name' && (sortOrder === 'asc' ? '↑' : '↓')}
                 </Button>
               </TableHead>
               <TableHead>
-                <Button variant='ghost' onClick={() => handleSort('contactCount')}>
-                  Contacts{' '}
-                  {sortField === 'contactCount' && (sortOrder === 'asc' ? '↑' : '↓')}
+                <Button
+                  variant="ghost"
+                  onClick={() => handleSort('contactCount')}
+                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                >
+                  Contacts {sortField === 'contactCount' && (sortOrder === 'asc' ? '↑' : '↓')}
                 </Button>
               </TableHead>
               <TableHead>
-                <Button variant='ghost' onClick={() => handleSort('description')}>
-                  Description{' '}
-                  {sortField === 'description' && (sortOrder === 'asc' ? '↑' : '↓')}
+                <Button
+                  variant="ghost"
+                  onClick={() => handleSort('description')}
+                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                >
+                  Description {sortField === 'description' && (sortOrder === 'asc' ? '↑' : '↓')}
                 </Button>
               </TableHead>
-              <TableHead className='text-right'>Actions</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {isFetching ? (
               <TableRow>
-                <TableCell colSpan={5} className='text-center py-10 text-gray-500'>
+                <TableCell colSpan={5} className="text-center py-10 text-gray-500 dark:text-gray-400">
                   Loading...
                 </TableCell>
               </TableRow>
             ) : filteredGroups.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className='text-center py-10 text-gray-500'>
-                  <div className='flex flex-col items-center gap-2'>
+                <TableCell colSpan={5} className="text-center py-10 text-gray-500 dark:text-gray-400">
+                  <div className="flex flex-col items-center gap-2">
                     <svg
-                      className='w-12 h-12 text-gray-400'
-                      fill='none'
-                      stroke='currentColor'
-                      viewBox='0 0 24 24'
-                      xmlns='http://www.w3.org/2000/svg'
+                      className="w-12 h-12 text-gray-400 dark:text-gray-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                        strokeWidth='2'
-                        d='M9 14h6m-3-3v6m-9 3h18a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M9 14h6m-3-3v6m-9 3h18a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                       ></path>
                     </svg>
                     <p>
@@ -440,33 +454,33 @@ export default function GroupsPage() {
               </TableRow>
             ) : (
               filteredGroups.map((group, index: number) => (
-                <TableRow key={group.id}>
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell className='font-medium text-gray-800'>
+                <TableRow key={group.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                  <TableCell className="text-gray-900 dark:text-gray-300">{index + 1}</TableCell>
+                  <TableCell className="font-medium text-gray-800 dark:text-gray-200">
                     {group.name}
                   </TableCell>
-                  <TableCell>{group.contacts.length} contacts</TableCell>
-                  <TableCell>{group.description || 'N/A'}</TableCell>
-                  <TableCell className='text-right space-x-2'>
+                  <TableCell className="text-gray-900 dark:text-gray-300">{group.contacts.length} contacts</TableCell>
+                  <TableCell className="text-gray-900 dark:text-gray-300">{group.description || 'N/A'}</TableCell>
+                  <TableCell className="text-right space-x-2">
                     <Button
-                      variant='ghost'
-                      size='sm'
+                      variant="ghost"
+                      size="sm"
                       onClick={() => openGroupDialog(group)}
-                      className='text-blue-600 hover:text-blue-800'
+                      className="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300"
                     >
-                      <Pencil className='w-4 h-4 mr-1' />
+                      <Pencil className="w-4 h-4 mr-1" />
                       Edit
                     </Button>
                     <Button
-                      variant='ghost'
-                      size='sm'
+                      variant="ghost"
+                      size="sm"
                       onClick={() => {
                         setSelectedGroup(group);
                         setIsDeleteDialogOpen(true);
                       }}
-                      className='text-red-600 hover:text-red-800'
+                      className="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300"
                     >
-                      <Trash2 className='w-4 h-4 mr-1' />
+                      <Trash2 className="w-4 h-4 mr-1" />
                       Delete
                     </Button>
                   </TableCell>
@@ -487,46 +501,50 @@ export default function GroupsPage() {
           setIsGroupDialogOpen(open);
         }}
       >
-        <DialogContent className='sm:max-w-[600px]'>
+        <DialogContent className="sm:max-w-[600px] bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <DialogHeader>
-            <DialogTitle>{selectedGroup ? 'Edit Group' : 'Create New Group'}</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-gray-900 dark:text-white">
+              {selectedGroup ? 'Edit Group' : 'Create New Group'}
+            </DialogTitle>
+            <DialogDescription className="text-gray-600 dark:text-gray-400">
               {selectedGroup
                 ? `Update the details for ${selectedGroup.name}.`
                 : 'Fill in the details to create a new group.'}
             </DialogDescription>
           </DialogHeader>
-          <div className='grid gap-4 py-4'>
-            <div className='grid gap-2'>
-              <label htmlFor='name' className='text-sm font-medium text-gray-700'>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <label htmlFor="name" className="text-sm font-medium text-gray-700 dark:text-gray-300">
                 Group Name
               </label>
               <Input
-                id='name'
+                id="name"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                placeholder='Enter group name'
+                placeholder="Enter group name"
+                className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               />
             </div>
-            <div className='grid gap-2'>
-              <label htmlFor='description' className='text-sm font-medium text-gray-700'>
+            <div className="grid gap-2">
+              <label htmlFor="description" className="text-sm font-medium text-gray-700 dark:text-gray-300">
                 Description (Optional)
               </label>
               <Input
-                id='description'
+                id="description"
                 value={formData.description}
                 onChange={(e) =>
                   setFormData({ ...formData, description: e.target.value })
                 }
-                placeholder='Enter description'
+                placeholder="Enter description"
+                className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               />
             </div>
-            <div className='grid gap-2'>
-              <label htmlFor='workflow' className='text-sm font-medium text-gray-700'>
+            <div className="grid gap-2">
+              <label htmlFor="workflow" className="text-sm font-medium text-gray-700 dark:text-gray-300">
                 Workflow
               </label>
               <select
-                id='workflow'
+                id="workflow"
                 value={formData.workflowId ?? ''}
                 onChange={(e) =>
                   setFormData({
@@ -534,77 +552,85 @@ export default function GroupsPage() {
                     workflowId: e.target.value ? Number(e.target.value) : undefined,
                   })
                 }
-                className='w-full border rounded px-3 py-2'
+                className="w-full border rounded px-3 py-2 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
               >
-                <option value=''>Select a workflow</option>
+                <option value="" className="bg-white dark:bg-gray-700 text-gray-900 dark:text-white">Select a workflow</option>
                 {fetchedWorkflows?.data?.map((wf) => (
-                  <option key={wf.id} value={wf.id}>
+                  <option key={wf.id} value={wf.id} className="bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
                     {wf.name}
                   </option>
                 ))}
               </select>
             </div>
-            <div className='grid gap-2'>
-              <label className='text-sm font-medium text-gray-700'>Add Contacts</label>
+            <div className="grid gap-2">
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Add Contacts</label>
               <Button
                 disabled={formData.selectedContacts.length <= 0}
-                variant='outline'
+                variant="outline"
                 onClick={() => setIsContactDialogOpen(true)}
-                className='flex justify-between'
+                className="flex justify-between bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-600"
               >
                 <span>
                   {formData.selectedContacts.length > 0
                     ? `${formData.selectedContacts.length} contacts selected`
                     : 'Select contacts'}
                 </span>
-                <ChevronRight className='w-4 h-4' />
+                <ChevronRight className="w-4 h-4" />
               </Button>
-              <div className='flex items-center justify-between border border-gray-200 rounded-lg p-3'>
+              <div className="flex items-center justify-between border rounded-lg p-3 bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600">
                 {excelContacts.length > 0 ? (
                   <>
                     <Button
-                      variant='ghost'
+                      variant="ghost"
                       onClick={() => setIsImportedContactsDialogOpen(true)}
-                      className='flex items-center gap-2'
+                      className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                     >
-                      <Upload className='w-5 h-5 text-gray-500' />
+                      <Upload className="w-5 h-5 text-gray-500" />
                       <span>{`${excelContacts.length} contacts imported`}</span>
                     </Button>
-                    <Button variant='ghost' size='sm' onClick={handleClearImported}>
-                      <X className='w-4 h-4 text-red-600' />
+                    <Button variant="ghost" size="sm" onClick={handleClearImported}>
+                      <X className="w-4 h-4 text-red-600" />
                     </Button>
                   </>
                 ) : (
                   <>
-                    <span className='flex items-center gap-2'>
-                      <Upload className='w-5 h-5 text-gray-500' />
+                    <span className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                      <Upload className="w-5 h-5 text-gray-500" />
                       Import from Excel/CSV
                     </span>
-                    <Button variant='ghost' size='sm' asChild>
+                    <Button variant="ghost" size="sm" asChild>
                       <label>
                         <input
-                          type='file'
-                          accept='.xlsx, .xls, .csv'
+                          type="file"
+                          accept=".xlsx, .xls, .csv"
                           onChange={handleFileImport}
-                          className='hidden'
+                          className="hidden"
                         />
-                        <Upload className='w-4 h-4 text-gray-500' />
+                        <Upload className="w-4 h-4 text-gray-500" />
                       </label>
                     </Button>
                   </>
                 )}
               </div>
-              <p className='text-sm text-gray-500'>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 Note: Web browsers cannot access device contacts. Use Excel/CSV import or
                 sync contacts via the mobile app.
               </p>
             </div>
           </div>
           <DialogFooter>
-            <Button variant='outline' onClick={() => setIsGroupDialogOpen(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setIsGroupDialogOpen(false)}
+              className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-600"
+            >
               Cancel
             </Button>
-            <Button onClick={handleGroupOperation} disabled={isManagingGroup}>
+            <Button
+              onClick={handleGroupOperation}
+              disabled={isManagingGroup}
+              className="bg-red-600 hover:bg-red-700 dark:hover:bg-red-500 text-white"
+            >
               {isManagingGroup ? 'Saving...' : selectedGroup ? 'Save' : 'Create'}
             </Button>
           </DialogFooter>
@@ -612,32 +638,34 @@ export default function GroupsPage() {
       </Dialog>
 
       <Dialog open={isContactDialogOpen} onOpenChange={setIsContactDialogOpen}>
-        <DialogContent className='sm:max-w-[800px] h-max max-h-[80vh] overflow-y-auto flex flex-col justify-between'>
+        <DialogContent className="sm:max-w-[800px] h-max max-h-[80vh] overflow-y-auto flex flex-col justify-between bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <div>
             <DialogHeader>
-              <DialogTitle>Contacts in {selectedGroup?.name || 'Group'}</DialogTitle>
-              <DialogDescription>
+              <DialogTitle className="text-gray-900 dark:text-white">
+                Contacts in {selectedGroup?.name || 'Group'}
+              </DialogTitle>
+              <DialogDescription className="text-gray-600 dark:text-gray-400">
                 List of contacts for the selected group. This view is read-only and shows
                 only backend-fetched contacts.
               </DialogDescription>
             </DialogHeader>
-            <div className='py-4'>
+            <div className="py-4">
               <Table>
-                <TableHeader className='sticky top-0'>
-                  <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Phone Number</TableHead>
-                    <TableHead>Source</TableHead>
+                <TableHeader className="sticky top-0 bg-white dark:bg-gray-800">
+                  <TableRow className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <TableHead className="text-gray-700 dark:text-gray-300">Name</TableHead>
+                    <TableHead className="text-gray-700 dark:text-gray-300">Phone Number</TableHead>
+                    <TableHead className="text-gray-700 dark:text-gray-300">Source</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {formData.selectedContacts.map((contact) => (
-                    <TableRow key={contact.id}>
-                      <TableCell className='font-medium text-gray-800'>
+                    <TableRow key={contact.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                      <TableCell className="font-medium text-gray-800 dark:text-gray-200">
                         {contact.name}
                       </TableCell>
-                      <TableCell>{contact.phoneNumbers[0]?.number}</TableCell>
-                      <TableCell>
+                      <TableCell className="text-gray-900 dark:text-gray-300">{contact.phoneNumbers[0]?.number}</TableCell>
+                      <TableCell className="text-gray-900 dark:text-gray-300">
                         {contact.isContactFromDevice ? 'Synced from mobile' : 'Imported'}
                       </TableCell>
                     </TableRow>
@@ -647,7 +675,12 @@ export default function GroupsPage() {
             </div>
           </div>
           <DialogFooter>
-            <Button onClick={() => setIsContactDialogOpen(false)}>Close</Button>
+            <Button
+              onClick={() => setIsContactDialogOpen(false)}
+              className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-600"
+            >
+              Close
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -656,31 +689,31 @@ export default function GroupsPage() {
         open={isImportedContactsDialogOpen}
         onOpenChange={setIsImportedContactsDialogOpen}
       >
-        <DialogContent className='sm:max-w-[800px] h-max max-h-[80vh] overflow-y-auto flex flex-col justify-between'>
-          <div className=''>
+        <DialogContent className="sm:max-w-[800px] h-max max-h-[80vh] overflow-y-auto flex flex-col justify-between bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <div className="">
             <DialogHeader>
-              <DialogTitle>Imported Contacts</DialogTitle>
-              <DialogDescription>
+              <DialogTitle className="text-gray-900 dark:text-white">Imported Contacts</DialogTitle>
+              <DialogDescription className="text-gray-600 dark:text-gray-400">
                 List of contacts imported from Excel/CSV.
               </DialogDescription>
             </DialogHeader>
-            <div className='py-4'>
+            <div className="py-4">
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Phone Number</TableHead>
-                    <TableHead>Source</TableHead>
+                  <TableRow className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <TableHead className="text-gray-700 dark:text-gray-300">Name</TableHead>
+                    <TableHead className="text-gray-700 dark:text-gray-300">Phone Number</TableHead>
+                    <TableHead className="text-gray-700 dark:text-gray-300">Source</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {excelContacts.map((contact) => (
-                    <TableRow key={contact.id}>
-                      <TableCell className='font-medium text-gray-800'>
+                    <TableRow key={contact.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                      <TableCell className="font-medium text-gray-800 dark:text-gray-200">
                         {contact.name}
                       </TableCell>
-                      <TableCell>{contact.phoneNumbers[0]?.number}</TableCell>
-                      <TableCell>Imported</TableCell>
+                      <TableCell className="text-gray-900 dark:text-gray-300">{contact.phoneNumbers[0]?.number}</TableCell>
+                      <TableCell className="text-gray-900 dark:text-gray-300">Imported</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -688,28 +721,38 @@ export default function GroupsPage() {
             </div>
           </div>
           <DialogFooter>
-            <Button onClick={() => setIsImportedContactsDialogOpen(false)}>Close</Button>
+            <Button
+              onClick={() => setIsImportedContactsDialogOpen(false)}
+              className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-600"
+            >
+              Close
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
       <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-        <DialogContent className='sm:max-w-[425px]'>
+        <DialogContent className="sm:max-w-[425px] bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <DialogHeader>
-            <DialogTitle>Delete Group</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-gray-900 dark:text-white">Delete Group</DialogTitle>
+            <DialogDescription className="text-gray-600 dark:text-gray-400">
               Are you sure you want to delete {selectedGroup?.name}? This action cannot be
               undone.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant='outline' onClick={() => setIsDeleteDialogOpen(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setIsDeleteDialogOpen(false)}
+              className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-600"
+            >
               Cancel
             </Button>
             <Button
-              variant='destructive'
+              variant="destructive"
               onClick={handleDeleteGroup}
               disabled={isManagingGroup}
+              className="bg-red-600 hover:bg-red-700 dark:hover:bg-red-500 text-white"
             >
               {isManagingGroup ? 'Deleting...' : 'Delete'}
             </Button>
@@ -722,12 +765,12 @@ export default function GroupsPage() {
 
 const ChevronRight = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
-    xmlns='http://www.w3.org/2000/svg'
-    fill='none'
-    viewBox='0 0 24 24'
-    stroke='currentColor'
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
     {...props}
   >
-    <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9 5l7 7-7 7' />
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
   </svg>
 );

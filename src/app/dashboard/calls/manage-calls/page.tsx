@@ -1,5 +1,5 @@
 'use client';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import * as React from "react";
 import { io, Socket } from 'socket.io-client';
 import { toast } from 'sonner';
 import { useAuth } from '@/context/AuthContext';
@@ -36,12 +36,12 @@ const API_URL = 'http://localhost:8080';
 
 export default function CallsPage() {
   const { user } = useAuth();
-  const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
-  const [selectedContacts, setSelectedContacts] = useState<any[]>([]);
-  const [isContactDialogOpen, setIsContactDialogOpen] = useState(false);
-  const [isRecording, setIsRecording] = useState(false);
-  const [recordedMessage, setRecordedMessage] = useState('');
-  const [currentCall, setCurrentCall] = useState<CallState>({
+  const [selectedGroup, setSelectedGroup] = React.useState<string | null>(null);
+  const [selectedContacts, setSelectedContacts] = React.useState<any[]>([]);
+  const [isContactDialogOpen, setIsContactDialogOpen] = React.useState(false);
+  const [isRecording, setIsRecording] = React.useState(false);
+  const [recordedMessage, setRecordedMessage] = React.useState('');
+  const [currentCall, setCurrentCall] = React.useState<CallState>({
     status: 'idle',
     contacts: [],
     currentIndex: 0,
@@ -49,9 +49,9 @@ export default function CallsPage() {
     currentContact: null,
     attempt: 0,
   });
-  const [callHistory, setCallHistory] = useState<CallHistoryEntry[]>([]);
-  const [socket, setSocket] = useState<Socket | null>(null);
-  const stableUserId = useMemo(
+  const [callHistory, setCallHistory] = React.useState<CallHistoryEntry[]>([]);
+  const [socket, setSocket] = React.useState<Socket | null>(null);
+  const stableUserId = React.useMemo(
     () => (user?.id != null ? String(user.id) : undefined),
     [user?.id],
   );
@@ -88,7 +88,7 @@ export default function CallsPage() {
   });
 
   // Initialize socket
-  useEffect(() => {
+  React.useEffect(() => {
     const socketInstance: Socket = io(API_URL, {
       transports: ['websocket'],
       reconnection: true,
@@ -107,7 +107,7 @@ export default function CallsPage() {
   }, []);
 
   // Handle socket events
-  useEffect(() => {
+  React.useEffect(() => {
     if (!socket || !currentCall.sessionId) return;
 
     socket.on('callStatusUpdate', (data: CallStatusData) => {
@@ -164,7 +164,7 @@ export default function CallsPage() {
   }, [socket, currentCall.sessionId]);
 
   // Process valid contacts
-  const validContacts = useMemo(() => {
+  const validContacts = React.useMemo(() => {
     return selectedContacts
       .filter((contact) => contact.phoneNumbers?.[0]?.number?.trim())
       .map((contact) => ({
@@ -175,7 +175,7 @@ export default function CallsPage() {
   }, [selectedContacts]);
 
   // Start call handler
-  const handleStartCall = useCallback(async () => {
+  const handleStartCall = React.useCallback(async () => {
     const MAX_CONTACTS_FREE = 50;
     const MAX_CONTACTS_PREMIUM = 500;
 
@@ -206,21 +206,21 @@ export default function CallsPage() {
     const payload =
       selectedGroup === null
         ? {
-            userId: Number(user?.id),
-            contacts: validContacts.map((contact) => ({
-              name: contact.name,
-              phoneNumber: contact.phoneNumber,
-            })),
-            groupId: 0,
-            groupType: 'MANUAL',
-            messageContent,
-          }
+          userId: Number(user?.id),
+          contacts: validContacts.map((contact) => ({
+            name: contact.name,
+            phoneNumber: contact.phoneNumber,
+          })),
+          groupId: 0,
+          groupType: 'MANUAL',
+          messageContent,
+        }
         : {
-            userId: Number(user?.id),
-            groupId: Number(selectedGroup),
-            groupType: 'USER_DEFINED',
-            messageContent,
-          };
+          userId: Number(user?.id),
+          groupId: Number(selectedGroup),
+          groupType: 'USER_DEFINED',
+          messageContent,
+        };
 
     try {
       const response: any = await StartCallSession(payload);
@@ -248,7 +248,7 @@ export default function CallsPage() {
   ]);
 
   // End call handler
-  const handleEndCall = useCallback(async () => {
+  const handleEndCall = React.useCallback(async () => {
     if (!currentCall.sessionId) return;
     try {
       const data = await StopCallSession({ sessionId: currentCall.sessionId });
@@ -329,7 +329,7 @@ export default function CallsPage() {
     }
   };
 
-  const handleFileImport = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileImport = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
     try {
@@ -371,36 +371,36 @@ export default function CallsPage() {
   // Render active call view
   if (isCallActive) {
     return (
-      <section className='p-4 md:p-6 lg:p-8 bg-gray-50 min-h-screen'>
-        <div className='flex justify-between items-center mb-6'>
-          <h1 className='text-2xl md:text-3xl font-bold text-gray-800'>Active Call</h1>
+      <section className="p-4 md:p-6 lg:p-8 bg-gray-100 dark:bg-gray-900 min-h-screen">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-200">Active Call</h1>
           <Button
-            variant='destructive'
+            variant="destructive"
             onClick={handleEndCall}
-            className='flex items-center gap-2'
+            className="flex items-center gap-2 bg-red-600 hover:bg-red-700 dark:hover:bg-red-500 text-white"
           >
-            <X className='w-4 h-4' /> End Call
+            <X className="w-4 h-4" /> End Call
           </Button>
         </div>
         {currentCall.currentContact && (
-          <div className='bg-white shadow-sm rounded-lg border border-gray-200 p-6 mb-6 text-center'>
-            <div className='inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 mb-4'>
-              <Users className='w-8 h-8 text-blue-600' />
+          <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700 p-6 mb-6 text-center">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900 mb-4">
+              <Users className="w-8 h-8 text-blue-600 dark:text-blue-400" />
             </div>
-            <h2 className='text-lg font-bold text-gray-800'>
+            <h2 className="text-lg font-bold text-gray-800 dark:text-gray-200">
               {currentCall.currentContact.name}
             </h2>
-            <p className='text-gray-500'>{currentCall.currentContact.phoneNumber}</p>
-            <p className='mt-2 text-blue-600'>{getStatusDisplay(currentCall.status)}</p>
+            <p className="text-gray-500 dark:text-gray-400">{currentCall.currentContact.phoneNumber}</p>
+            <p className="mt-2 text-blue-600 dark:text-blue-400">{getStatusDisplay(currentCall.status)}</p>
           </div>
         )}
-        <div className='bg-white shadow-sm rounded-lg border border-gray-200'>
+        <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Contact</TableHead>
-                <TableHead>Phone Number</TableHead>
-                <TableHead>Status</TableHead>
+              <TableRow className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
+                <TableHead className="text-gray-700 dark:text-gray-300">Contact</TableHead>
+                <TableHead className="text-gray-700 dark:text-gray-300">Phone Number</TableHead>
+                <TableHead className="text-gray-700 dark:text-gray-300">Status</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -412,20 +412,19 @@ export default function CallsPage() {
                   historyEntry?.status ||
                   (index === currentCall.currentIndex ? 'IN_PROGRESS' : 'PENDING');
                 return (
-                  <TableRow key={contact.id}>
-                    <TableCell className='font-medium text-gray-800'>
+                  <TableRow key={contact.id} className="text-gray-900 dark:text-gray-300">
+                    <TableCell className="font-medium text-gray-800 dark:text-gray-200">
                       {contact.name}
                     </TableCell>
-                    <TableCell>{contact.phoneNumber}</TableCell>
+                    <TableCell className="text-gray-900 dark:text-gray-300">{contact.phoneNumber}</TableCell>
                     <TableCell>
                       <span
-                        className={`text-sm ${
-                          status === 'ACCEPTED'
-                            ? 'text-green-500'
-                            : status === 'FAILED' || status === 'DECLINED'
-                            ? 'text-red-500'
-                            : 'text-gray-500'
-                        }`}
+                        className={`text-sm ${status === 'ACCEPTED'
+                          ? 'text-green-500 dark:text-green-400'
+                          : status === 'FAILED' || status === 'DECLINED'
+                            ? 'text-red-500 dark:text-red-400'
+                            : 'text-gray-500 dark:text-gray-400'
+                          }`}
                       >
                         {getStatusDisplay(status)}
                       </span>
@@ -436,7 +435,11 @@ export default function CallsPage() {
             </TableBody>
           </Table>
         </div>
-        <Button variant='destructive' onClick={handleEndCall} className='w-full mt-6'>
+        <Button
+          variant="destructive"
+          onClick={handleEndCall}
+          className="w-full mt-6 bg-red-600 hover:bg-red-700 dark:hover:bg-red-500 text-white"
+        >
           End Call Session
         </Button>
       </section>
@@ -445,47 +448,49 @@ export default function CallsPage() {
 
   // Render idle call view
   return (
-    <section className='p-4 md:p-6 lg:p-8 bg-gray-50 min-h-screen'>
-      <div className='flex justify-between items-center mb-6'>
-        <div className='flex items-center gap-2'>
-          <Phone className='w-6 h-6 text-blue-600' />
-          <h1 className='text-2xl md:text-3xl font-bold text-gray-800'>Start a Call</h1>
+    <section className="p-4 md:p-6 lg:p-8 bg-gray-100 dark:bg-gray-900 min-h-screen">
+      <div className="flex justify-between items-center mb-6">
+        <div className="flex items-center gap-2">
+          <Phone className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-200">Start a Call</h1>
         </div>
         <Button
-          variant='ghost'
+          variant="ghost"
           onClick={() => {
             /* Navigate to reports */
           }}
+          className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
         >
           <svg
-            className='w-6 h-6 text-blue-600'
-            fill='none'
-            stroke='currentColor'
-            viewBox='0 0 24 24'
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
           >
             <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth='2'
-              d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
         </Button>
       </div>
-      <div className='space-y-6'>
+      <div className="space-y-6">
         {/* Group Selection */}
-        <div className='bg-white shadow-sm rounded-lg border border-gray-200 p-6'>
-          <div className='flex items-center gap-2 mb-4'>
-            <Users className='w-5 h-5 text-blue-600' />
-            <h2 className='text-lg font-bold text-gray-800'>Select Group</h2>
+        <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <Users className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+            <h2 className="text-lg font-bold text-gray-800 dark:text-gray-200">Select Group</h2>
           </div>
           {isFetchingGroups ? (
-            <p className='text-gray-500'>Loading groups...</p>
+            <p className="text-gray-500 dark:text-gray-400">Loading groups...</p>
           ) : fetchedGroups?.data?.length > 0 ? (
-            <div className='flex flex-wrap gap-2'>
+            <div className="flex flex-wrap gap-2">
               <Button
                 variant={selectedGroup === null ? 'default' : 'outline'}
                 onClick={() => handleGroupSelect(null)}
+                className={selectedGroup === null ? 'bg-red-600 hover:bg-red-700 dark:hover:bg-red-500 text-white' : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-600'}
               >
                 Custom
               </Button>
@@ -494,15 +499,20 @@ export default function CallsPage() {
                   key={group.id}
                   variant={selectedGroup === group.id ? 'default' : 'outline'}
                   onClick={() => handleGroupSelect(group.id)}
+                  className={selectedGroup === group.id ? 'bg-red-600 hover:bg-red-700 dark:hover:bg-red-500 text-white' : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-600'}
                 >
                   {group.group_name}
                 </Button>
               ))}
             </div>
           ) : (
-            <div className='flex items-center gap-2'>
-              <p className='text-gray-500'>No groups available</p>
-              <Button variant='link' onClick={() => fetchGroups()}>
+            <div className="flex items-center gap-2">
+              <p className="text-gray-500 dark:text-gray-400">No groups available</p>
+              <Button
+                variant="link"
+                onClick={() => fetchGroups()}
+                className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
+              >
                 Retry
               </Button>
             </div>
@@ -510,49 +520,56 @@ export default function CallsPage() {
         </div>
 
         {/* Contact Selection */}
-        <div className='bg-white shadow-sm rounded-lg border border-gray-200 p-6'>
-          <div className='flex justify-between items-center mb-4'>
-            <div className='flex items-center gap-2'>
+        <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+          <div className="flex justify-between items-center mb-4">
+            <div className="flex items-center gap-2">
               {/* <AddressBook className="w-5 h-5 text-blue-600" /> */}
-              <h2 className='text-lg font-bold text-gray-800'>Selected Contacts</h2>
+              <h2 className="text-lg font-bold text-gray-800 dark:text-gray-200">Selected Contacts</h2>
             </div>
-            <Button variant='link' onClick={() => setIsContactDialogOpen(true)}>
+            <Button
+              variant="link"
+              onClick={() => setIsContactDialogOpen(true)}
+              className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
+            >
               {selectedGroup ? 'Change' : 'Select'}
             </Button>
           </div>
           {selectedContacts.length > 0 ? (
             <div>
-              <p className='text-gray-500 mb-4'>
+              <p className="text-gray-500 dark:text-gray-400 mb-4">
                 {selectedContacts.length} contacts selected
               </p>
-              <div className='flex flex-wrap gap-4'>
+              <div className="flex flex-wrap gap-4">
                 {selectedContacts.slice(0, 5).map((contact: any) => (
-                  <div key={contact.id} className='text-center'>
-                    <div className='w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-1'>
-                      <Users className='w-6 h-6 text-blue-600' />
+                  <div key={contact.id} className="text-center">
+                    <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mb-1">
+                      <Users className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                     </div>
-                    <p className='text-xs text-gray-800 truncate w-12'>{contact.name}</p>
+                    <p className="text-xs text-gray-800 dark:text-gray-200 truncate w-12">{contact.name}</p>
                   </div>
                 ))}
                 {selectedContacts.length > 5 && (
-                  <div className='text-center'>
-                    <div className='w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mb-1'>
-                      <span className='font-bold text-gray-800'>
+                  <div className="text-center">
+                    <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center mb-1">
+                      <span className="font-bold text-gray-800 dark:text-gray-200">
                         +{selectedContacts.length - 5}
                       </span>
                     </div>
-                    <p className='text-xs text-gray-800'>More</p>
+                    <p className="text-xs text-gray-800 dark:text-gray-200">More</p>
                   </div>
                 )}
               </div>
             </div>
           ) : (
-            <div className='text-center p-6 bg-gray-50 rounded-lg'>
-              <Users className='w-12 h-12 text-gray-400 mx-auto' />
-              <p className='mt-2 text-gray-500'>
+            <div className="text-center p-6 bg-gray-50 dark:bg-gray-700 rounded-lg">
+              <Users className="w-12 h-12 text-gray-400 dark:text-gray-500 mx-auto" />
+              <p className="mt-2 text-gray-500 dark:text-gray-400">
                 No contacts selected. Select a group or add contacts.
               </p>
-              <Button className='mt-4' onClick={() => setIsContactDialogOpen(true)}>
+              <Button
+                onClick={() => setIsContactDialogOpen(true)}
+                className="mt-4 bg-red-600 hover:bg-red-700 dark:hover:bg-red-500 text-white"
+              >
                 Select Contacts
               </Button>
             </div>
@@ -560,52 +577,51 @@ export default function CallsPage() {
         </div>
 
         {/* Voice Message */}
-        <div className='bg-white shadow-sm rounded-lg border border-gray-200 p-6'>
-          <div className='flex items-center gap-2 mb-4'>
+        <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+          <div className="flex items-center gap-2 mb-4">
             {/* <Microphone className="w-5 h-5 text-blue-600" /> */}
-            <h2 className='text-lg font-bold text-gray-800'>Voice Message</h2>
+            <h2 className="text-lg font-bold text-gray-800 dark:text-gray-200">Voice Message</h2>
             {!user?.is_premium && (
-              <span className='px-2 py-1 text-xs text-blue-600 bg-blue-100 rounded'>
+              <span className="px-2 py-1 text-xs text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900 rounded">
                 Premium
               </span>
             )}
           </div>
           <Button
-            variant='outline'
-            className={`w-full justify-between ${isRecording ? 'bg-red-100' : ''} ${
-              !user?.is_premium ? 'opacity-50' : ''
-            }`}
+            variant="outline"
+            className={`w-full justify-between bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-600 ${isRecording ? 'bg-red-100 dark:bg-red-900' : ''} ${!user?.is_premium ? 'opacity-50' : ''
+              }`}
             onClick={handleRecordMessage}
             disabled={!user?.is_premium}
           >
-            <span className={isRecording ? 'text-red-600' : 'text-gray-700'}>
+            <span className={isRecording ? 'text-red-600 dark:text-red-400' : 'text-gray-700 dark:text-gray-300'}>
               {isRecording
                 ? 'Recording...'
                 : recordedMessage
-                ? 'Re-record Message'
-                : 'Record Voice Message'}
+                  ? 'Re-record Message'
+                  : 'Record Voice Message'}
             </span>
             {/* <Microphone className={`w-5 h-5 ${isRecording ? 'text-red-600' : 'text-gray-500'}`} /> */}
           </Button>
           {!user?.is_premium && (
-            <p className='mt-2 text-sm text-gray-500'>
+            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
               Upgrade to Pro to record voice messages
             </p>
           )}
           {recordedMessage && (
-            <div className='mt-4 p-3 bg-gray-50 rounded-lg'>
-              <p className='text-gray-700'>{recordedMessage}</p>
+            <div className="mt-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+              <p className="text-gray-700 dark:text-gray-300">{recordedMessage}</p>
             </div>
           )}
         </div>
 
         {/* Start Call Button */}
         <Button
-          className={`w-full ${selectedContacts.length === 0 ? 'opacity-50' : ''}`}
+          className={`w-full bg-red-600 hover:bg-red-700 dark:hover:bg-red-500 text-white ${selectedContacts.length === 0 ? 'opacity-50' : ''}`}
           onClick={handleStartCall}
           disabled={selectedContacts.length === 0}
         >
-          <Phone className='w-5 h-5 mr-2' />
+          <Phone className="w-5 h-5 mr-2" />
           Start Calling{' '}
           {selectedContacts.length > 0 && `(${selectedContacts.length} contacts)`}
         </Button>
@@ -613,46 +629,46 @@ export default function CallsPage() {
 
       {/* Contact Selection Dialog */}
       <Dialog open={isContactDialogOpen} onOpenChange={setIsContactDialogOpen}>
-        <DialogContent className='sm:max-w-[600px]'>
+        <DialogContent className="sm:max-w-[600px] bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
           <DialogHeader>
-            <DialogTitle>Select Contacts</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-gray-900 dark:text-white">Select Contacts</DialogTitle>
+            <DialogDescription className="text-gray-600 dark:text-gray-400">
               Import contacts via Excel/CSV. Web browsers cannot access device contacts.
             </DialogDescription>
           </DialogHeader>
-          <div className='py-4'>
-            <div className='flex items-center justify-between border border-gray-200 rounded-lg p-3'>
-              <span className='flex items-center gap-2'>
+          <div className="py-4">
+            <div className="flex items-center justify-between border border-gray-200 dark:border-gray-700 rounded-lg p-3 bg-white dark:bg-gray-700">
+              <span className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
                 {/* <Upload className="w-5 h-5 text-gray-500" /> */}
                 Import from Excel/CSV
               </span>
-              <Button variant='ghost' size='sm' asChild>
+              <Button variant="ghost" size="sm" asChild className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
                 <label>
                   <input
-                    type='file'
-                    accept='.xlsx, .xls, .csv'
+                    type="file"
+                    accept=".xlsx, .xls, .csv"
                     onChange={handleFileImport}
-                    className='hidden'
+                    className="hidden"
                   />
                   {/* <Upload className="w-4 h-4 text-gray-500" /> */}
                 </label>
               </Button>
             </div>
             {selectedContacts.length > 0 && (
-              <Table className='mt-4'>
+              <Table className="mt-4">
                 <TableHeader>
-                  <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Phone Number</TableHead>
+                  <TableRow className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <TableHead className="text-gray-700 dark:text-gray-300">Name</TableHead>
+                    <TableHead className="text-gray-700 dark:text-gray-300">Phone Number</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {selectedContacts.map((contact) => (
-                    <TableRow key={contact.id}>
-                      <TableCell className='font-medium text-gray-800'>
+                    <TableRow key={contact.id} className="text-gray-900 dark:text-gray-300">
+                      <TableCell className="font-medium text-gray-800 dark:text-gray-200">
                         {contact.name}
                       </TableCell>
-                      <TableCell>{contact.phoneNumbers[0]?.number}</TableCell>
+                      <TableCell className="text-gray-900 dark:text-gray-300">{contact.phoneNumbers[0]?.number}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -660,7 +676,12 @@ export default function CallsPage() {
             )}
           </div>
           <DialogFooter>
-            <Button onClick={() => setIsContactDialogOpen(false)}>Done</Button>
+            <Button
+              onClick={() => setIsContactDialogOpen(false)}
+              className="bg-red-600 hover:bg-red-700 dark:hover:bg-red-500 text-white"
+            >
+              Done
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
