@@ -93,21 +93,21 @@ const features = [
     title: "AI-Powered Calling",
     description: "Revolutionary voice technology with 99.9% accuracy",
     stats: "10M+ calls",
-    color: "from-red-500 to-red-600",
+    color: "from-red-600 to-red-700",
   },
   {
     icon: Shield,
     title: "Enterprise Security",
     description: "Bank-level encryption with SOC 2 compliance",
     stats: "256-bit SSL",
-    color: "from-red-400 to-red-500",
+    color: "from-red-500 to-red-600",
   },
   {
     icon: Zap,
     title: "Lightning Performance",
     description: "Sub-second response times across global networks",
     stats: "<100ms latency",
-    color: "from-red-600 to-red-700",
+    color: "from-red-700 to-red-800",
   },
 ];
 
@@ -165,7 +165,6 @@ export default function RegisterPage() {
         role: "USER",
       };
 
-      // Simulate API call (replace with actual API call)
       await signup(payload);
       setPhoneNumber(data.phoneNumber);
       setPassword(data.password);
@@ -186,7 +185,6 @@ export default function RegisterPage() {
         phoneNumber: phoneNumberCleaned,
         otp,
       });
-      // Sign in after OTP verification
       await signIn(phoneNumberCleaned, password);
       router.push("/dashboard");
     } catch (error: any) {
@@ -198,77 +196,83 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden">
-      <div className="relative z-10 min-h-screen flex">
+    <div className="min-h-screen bg-background text-foreground relative overflow-hidden" data-theme="light">
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-20 w-96 h-96 bg-red-600/10 dark:bg-red-600/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-20 w-[500px] h-[500px] bg-red-600/10 dark:bg-red-600/20 rounded-full blur-3xl" />
+      </div>
+
+      <div className="relative z-10 min-h-screen flex flex-col lg:flex-row">
         {/* Left Side - Features */}
         <motion.div
-          className="hidden lg:flex lg:w-1/2 flex-col justify-center px-12 xl:px-20 bg-gray-50"
+          className="lg:w-1/2 flex flex-col justify-center px-6 xl:px-12 backdrop-blur-lg bg-white/70 dark:bg-gray-800/70 lg:shadow-xl"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
-          <div className="max-w-lg">
-            {/* Brand Header */}
-            <div className="flex items-center space-x-4 mb-12">
-              <Image
-                src="/images/flaro-logo.svg"
-                alt="Flaro Logo"
-                width={48}
-                height={48}
-                className="object-contain"
-              />
+          <div className="max-w-xl mx-auto">
+            <div className="flex items-center space-x-4 mb-6">
+              <div className="relative">
+                <div className="absolute -top-1 -right-1 w-6 h-6 bg-green-400 rounded-full flex items-center justify-center">
+                  <div className="w-2 h-2 bg-white rounded-full animate-ping" />
+                </div>
+                <Image
+                  src="/images/flaro-logo.svg"
+                  alt="Flaro Logo"
+                  width={48}
+                  height={48}
+                  className="object-contain"
+                />
+              </div>
               <div>
-                <span className="text-3xl font-bold text-gray-900">Flaro</span>
+                <span className="text-3xl font-bold text-gray-900 dark:text-white">Flaro</span>
                 <div className="flex items-center space-x-2 mt-1">
                   <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                  <span className="text-gray-600 text-sm">
+                  <span className="text-gray-600 dark:text-gray-300 text-sm">
                     Trusted by 50,000+ teams
                   </span>
                 </div>
               </div>
             </div>
 
-            {/* Hero Content */}
-            <h1 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4 leading-tight">
               Scale Your
-              <span className="block text-red-600 relative">
+              <span className="block text-red-600 dark:text-red-400 relative">
                 Business Calls
-                <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-red-400 to-red-600 rounded-full" />
+                <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-red-500 to-red-700 rounded-full" />
               </span>
             </h1>
-            <p className="text-xl text-gray-600 mb-12 leading-relaxed">
-              Join businesses revolutionizing communications with AI-powered
-              calling technology.
+            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+              Join businesses revolutionizing communications with AI-powered calling technology.
             </p>
 
-            {/* Feature Cards */}
-            <div className="space-y-6">
+            <div className="space-y-4">
               {features.map((feature, index) => (
                 <motion.div
                   key={feature.title}
-                  className="group p-6 rounded-3xl bg-white border border-gray-100 hover:shadow-lg transition-all duration-300 cursor-pointer"
+                  className="group p-4 rounded-3xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-all duration-300"
                   variants={featureVariants}
                   initial="hidden"
                   animate="visible"
                   custom={index}
                   whileHover={{ scale: 1.05 }}
                 >
-                  <div className="flex items-start space-x-4">
+                  <div className="flex items-start space-x-3">
                     <div
-                      className={`w-12 h-12 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg`}
+                      className={`w-12 h-12 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center shadow-lg`}
                     >
                       <feature.icon className="w-6 h-6 text-white" />
                     </div>
                     <div className="flex-1">
-                      <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-gray-900 font-bold text-lg">
+                      <div className="flex items-center justify-between mb-1">
+                        <h3 className="text-gray-900 dark:text-white font-bold text-lg">
                           {feature.title}
                         </h3>
-                        <div className="bg-gradient-to-r from-green-400 to-emerald-400 text-white text-xs px-3 py-1 rounded-full font-medium">
+                        <div className="bg-gradient-to-r from-green-400 to-emerald-400 text-white text-xs px-2 py-1 rounded-full font-medium">
                           {feature.stats}
                         </div>
                       </div>
-                      <p className="text-gray-600 leading-relaxed">
+                      <p className="text-gray-600 dark:text-gray-300 text-sm">
                         {feature.description}
                       </p>
                     </div>
@@ -281,14 +285,14 @@ export default function RegisterPage() {
 
         {/* Right Side - Registration Form */}
         <motion.div
-          className="w-full lg:w-1/2 flex items-center justify-center  lg:px-6"
+          className="w-full lg:w-1/2 flex items-center justify-center px-6 lg:px-12"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
-          <Card className="w-full max-w-md bg-white shadow-2xl rounded-3xl border border-gray-100">
-            <CardHeader className="text-center  ">
-              <div className="flex justify-center mb-4 mt-2 lg:hidden">
+          <Card className="w-full max-w-md bg-white dark:bg-gray-900 shadow-xl rounded-3xl border border-gray-100 dark:border-gray-800">
+            <CardHeader className="text-center pb-6 pt-6">
+              <div className="flex justify-center mb-2 mt-2 lg:hidden">
                 <Image
                   src="/images/flaro-logo.svg"
                   alt="Flaro Logo"
@@ -297,17 +301,17 @@ export default function RegisterPage() {
                   className="object-contain"
                 />
               </div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-3">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
                 {showOTP ? "Verify Your Phone" : "Create Account"}
               </h2>
-              <p className="text-gray-600 text-lg">
+              <p className="text-gray-600 dark:text-gray-400 text-sm">
                 {showOTP
                   ? "Enter the OTP sent to your phone"
                   : "Start your free trial today"}
               </p>
             </CardHeader>
 
-            <CardContent className="space-y-8 pb-6 px-4">
+            <CardContent className="space-y-6 pb-6 px-4">
               {!showOTP ? (
                 <>
                   <DynamicForm
@@ -319,46 +323,47 @@ export default function RegisterPage() {
                         type="submit"
                         disabled={isSignupLoading}
                         onClick={handleSubmit}
-                        className={`w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-4 rounded-xl transition-all duration-300 text-lg group ${
-                          isSignupLoading ? "opacity-50 cursor-not-allowed" : ""
-                        }`}
+                        className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold py-3 rounded-xl transition-all duration-300 text-lg"
                       >
                         {isSignupLoading ? (
-                          <motion.div className="flex items-center">
-                            <Loader2 className="w-5 h-5 mr-2" />
-                            Creating Account...
+                          <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                            className="flex items-center"
+                          >
+                            <Loader2 className="w-5 h-5 mr-2" /> Creating Account...
                           </motion.div>
                         ) : (
                           <>
                             <span>Create Account</span>
-                            <ArrowRight className="ml-2 w-5 h-5 " />
+                            <ArrowRight className="ml-2 w-5 h-5" />
                           </>
                         )}
                       </Button>
                     )}
                   />
-                  <div className="flex items-start space-x-2">
+                  <div className="flex items-start space-x-2 text-sm">
                     <input
                       type="checkbox"
                       id="terms"
-                      className="mt-1 rounded border-gray-300 bg-white text-red-500 focus:ring-red-500 focus:ring-offset-0"
+                      className="mt-1 rounded accent-red-600 dark:accent-red-400"
                       required
                     />
                     <label
                       htmlFor="terms"
-                      className="text-sm text-gray-600 leading-relaxed"
+                      className="text-gray-600 dark:text-gray-400 leading-relaxed"
                     >
                       By signing up, you agree to our{" "}
                       <Link
                         href="/terms"
-                        className="text-red-600 hover:text-red-700 transition-colors"
+                        className="text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors"
                       >
                         Terms of Service
                       </Link>{" "}
                       and{" "}
                       <Link
                         href="/privacy"
-                        className="text-red-600 hover:text-red-700 transition-colors"
+                        className="text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors"
                       >
                         Privacy Policy
                       </Link>
@@ -367,7 +372,7 @@ export default function RegisterPage() {
                   </div>
                 </>
               ) : (
-                <div className="space-y-4 ">
+                <div className="space-y-4">
                   <CustomOTPInput
                     value={otp}
                     onChange={setOtp}
@@ -378,27 +383,20 @@ export default function RegisterPage() {
                     type="button"
                     disabled={isVerifyLoading}
                     onClick={handleOTPSubmit}
-                    className={`w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-4 rounded-xl transition-all duration-300 text-lg group ${
-                      isVerifyLoading ? "opacity-50 cursor-not-allowed" : ""
-                    }`}
+                    className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold py-3 rounded-xl transition-all duration-300 text-lg"
                   >
                     {isVerifyLoading ? (
                       <motion.div
                         animate={{ rotate: 360 }}
-                        transition={{
-                          duration: 1,
-                          repeat: Infinity,
-                          ease: "linear",
-                        }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                         className="flex items-center"
                       >
-                        <Loader2 className="w-5 h-5 mr-2" />
-                        Verifying OTP...
+                        <Loader2 className="w-5 h-5 mr-2" /> Verifying OTP...
                       </motion.div>
                     ) : (
                       <>
                         <span>Verify OTP</span>
-                        <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                        <ArrowRight className="ml-2 w-5 h-5" />
                       </>
                     )}
                   </Button>
@@ -409,38 +407,27 @@ export default function RegisterPage() {
                 <>
                   <div className="relative">
                     <div className="absolute inset-0 flex items-center">
-                      <div className="w-full border-t border-gray-200" />
+                      <div className="w-full border-t border-gray-200 dark:border-gray-700" />
                     </div>
                     <div className="relative flex justify-center text-sm">
-                      <span className="px-4 bg-white text-gray-500">
+                      <span className="px-2 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400">
                         Or sign up with
                       </span>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
-                    <Button
-                      variant="outline"
-                      className="bg-white border-gray-200 text-gray-700 hover:bg-gray-50 rounded-xl h-12 group"
-                    >
-                      <Twitter className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-300" />
-                      Twitter
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button variant="outline" className="rounded-xl h-10">
+                      <Twitter className="w-5 h-5 mr-2" /> Twitter
                     </Button>
-                    <Button
-                      variant="outline"
-                      className="bg-white border-gray-200 text-gray-700 hover:bg-gray-50 rounded-xl h-12 group"
-                    >
-                      <Github className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-300" />
-                      Github
+                    <Button variant="outline" className="rounded-xl h-10">
+                      <Github className="w-5 h-5 mr-2" /> Github
                     </Button>
                   </div>
 
-                  <p className="text-center text-gray-600">
-                    Already have an account?{" "}
-                    <Link
-                      href="/login"
-                      className="text-red-600 hover:text-red-700 font-semibold"
-                    >
+                  <p className="text-center text-gray-600 dark:text-gray-400 text-sm">
+                    Already have an account?{' '}
+                    <Link href="/login" className="text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 font-semibold">
                       Sign In
                     </Link>
                   </p>

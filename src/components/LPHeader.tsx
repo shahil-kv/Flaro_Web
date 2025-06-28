@@ -94,7 +94,7 @@ const LPHeader = () => {
                     {/* Desktop Buttons */}
                     <div className="hidden md:flex items-center space-x-3">
                         <div >
-                            <Button variant="ghost" className="font-medium hover:bg-orange-50 dark:hover:bg-orange-950/20 text-gray-700 dark:text-gray-300">
+                            <Button variant="ghost" className="font-semibold text-gray-700 dark:text-gray-300 hover:bg-orange-100 dark:hover:bg-orange-900/30 transition-colors px-5 py-2 rounded-lg">
                                 <Link href="/login">
                                     Sign In
                                 </Link>
