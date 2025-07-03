@@ -49,7 +49,7 @@ html {
     --glass-background: rgba(245, 245, 245, 0.15);
     --glass-border: rgba(209, 213, 219, 0.25);
     --glass-shadow: rgba(0, 0, 0, 0.03);
-    --glass-card-background: rgba(245, 245, 245, 0.85);
+    --glass-card-background: rgba(245, 245, 245, 0.904);
     --glass-card-border: rgba(209, 213, 219, 0.35);
     --glass-card-shadow: rgba(0, 0, 0, 0.06);
     --glass-effect-dark-background: rgba(255, 255, 255, 0.95);
@@ -130,7 +130,7 @@ html {
     --glass-background: rgba(0, 0, 0, 0.2);
     --glass-border: rgba(255, 255, 255, 0.08);
     --glass-shadow: rgba(255, 0, 0, 0.08);
-    --glass-card-background: rgba(31, 41, 55, 0.8);
+    --glass-card-background: rgba(31, 41, 55, 0.884);
     --glass-card-border: rgba(255, 0, 0, 0.08);
     --glass-card-shadow: rgba(255, 0, 0, 0.12);
     --glass-effect-dark-background: rgba(15, 15, 15, 0.8);
@@ -442,8 +442,8 @@ html {
 
   .glass-card {
     background: var(--glass-card-background);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
     border: 1px solid var(--glass-card-border);
     box-shadow: 0 8px 32px 0 var(--glass-card-shadow);
     will-change: transform;
