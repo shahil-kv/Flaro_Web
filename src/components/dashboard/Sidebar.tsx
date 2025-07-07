@@ -94,7 +94,7 @@ export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
           } bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100`}
       >
         {/* Sidebar Header */}
-        <div className="px-4 py-4 flex items-center justify-between border-b border-gray-200 dark:border-gray-700">
+        <div className="px-4 py-3 flex items-center justify-between border-b border-gray-200 dark:border-gray-700">
           {isOpen ? (
             <div className="flex items-center gap-2 w-full justify-center">
               <Image
