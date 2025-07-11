@@ -137,7 +137,7 @@ export default function Header({ }: HeaderProps) {
       </div>
 
       {/* Right side actions */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3 mr-4">
         {/* Theme Toggle */}
         <Button
           variant="ghost"

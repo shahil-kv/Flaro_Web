@@ -3,24 +3,48 @@ import CallTrendChart from "@/components/dashboard/CallTrendChart";
 import CampaignAnalytics from "@/components/dashboard/CampaignAnalytics";
 import CampaignOverviewCards from "@/components/dashboard/CampaignOverviewCards";
 import ExportReports from "@/components/dashboard/ExportReports";
+import GroupHistory from "@/components/dashboard/GroupHistory";
 import SmartInsights from "@/components/dashboard/SmartInsights";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar, ChartNoAxesCombined, Target, TrendingUp, Users } from "lucide-react";
-import { useState } from "react";
+import { useAuth } from "@/context/AuthContext";
+import { useGet } from "@/lib/useApi";
+import { Calendar, ChartNoAxesCombined, History, Target, TrendingUp, Users } from "lucide-react";
+import { useMemo, useState } from "react";
 
 export default function HomePage() {
   const [selectedTimeframe, setSelectedTimeframe] = useState("weekly");
   const [selectedCampaign, setSelectedCampaign] = useState("all");
+  const { user } = useAuth();
+  const stableUserId = useMemo(
+    () => (user?.id != null ? String(user.id) : undefined),
+    [user?.id],
+  );
+
+  // Fetch analytics overview data
+  const {
+    data: analyticsData,
+  } = useGet<{ data: any }, { userId: string | undefined }>(
+    '/report/getOverview',
+    { userId: stableUserId },
+    {
+      showErrorToast: true,
+      showSuccessToast: false,
+      showLoader: true,
+      enabled: !!stableUserId,
+    },
+  );
+  console.log("Analytics Data:", analyticsData);
+
   return (
 
-    <div className="min-h-full bg-gradient-to-br from-slate-100 to-slate-100 dark:from-slate-900 dark:to-slate-800 p-4 md:p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
+    <div className="min-h-full bg-gradient-to-br from-slate-100 to-slate-100 dark:from-slate-900 dark:to-slate-800 p-4 md:p-6 md:px-8">
+      <div className="max-w-full mx-auto space-y-6">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <h1 className="text-3xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-r from-red-600 to-red-700 rounded-lg flex items-center justify-center">
                 <ChartNoAxesCombined className="w-5 h-5 text-white" />
               </div>
               Flaro Analytics
@@ -65,10 +89,14 @@ export default function HomePage() {
 
         {/* Main Content Tabs */}
         <Tabs defaultValue="trends" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 lg:w-96">
+          <TabsList className="grid w-full grid-cols-4 lg:w-[32rem]">
             <TabsTrigger value="trends" className="flex items-center gap-2">
               <TrendingUp className="w-4 h-4" />
-              Trends
+              Overview
+            </TabsTrigger>
+            <TabsTrigger value="history" className="flex items-center gap-2">
+              <History className="w-4 h-4" />
+              History
             </TabsTrigger>
             <TabsTrigger value="campaigns" className="flex items-center gap-2">
               <Target className="w-4 h-4" />
@@ -84,6 +112,10 @@ export default function HomePage() {
             <CallTrendChart timeframe={selectedTimeframe} campaign={selectedCampaign} />
           </TabsContent>
 
+          <TabsContent value="history" className="space-y-6">
+            <GroupHistory />
+          </TabsContent>
+
           <TabsContent value="campaigns" className="space-y-6">
             <CampaignAnalytics selectedCampaign={selectedCampaign} />
           </TabsContent>
@@ -96,41 +128,3 @@ export default function HomePage() {
     </div>
   );
 }
-
-
-// <div className=" bg-gray-900 text-white flex flex-col items-center justify-center space-y-6">
-//   <h1 className="text-4xl font-bold">Welcome to CoinVerse</h1>
-//   <p className="text-gray-400">Access your dashboard sections below:</p>
-//   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-//     <Link href="/dashboard/calls">
-//       <div className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 text-center">
-//         <h2 className="text-xl font-semibold">Calls</h2>
-//         <p className="text-gray-400">Manage your calls</p>
-//       </div>
-//     </Link>
-//     <Link href="/dashboard/groups">
-//       <div className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 text-center">
-//         <h2 className="text-xl font-semibold">Groups</h2>
-//         <p className="text-gray-400">View your groups</p>
-//       </div>
-//     </Link>
-//     <Link href="/dashboard/analytics">
-//       <div className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 text-center">
-//         <h2 className="text-xl font-semibold">Analytics</h2>
-//         <p className="text-gray-400">Analyze your data</p>
-//       </div>
-//     </Link>
-//     <Link href="/dashboard/messages">
-//       <div className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 text-center">
-//         <h2 className="text-xl font-semibold">Messages</h2>
-//         <p className="text-gray-400">Check your messages</p>
-//       </div>
-//     </Link>
-//     <Link href="/dashboard/settings">
-//       <div className="bg-gray-800 p-4 rounded-lg hover:bg-gray-700 text-center">
-//         <h2 className="text-xl font-semibold">Settings</h2>
-//         <p className="text-gray-400">Adjust your settings</p>
-//       </div>
-//     </Link>
-//   </div>
-// </div>

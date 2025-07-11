@@ -63,7 +63,7 @@ const CallTrendChart = ({ timeframe }: CallTrendChartProps) => {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <ChartContainer config={chartConfig} className="h-80">
+                    <ChartContainer config={chartConfig} className="h-80 w-full">
                         {chartType === "area" ? (
                             <AreaChart data={data}>
                                 <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
@@ -72,6 +72,9 @@ const CallTrendChart = ({ timeframe }: CallTrendChartProps) => {
                                 <ChartTooltip content={<ChartTooltipContent />} />
                                 <Area type="monotone" dataKey="calls" stackId="1" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.6} />
                                 <Area type="monotone" dataKey="answered" stackId="2" stroke="#10b981" fill="#10b981" fillOpacity={0.6} />
+                                <Area type="monotone" dataKey="missed" stackId="3" stroke="#f59e0b" fill="#f59e0b" fillOpacity={0.6} />
+                                <Area type="monotone" dataKey="rejected" stackId="4" stroke="#ef4444" fill="#ef4444" fillOpacity={0.6} />
+
                             </AreaChart>
                         ) : chartType === "line" ? (
                             <LineChart data={data}>
