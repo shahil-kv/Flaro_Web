@@ -7,9 +7,7 @@ import VoiceWaveAnimation from './ui/voiceWaveAnimation';
 const LPHero = () => {
 
     const handleGetStarted = () => {
-        // Handle the "Get Started" button click
-        console.log("Get Started clicked");
-
+        window.location.href = "/login";
     };
 
 
