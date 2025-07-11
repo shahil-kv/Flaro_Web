@@ -37,7 +37,8 @@ const refreshTokens = async (): Promise<string> => {
     }
 
     // Store new tokens
-    const newExpiry = new Date(Date.now() + 1 * 60 * 1000); // 1 minute for debugging
+    const newExpiry = new Date(Date.now() + 15 * 60 * 1000);
+    // 1 minute for debugging
     localStorage.setItem("access_token", newAccessToken);
     localStorage.setItem("refresh_token", newRefreshToken);
     localStorage.setItem("token_expiry", newExpiry.toISOString());

@@ -117,7 +117,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       console.log('[AuthContext] signIn success', { user, newTokens });
 
-      const tokenExpiry = new Date(Date.now() + 1 * 60 * 1000); // 1 minute for debugging
+      const tokenExpiry = new Date(Date.now() + 15 * 60 * 1000);
+
       localStorage.setItem('access_token', newTokens.accessToken);
       localStorage.setItem('refresh_token', newTokens.refreshToken);
       localStorage.setItem('token_expiry', tokenExpiry.toISOString());

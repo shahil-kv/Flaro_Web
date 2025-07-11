@@ -1,8 +1,9 @@
 export interface Step {
-    id: number;
+    id: string; // was number | string
     question: string;
-    answerType: string;
-    branch?: { [key: string]: number };
+    malayalam?: string;
+    answerType?: string;
+    branch?: { [answer: string]: string };
 }
 
 export interface Workflow {
