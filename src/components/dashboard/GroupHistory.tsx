@@ -3,8 +3,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog";
-import { Clock, Users, PhoneCall, Building2, X, UserCheck, Search, DollarSign, Headphones, Megaphone, Heart, Wrench, Box } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Clock, Users, PhoneCall, Building2, UserCheck, Search, DollarSign, Headphones, Megaphone, Heart, Wrench, Box } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Group, Contact, PerformanceMetric } from "@/types/groupHistory.types"; // Adjust the import path as necessary
 import { Input } from "../ui/input";
@@ -101,13 +101,13 @@ const GroupCard = memo(({ group, onClick, index }: GroupCardProps) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: index * 0.1 }}
             onClick={() => onClick(group.id)}
-            className="p-6 bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl hover:shadow-xl hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-300 cursor-pointer group"
+            className="px-6 py-4 bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl hover:shadow-xl hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-300 cursor-pointer group"
             role="button"
             tabIndex={0}
             onKeyDown={(e) => e.key === "Enter" && onClick(group.id)}
             aria-label={`View details for ${group.name}`}
         >
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                     <div className={`w-12 h-12 bg-gradient-to-r ${COLORS.PRIMARY} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                         <IconComponent className="h-7 w-7 text-white" aria-label={`${group.name} icon`} />
@@ -350,21 +350,13 @@ const GroupHistory = () => {
             <AnimatePresence>
                 {selectedGroupId && selectedGroup && (
                     <Dialog open={!!selectedGroupId} onOpenChange={() => setSelectedGroupId(null)}>
-                        <DialogContent className="max-w-7xl max-h-[82vh] overflow-y-auto bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl">
-                            <DialogHeader>
+                        <DialogContent className="max-w-7xl max-h-[82vh] overflow-y-auto bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl " >
+                            <DialogHeader className="mb-4 border-b border-gray-200 dark:border-gray-700 pb-4">
                                 <div className="flex items-center justify-between">
                                     <DialogTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
                                         <Building2 className="w-6 h-6 text-blue-600" />
                                         {selectedGroup.name} Details
                                     </DialogTitle>
-                                    <DialogClose asChild>
-                                        <button
-                                            className="p-2 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600"
-                                            aria-label="Close dialog"
-                                        >
-                                            <X className="w-5 h-5 text-gray-600 dark:text-gray-400" />
-                                        </button>
-                                    </DialogClose>
                                 </div>
                             </DialogHeader>
                             <div className="space-y-6 p-6">

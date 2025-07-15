@@ -4,16 +4,12 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/
 import { LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, BarChart, Bar } from "recharts";
 import { TrendingUp } from "lucide-react";
 import { useState } from "react";
-
-interface CallTrendChartProps {
-    timeframe: string;
-    campaign: string;
-}
+import { CallData, CallTrendChartProps, ChartType } from "@/types/callTrendChart.types";
 
 const CallTrendChart = ({ timeframe }: CallTrendChartProps) => {
-    const [chartType, setChartType] = useState("area");
+    const [chartType, setChartType] = useState<ChartType>("area");
 
-    const data = [
+    const data: CallData[] = [
         { date: "Jan 1", calls: 1200, answered: 840, missed: 240, rejected: 120 },
         { date: "Jan 2", calls: 1450, answered: 1015, missed: 290, rejected: 145 },
         { date: "Jan 3", calls: 1180, answered: 826, missed: 236, rejected: 118 },
