@@ -6,12 +6,12 @@ export interface Step {
     branch?: { [answer: string]: string };
 }
 
-export interface Workflow {
-    id: number;
-    name: string;
-    description: string;
-    steps: Step[];
-}
+// export interface Workflow {
+//     id: number;
+//     name: string;
+//     description: string;
+//     steps: Step[];
+// }
 
 export interface WorkflowResponse {
     id: number;
@@ -28,4 +28,38 @@ export interface ManageWorkflowPayload {
     description: string;
     steps: Step[];
     opsMode: 'INSERT' | 'UPDATE' | 'DELETE';
-} 
+}
+////
+export interface WorkflowNode {
+    id: string;
+    type: 'start' | 'question' | 'action' | 'end';
+    position: { x: number; y: number };
+    data: {
+        label: string;
+        question?: string;
+        answerType?: 'yes_no' | 'text' | 'number' | 'multiple_choice';
+        options?: string[];
+        action?: string;
+        nextNode?: string;
+        yesNode?: string;
+        noNode?: string;
+    };
+}
+
+export interface WorkflowEdge {
+    id: string;
+    source: string;
+    target: string;
+    label?: string;
+}
+
+export interface Workflow {
+    id: string;
+    name: string;
+    description: string;
+    nodes: WorkflowNode[];
+    edges: WorkflowEdge[];
+    createdAt: Date;
+    updatedAt: Date;
+    isActive: boolean;
+}
