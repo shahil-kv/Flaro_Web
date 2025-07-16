@@ -121,7 +121,7 @@ export function WorkflowCanvas({
     };
 
     return (
-        <div className="h-full relative overflow-hidden bg-gray-100 dark:bg-gray-800">
+        <div className="h-full relative overflow-hidden bg-gray-100 dark:bg-gray-900">
             {/* Canvas Controls */}
             <div className="absolute top-4 right-4 z-10 flex flex-col space-y-2">
                 {/* Drag Mode Toggle */}

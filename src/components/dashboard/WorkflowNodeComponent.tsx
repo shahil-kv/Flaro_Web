@@ -208,7 +208,7 @@ export function WorkflowNodeComponent({
                     )}
                 </div>
 
-                {/* Connection Points */}
+                {/* Output Connection Point - Right Side */}
                 {node.type !== "end" && (
                     <div
                         className="absolute -right-2 top-1/2 transform -translate-y-1/2 group/output z-30"
@@ -217,9 +217,10 @@ export function WorkflowNodeComponent({
                             if (connecting) {
                                 onCompleteConnection(node.id);
                             } else {
+                                // Calculate the exact position of the output connection point
                                 const position = {
-                                    x: node.position.x + 200,
-                                    y: node.position.y + 40,
+                                    x: node.position.x + 192, // Node width (192px)
+                                    y: node.position.y + 40,   // Half of node height
                                 };
                                 onStartConnection(node.id, node.type, position);
                             }
@@ -245,6 +246,7 @@ export function WorkflowNodeComponent({
                     </div>
                 )}
 
+                {/* Input Connection Point - Left Side */}
                 {node.type !== "start" && (
                     <div
                         className="absolute -left-2 top-1/2 transform -translate-y-1/2 group/input z-30"
