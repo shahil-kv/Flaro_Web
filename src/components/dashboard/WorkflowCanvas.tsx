@@ -450,9 +450,7 @@ export const WorkflowCanvas = memo(
                     isFullscreen ? "fixed inset-0 z-50 h-screen w-screen" : "h-full w-full",
                     "bg-[radial-gradient(circle,#9ca3af_1px,transparent_1px)] bg-[length:20px_20px]"
                 )}
-                style={{
-                    backgroundPosition: `${pan.x}px ${pan.y}px`,
-                }}
+
                 role="region"
                 aria-label="Workflow Canvas"
                 tabIndex={0}
@@ -536,9 +534,9 @@ export const WorkflowCanvas = memo(
                             key={index}
                             className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 p-3"
                         >
-                            <div className="text-xs font-semibold text-gray-600 dark:text-gray-300 mb-2 px-2">
+                            {/* <div className="text-xs font-semibold text-gray-600 dark:text-gray-300 mb-2 px-2">
                                 {section.title}
-                            </div>
+                            </div> */}
                             <div
                                 className={cn(
                                     "flex flex-col space-y-1",
@@ -556,14 +554,14 @@ export const WorkflowCanvas = memo(
                                             btn.type === "mode" && dragMode === btn.mode
                                                 ? "bg-blue-600 hover:bg-blue-700 text-white shadow-md"
                                                 : btn.label.includes("Fullscreen")
-                                                    ? "w-full justify-start text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                                    ? "w-full justify-center text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
                                                     : "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
                                         )}
                                         title={`${btn.description} (${btn.shortcut})`}
                                         aria-label={btn.description}
                                     >
                                         <btn.icon className="h-3 w-3 mr-2" />
-                                        {btn.label}
+                                        {/* {btn.label} */}
                                     </Button>
                                 ))}
                             </div>
