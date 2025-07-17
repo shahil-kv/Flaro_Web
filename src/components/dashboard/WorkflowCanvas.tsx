@@ -447,7 +447,7 @@ export const WorkflowCanvas = memo(
                 ref={containerRef}
                 className={cn(
                     "relative overflow-hidden bg-gray-100 dark:bg-gray-900 transition-all duration-300",
-                    isFullscreen ? "fixed inset-0 z-50 h-screen w-screen" : "h-full w-full",
+                    isFullscreen ? "fixed inset-0 z-50 h-full w-full" : "h-full w-full",
                     "bg-[radial-gradient(circle,#9ca3af_1px,transparent_1px)] bg-[length:20px_20px]"
                 )}
                 role="region"

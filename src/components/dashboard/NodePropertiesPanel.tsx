@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef } from "react";
-import { X, Phone, MessageCircle, PlayCircle, PhoneOff } from "lucide-react";
+import { X, Phone, MessageCircle, PlayCircle, PhoneOff, ArrowRight, Trash2, Link } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,22 +15,43 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { WorkflowNode } from "@/types/workflow.types"; // Aligned with WorkflowCanvas and WorkflowBuilder
+import { WorkflowNode } from "@/types/workflow.types";
+
+// Connection type definition
+interface Connection {
+    id: string;
+    source: string;
+    target: string;
+    sourceHandle?: string;
+    targetHandle?: string;
+    type?: string;
+    label?: string;
+}
 
 // Component props
 interface NodePropertiesPanelProps {
     node: WorkflowNode;
+    nodes: WorkflowNode[];
+    connections: Connection[];
     onNodeUpdate: (updates: Partial<WorkflowNode>) => void;
+    onConnectionDelete: (connectionId: string) => void;
     onClose: () => void;
 }
 
-export function NodePropertiesPanel({ node, onNodeUpdate, onClose }: NodePropertiesPanelProps) {
+export function NodePropertiesPanel({
+    node,
+    nodes,
+    connections,
+    onNodeUpdate,
+    onConnectionDelete,
+    onClose
+}: NodePropertiesPanelProps) {
     const panelRef = useRef<HTMLDivElement>(null);
     const isFocused = useRef(false);
 
     // Get node icon based on type
-    const getNodeIcon = useCallback(() => {
-        switch (node.type) {
+    const getNodeIcon = useCallback((nodeType: string) => {
+        switch (nodeType) {
             case "start":
                 return <Phone className="h-4 w-4 text-workflow-start" />;
             case "question":
@@ -42,11 +63,11 @@ export function NodePropertiesPanel({ node, onNodeUpdate, onClose }: NodePropert
             default:
                 return <PlayCircle className="h-4 w-4 text-muted-foreground" />;
         }
-    }, [node.type]);
+    }, []);
 
     // Get node type label
-    const getNodeTypeLabel = useCallback(() => {
-        switch (node.type) {
+    const getNodeTypeLabel = useCallback((nodeType: string) => {
+        switch (nodeType) {
             case "start":
                 return "Start Call";
             case "question":
@@ -58,7 +79,47 @@ export function NodePropertiesPanel({ node, onNodeUpdate, onClose }: NodePropert
             default:
                 return "Node";
         }
-    }, [node.type]);
+    }, []);
+
+    // Get connected nodes
+    const getConnectedNodes = useCallback(() => {
+        const incomingConnections = connections.filter(conn => conn.target === node.id);
+        const outgoingConnections = connections.filter(conn => conn.source === node.id);
+
+        const incoming = incomingConnections.map(conn => {
+            const sourceNode = nodes.find(n => n.id === conn.source);
+            return {
+                connection: conn,
+                node: sourceNode,
+                direction: 'incoming' as const
+            };
+        }).filter(item => item.node);
+
+        const outgoing = outgoingConnections.map(conn => {
+            const targetNode = nodes.find(n => n.id === conn.target);
+            return {
+                connection: conn,
+                node: targetNode,
+                direction: 'outgoing' as const
+            };
+        }).filter(item => item.node);
+
+        return { incoming, outgoing };
+    }, [connections, nodes, node.id]);
+
+    // Get connection label based on source handle
+    const getConnectionLabel = useCallback((connection: Connection, sourceNode?: WorkflowNode) => {
+        if (sourceNode?.type === "question" && sourceNode.data.answerType === "yes_no") {
+            if (connection.sourceHandle === "yes") return "Yes";
+            if (connection.sourceHandle === "no") return "No";
+        }
+        return connection.label || "Default";
+    }, []);
+
+    // Check if node can have multiple connections
+    const canHaveMultipleConnections = useCallback((nodeType: string, answerType?: string) => {
+        return nodeType === "question" && answerType === "yes_no";
+    }, []);
 
     // Handle label change
     const handleLabelChange = useCallback(
@@ -152,6 +213,14 @@ export function NodePropertiesPanel({ node, onNodeUpdate, onClose }: NodePropert
         [node.data.options, handleOptionsChange]
     );
 
+    // Handle connection deletion
+    const handleDeleteConnection = useCallback(
+        (connectionId: string) => {
+            onConnectionDelete(connectionId);
+        },
+        [onConnectionDelete]
+    );
+
     // Handle keyboard shortcuts
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -204,10 +273,12 @@ export function NodePropertiesPanel({ node, onNodeUpdate, onClose }: NodePropert
         };
     }, []);
 
+    const connectedNodes = getConnectedNodes();
+
     return (
         <div
             ref={panelRef}
-            className="h-full bg-background border-l border-border flex flex-col"
+            className=" bg-background border-l border-border flex flex-col h-full"
             tabIndex={0}
             role="region"
             aria-label="Node Properties Panel"
@@ -215,8 +286,8 @@ export function NodePropertiesPanel({ node, onNodeUpdate, onClose }: NodePropert
             {/* Header */}
             <div className="p-4 border-b border-border flex items-center justify-between">
                 <div className="flex items-center space-x-2">
-                    {getNodeIcon()}
-                    <span className="font-medium text-foreground">{getNodeTypeLabel()}</span>
+                    {getNodeIcon(node.type)}
+                    <span className="font-medium text-foreground">{getNodeTypeLabel(node.type)}</span>
                 </div>
                 <Button
                     variant="ghost"
@@ -231,7 +302,7 @@ export function NodePropertiesPanel({ node, onNodeUpdate, onClose }: NodePropert
             </div>
 
             {/* Content */}
-            <div className="flex-1 p-4 space-y-6 overflow-y-auto">
+            <div className="h-full w-full flex flex-col  p-4 space-y-6 overflow-y-auto">
                 {/* Basic Properties */}
                 <Card>
                     <CardHeader>
@@ -253,8 +324,95 @@ export function NodePropertiesPanel({ node, onNodeUpdate, onClose }: NodePropert
                         <div>
                             <Label className="text-foreground">Node Type</Label>
                             <div className="mt-1">
-                                <Badge variant="secondary">{getNodeTypeLabel()}</Badge>
+                                <Badge variant="secondary">{getNodeTypeLabel(node.type)}</Badge>
                             </div>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* Connections */}
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="text-sm text-foreground flex items-center gap-2">
+                            <Link className="h-4 w-4" />
+                            Connections
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                        {/* Incoming Connections */}
+                        {connectedNodes.incoming.length > 0 && (
+                            <div>
+                                <Label className="text-foreground text-xs font-medium">Incoming Connections</Label>
+                                <div className="mt-2 space-y-2">
+                                    {connectedNodes.incoming.map(({ connection, node: connectedNode }) => (
+                                        <div key={connection.id} className="flex items-center justify-between p-2 bg-muted/30 rounded-md">
+                                            <div className="flex items-center space-x-2">
+                                                {getNodeIcon(connectedNode!.type)}
+                                                <span className="text-sm text-foreground">{connectedNode!.data.label}</span>
+                                                <ArrowRight className="h-3 w-3 text-muted-foreground" />
+                                                <Badge variant="outline" className="text-xs">
+                                                    {getConnectionLabel(connection, connectedNode)}
+                                                </Badge>
+                                            </div>
+                                            <Button
+                                                variant="ghost"
+                                                size="sm"
+                                                onClick={() => handleDeleteConnection(connection.id)}
+                                                className="h-6 w-6 p-0 hover:bg-destructive/10 hover:text-destructive"
+                                                title="Delete connection"
+                                                aria-label="Delete connection"
+                                            >
+                                                <Trash2 className="h-3 w-3" />
+                                            </Button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Outgoing Connections */}
+                        {connectedNodes.outgoing.length > 0 && (
+                            <div>
+                                <Label className="text-foreground text-xs font-medium">Outgoing Connections</Label>
+                                <div className="mt-2 space-y-2">
+                                    {connectedNodes.outgoing.map(({ connection, node: connectedNode }) => (
+                                        <div key={connection.id} className="flex items-center justify-between p-2 bg-muted/30 rounded-md">
+                                            <div className="flex items-center space-x-2">
+                                                <Badge variant="outline" className="text-xs">
+                                                    {getConnectionLabel(connection, node)}
+                                                </Badge>
+                                                <ArrowRight className="h-3 w-3 text-muted-foreground" />
+                                                {getNodeIcon(connectedNode!.type)}
+                                                <span className="text-sm text-foreground">{connectedNode!.data.label}</span>
+                                            </div>
+                                            <Button
+                                                variant="ghost"
+                                                size="sm"
+                                                onClick={() => handleDeleteConnection(connection.id)}
+                                                className="h-6 w-6 p-0 hover:bg-destructive/10 hover:text-destructive"
+                                                title="Delete connection"
+                                                aria-label="Delete connection"
+                                            >
+                                                <Trash2 className="h-3 w-3" />
+                                            </Button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* No Connections */}
+                        {connectedNodes.incoming.length === 0 && connectedNodes.outgoing.length === 0 && (
+                            <div className="text-center py-4">
+                                <p className="text-sm text-muted-foreground">No connections found</p>
+                            </div>
+                        )}
+
+                        {/* Connection Rules Info */}
+                        <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-950/20 rounded-md">
+                            <p className="text-xs text-blue-700 dark:text-blue-300">
+                                <strong>Connection Rules:</strong> Only Yes/No question nodes can have multiple outgoing connections (Yes and No paths). All other nodes support single connections only.
+                            </p>
                         </div>
                     </CardContent>
                 </Card>
@@ -295,6 +453,11 @@ export function NodePropertiesPanel({ node, onNodeUpdate, onClose }: NodePropert
                                         <SelectItem value="multiple_choice">Multiple Choice</SelectItem>
                                     </SelectContent>
                                 </Select>
+                                {node.data.answerType === "yes_no" && (
+                                    <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">
+                                        This node can have two outgoing connections (Yes and No paths)
+                                    </p>
+                                )}
                             </div>
 
                             {node.data.answerType === "multiple_choice" && (
@@ -398,27 +561,10 @@ export function NodePropertiesPanel({ node, onNodeUpdate, onClose }: NodePropert
                         <div className="text-xs text-muted-foreground">
                             <div>Node ID: {node.id}</div>
                             <div>Position: ({node.position.x}, {node.position.y})</div>
+                            <div>Connections: {connectedNodes.incoming.length + connectedNodes.outgoing.length}</div>
                         </div>
                     </CardContent>
                 </Card>
-            </div>
-
-            {/* Keyboard Shortcuts Indicator */}
-            <div className="p-4 border-t border-border bg-muted/30">
-                <div className="text-xs font-semibold text-blue-300 mb-2">Keyboard Shortcuts</div>
-                <div className="space-y-1 text-xs text-gray-300">
-                    <div>
-                        <kbd className="bg-gray-700 px-1.5 py-0.5 rounded text-xs">Esc</kbd> Close Panel
-                    </div>
-                    <div>
-                        <kbd className="bg-gray-700 px-1.5 py-0.5 rounded text-xs">Ctrl + Enter</kbd> Save Changes
-                    </div>
-                    {node.type === "question" && node.data.answerType === "multiple_choice" && (
-                        <div>
-                            <kbd className="bg-gray-700 px-1.5 py-0.5 rounded text-xs">Ctrl + O</kbd> Add Option
-                        </div>
-                    )}
-                </div>
             </div>
         </div>
     );

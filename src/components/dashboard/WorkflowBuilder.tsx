@@ -179,7 +179,7 @@ export function WorkflowBuilder({ workflow, onSave, onClose }: WorkflowBuilderPr
     return (
         <div
             ref={containerRef}
-            className="h-screen flex flex-col bg-gray-50 dark:bg-gray-900"
+            className="h-full flex flex-col bg-gray-50 dark:bg-gray-900"
             tabIndex={0}
             role="region"
             aria-label="Workflow Builder"
@@ -349,8 +349,8 @@ export function WorkflowBuilder({ workflow, onSave, onClose }: WorkflowBuilderPr
                 </div>
 
                 {/* Main Canvas Area */}
-                <div className="flex-1 flex">
-                    <div className="flex-1 relative">
+                <div className="h-full w-full flex">
+                    <div className="h-full w-full relative">
                         <WorkflowCanvas
                             workflow={currentWorkflow}
                             selectedNode={selectedNode}
@@ -363,10 +363,18 @@ export function WorkflowBuilder({ workflow, onSave, onClose }: WorkflowBuilderPr
 
                     {/* Right Sidebar - Properties */}
                     {selectedNode && (
-                        <div className="w-80 border-l border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800">
+                        <div className="w-80 h-full border-l border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800">
                             <NodePropertiesPanel
                                 node={selectedNode}
+                                nodes={currentWorkflow.nodes}
+                                connections={currentWorkflow.edges}
                                 onNodeUpdate={(updates) => handleNodeUpdate(selectedNode.id, updates)}
+                                onConnectionDelete={(connectionId: string) => {
+                                    setCurrentWorkflow((prev) => ({
+                                        ...prev,
+                                        edges: prev.edges.filter(edge => edge.id !== connectionId),
+                                    }));
+                                }}
                                 onClose={() => setSelectedNode(null)}
                             />
                         </div>
