@@ -374,38 +374,6 @@ export function WorkflowBuilder({ workflow, onSave, onClose }: WorkflowBuilderPr
                 </div>
             </div>
 
-            {/* Keyboard Shortcuts Indicator */}
-            {isLeftSidebarCollapsed && (
-                <div className="absolute top-4 left-20 z-20 bg-gray-800 dark:bg-gray-900 text-gray-100 dark:text-gray-200 text-xs px-4 py-3 rounded-lg backdrop-blur-sm shadow-xl border border-gray-700 dark:border-gray-800">
-                    <div className="font-semibold mb-2 text-blue-300 dark:text-blue-400">Keyboard Shortcuts</div>
-                    <div className="space-y-1">
-                        <div>
-                            <kbd className="bg-gray-700 dark:bg-gray-800 px-1.5 py-0.5 rounded text-xs">Ctrl + S</kbd>{" "}
-                            Save Workflow
-                        </div>
-                        <div>
-                            <kbd className="bg-gray-700 dark:bg-gray-800 px-1.5 py-0.5 rounded text-xs">Ctrl + 1</kbd>{" "}
-                            Add Start Node
-                        </div>
-                        <div>
-                            <kbd className="bg-gray-700 dark:bg-gray-800 px-1.5 py-0.5 rounded text-xs">Ctrl + 2</kbd>{" "}
-                            Add Question Node
-                        </div>
-                        <div>
-                            <kbd className="bg-gray-700 dark:bg-gray-800 px-1.5 py-0.5 rounded text-xs">Ctrl + 3</kbd>{" "}
-                            Add Action Node
-                        </div>
-                        <div>
-                            <kbd className="bg-gray-700 dark:bg-gray-800 px-1.5 py-0.5 rounded text-xs">Ctrl + 4</kbd>{" "}
-                            Add End Node
-                        </div>
-                        <div>
-                            <kbd className="bg-gray-700 dark:bg-gray-800 px-1.5 py-0.5 rounded text-xs">Ctrl + B</kbd>{" "}
-                            Toggle Sidebar
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
     );
 }
