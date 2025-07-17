@@ -450,7 +450,6 @@ export const WorkflowCanvas = memo(
                     isFullscreen ? "fixed inset-0 z-50 h-screen w-screen" : "h-full w-full",
                     "bg-[radial-gradient(circle,#9ca3af_1px,transparent_1px)] bg-[length:20px_20px]"
                 )}
-
                 role="region"
                 aria-label="Workflow Canvas"
                 tabIndex={0}
@@ -534,9 +533,6 @@ export const WorkflowCanvas = memo(
                             key={index}
                             className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 p-3"
                         >
-                            {/* <div className="text-xs font-semibold text-gray-600 dark:text-gray-300 mb-2 px-2">
-                                {section.title}
-                            </div> */}
                             <div
                                 className={cn(
                                     "flex flex-col space-y-1",
@@ -561,7 +557,6 @@ export const WorkflowCanvas = memo(
                                         aria-label={btn.description}
                                     >
                                         <btn.icon className="h-3 w-3 mr-2" />
-                                        {/* {btn.label} */}
                                     </Button>
                                 ))}
                             </div>
@@ -602,7 +597,7 @@ export const WorkflowCanvas = memo(
                 <div
                     ref={canvasRef}
                     className={cn(
-                        "w-full h-full transition-all duration-200 select-none",
+                        "w-full h-full transition-all duration-200 select-none relative",
                         dragMode === "pan" ? (isDragging ? "cursor-grabbing" : "cursor-grab") : "cursor-default",
                         isDragging && "transition-none"
                     )}
@@ -614,30 +609,36 @@ export const WorkflowCanvas = memo(
                     role="application"
                     aria-label="Interactive Workflow Canvas"
                 >
-                    <div
-                        className="relative"
+                    {/* Full Screen SVG for Edges - Always visible */}
+                    <svg
+                        className="absolute inset-0 pointer-events-none z-10"
                         style={{
-                            transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`,
-                            transformOrigin: "0 0",
-                            width: "1000%",
-                            height: "1000%",
-                            willChange: isDragging ? "transform" : "auto",
+                            width: "100%",
+                            height: "100%",
+                            overflow: "visible"
                         }}
                     >
-                        {/* Edges and Connections */}
-                        <svg className="absolute inset-0 pointer-events-none" style={{ width: "100%", height: "100%" }}>
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                <polygon
+                                    points="0 0, 10 3.5, 0 7"
+                                    className="fill-blue-500 dark:fill-blue-400"
+                                />
+                            </marker>
+                            <filter id="connectionGlow">
+                                <feGaussianBlur stdDeviation="2" result="coloredBlur" />
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur" />
+                                    <feMergeNode in="SourceGraphic" />
+                                </feMerge>
+                            </filter>
+                        </defs>
+
+                        {/* Transform group for edges */}
+                        <g transform={`translate(${pan.x}, ${pan.y}) scale(${zoom})`}>
                             {workflow.edges.map(renderEdge)}
                             {connecting && (
                                 <g>
-                                    <defs>
-                                        <filter id="connectionGlow">
-                                            <feGaussianBlur stdDeviation="2" result="coloredBlur" />
-                                            <feMerge>
-                                                <feMergeNode in="coloredBlur" />
-                                                <feMergeNode in="SourceGraphic" />
-                                            </feMerge>
-                                        </filter>
-                                    </defs>
                                     <path
                                         d={`M ${connecting.startPos.x} ${connecting.startPos.y} C ${connecting.startPos.x + 50} ${connecting.startPos.y} ${mousePosition.x - 50} ${mousePosition.y} ${mousePosition.x} ${mousePosition.y}`}
                                         strokeWidth="3"
@@ -672,16 +673,18 @@ export const WorkflowCanvas = memo(
                                     />
                                 </g>
                             )}
-                            <defs>
-                                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                                    <polygon
-                                        points="0 0, 10 3.5, 0 7"
-                                        className="fill-blue-500 dark:fill-blue-400"
-                                    />
-                                </marker>
-                            </defs>
-                        </svg>
+                        </g>
+                    </svg>
 
+                    {/* Transformed container for nodes */}
+                    <div
+                        className="relative h-full w-full"
+                        style={{
+                            transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`,
+                            transformOrigin: "0 0",
+                            willChange: isDragging ? "transform" : "auto",
+                        }}
+                    >
                         {/* Nodes */}
                         {workflow.nodes.map((node) => (
                             <WorkflowNodeComponent
