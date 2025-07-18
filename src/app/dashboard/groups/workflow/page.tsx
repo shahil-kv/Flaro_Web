@@ -475,150 +475,159 @@ import { WorkflowList } from "@/components/dashboard/WorkflowList";
 export default function WorkflowsPage() {
   const [workflows, setWorkflows] = useState<Workflow[]>([
     {
-      id: '1',
-      name: 'Lead Generation & Qualification',
-      description: 'Comprehensive lead generation workflow with qualification process',
+      id: "1",
+      name: "Lead Generation & Qualification",
+      description: "Comprehensive lead generation workflow with qualification process",
       nodes: [
         {
-          id: 'start-1',
-          type: 'start',
+          id: "start-1",
+          type: "start",
           position: { x: 50, y: 100 },
-          data: { label: 'Start Call', nextNode: 'question-1' }
+          data: {
+            label: "Start Call",
+            nextNode: "question-1"
+          }
         },
         {
-          id: 'question-1',
-          type: 'question',
+          id: "question-1",
+          type: "question",
           position: { x: 300, y: 100 },
           data: {
-            label: 'Introduction',
-            question: 'Hi! This is Sarah from Flaro. We help businesses improve their sales process. Do you have 2 minutes to talk?',
-            answerType: 'yes_no',
-            yesNode: 'question-2',
-            noNode: 'action-1'
+            label: "Introduction",
+            question: "Hi! This is Sarah from Flaro. We help businesses improve their sales process. Do you have 2 minutes to talk?",
+            answerType: "yes_no",
+            yesNode: "question-2",
+            noNode: "action-1"
           }
         },
         {
-          id: 'action-1',
-          type: 'action',
+          id: "action-1",
+          type: "action",
           position: { x: 550, y: 50 },
           data: {
-            label: 'Schedule Callback',
-            action: 'Schedule a callback for later and add to follow-up list',
-            nextNode: 'end-1'
+            label: "Schedule Callback",
+            action: "Schedule a callback for later and add to follow-up list",
+            nextNode: "end-1"
           }
         },
         {
-          id: 'question-2',
-          type: 'question',
-          position: { x: 550, y: 150 },
+          id: "question-2",
+          type: "question",
+          position: { x: 550, y: 250 },
           data: {
-            label: 'Business Type',
-            question: 'What type of business do you run?',
-            answerType: 'multiple_choice',
-            options: ['E-commerce', 'SaaS', 'Local Service', 'Manufacturing', 'Other'],
-            nextNode: 'question-3'
+            label: "Business Type",
+            question: "What type of business do you run?",
+            answerType: "multiple_choice",
+            options: ["E-commerce", "SaaS", "Local Service", "Manufacturing", "Other"],
+            nextNode: "question-3"
           }
         },
         {
-          id: 'question-3',
-          type: 'question',
-          position: { x: 800, y: 150 },
+          id: "question-3",
+          type: "question",
+          position: { x: 800, y: 250 },
           data: {
-            label: 'Team Size',
-            question: 'How many people are on your sales team?',
-            answerType: 'number',
-            nextNode: 'question-4'
+            label: "Team Size",
+            question: "How many people are on your sales team?",
+            answerType: "number",
+            nextNode: "question-4"
           }
         },
         {
-          id: 'question-4',
-          type: 'question',
+          id: "question-4",
+          type: "question",
           position: { x: 1050, y: 150 },
           data: {
-            label: 'Pain Point',
-            question: 'What\'s your biggest challenge in generating leads right now?',
-            answerType: 'text',
-            nextNode: 'action-2'
+            label: "Pain Point",
+            question: "What's your biggest challenge in generating leads right now?",
+            answerType: "text",
+            nextNode: "action-2"
           }
         },
         {
-          id: 'action-2',
-          type: 'action',
+          id: "action-2",
+          type: "action",
           position: { x: 1300, y: 150 },
           data: {
-            label: 'Qualify Lead',
-            action: 'Score lead based on responses and add to CRM with qualification data',
-            nextNode: 'question-5'
+            label: "Qualify Lead",
+            action: "Score lead based on responses and add to CRM with qualification data",
+            nextNode: "question-5"
           }
         },
         {
-          id: 'question-5',
-          type: 'question',
+          id: "question-5",
+          type: "question",
           position: { x: 1550, y: 150 },
           data: {
-            label: 'Book Demo',
-            question: 'Based on what you\'ve told me, I think Flaro could really help. Would you be interested in a 15-minute demo this week?',
-            answerType: 'yes_no',
-            yesNode: 'action-3',
-            noNode: 'action-4'
+            label: "Book Demo",
+            question: "Based on what you've told me, I think Flaro could really help. Would you be interested in a 15-minute demo this week?",
+            answerType: "yes_no",
+            yesNode: "action-3",
+            noNode: "action-4"
           }
         },
         {
-          id: 'action-3',
-          type: 'action',
+          id: "action-3",
+          type: "action",
           position: { x: 1800, y: 100 },
           data: {
-            label: 'Schedule Demo',
-            action: 'Send calendar link and book demo appointment',
-            nextNode: 'end-2'
+            label: "Schedule Demo",
+            action: "Send calendar link and book demo appointment",
+            nextNode: "end-2"
           }
         },
         {
-          id: 'action-4',
-          type: 'action',
-          position: { x: 1800, y: 200 },
+          id: "action-4",
+          type: "action",
+          position: { x: 1800, y: 300 },
           data: {
-            label: 'Send Resources',
-            action: 'Send relevant case studies and add to nurture sequence',
-            nextNode: 'end-3'
+            label: "Send Resources",
+            action: "Send relevant case studies and add to nurture sequence",
+            nextNode: "end-3"
           }
         },
         {
-          id: 'end-1',
-          type: 'end',
+          id: "end-1",
+          type: "end",
           position: { x: 800, y: 50 },
-          data: { label: 'End - Callback Scheduled' }
+          data: {
+            label: "End - Callback Scheduled"
+          }
         },
         {
-          id: 'end-2',
-          type: 'end',
+          id: "end-2",
+          type: "end",
           position: { x: 2050, y: 100 },
-          data: { label: 'End - Demo Booked' }
+          data: {
+            label: "End - Demo Booked"
+          }
         },
         {
-          id: 'end-3',
-          type: 'end',
-          position: { x: 2050, y: 200 },
-          data: { label: 'End - Nurture Sequence' }
+          id: "end-3",
+          type: "end",
+          position: { x: 2050, y: 300 },
+          data: {
+            label: "End - Nurture Sequence"
+          }
         }
       ],
       edges: [
-        { id: 'e1', source: 'start-1', target: 'question-1', label: '' },
-        { id: 'e2', source: 'question-1', target: 'question-2', label: 'Yes' },
-        { id: 'e3', source: 'question-1', target: 'action-1', label: 'No' },
-        { id: 'e4', source: 'action-1', target: 'end-1', label: '' },
-        { id: 'e5', source: 'question-2', target: 'question-3', label: '' },
-        { id: 'e6', source: 'question-3', target: 'question-4', label: '' },
-        { id: 'e7', source: 'question-4', target: 'action-2', label: '' },
-        { id: 'e8', source: 'action-2', target: 'question-5', label: '' },
-        { id: 'e9', source: 'question-5', target: 'action-3', label: 'Yes' },
-        { id: 'e10', source: 'question-5', target: 'action-4', label: 'No' },
-        { id: 'e11', source: 'action-3', target: 'end-2', label: '' },
-        { id: 'e12', source: 'action-4', target: 'end-3', label: '' }
+        { id: "e1", source: "start-1", target: "question-1", label: "" },
+        { id: "e2", source: "question-1", target: "question-2", label: "Yes" },
+        { id: "e3", source: "question-1", target: "action-1", label: "No" },
+        { id: "e4", source: "action-1", target: "end-1", label: "" },
+        { id: "e5", source: "question-2", target: "question-3", label: "" },
+        { id: "e6", source: "question-3", target: "question-4", label: "" },
+        { id: "e7", source: "question-4", target: "action-2", label: "" },
+        { id: "e8", source: "action-2", target: "question-5", label: "" },
+        { id: "e9", source: "question-5", target: "action-3", label: "Yes" },
+        { id: "e10", source: "question-5", target: "action-4", label: "No" },
+        { id: "e11", source: "action-3", target: "end-2", label: "" },
+        { id: "e12", source: "action-4", target: "end-3", label: "" }
       ],
       createdAt: new Date(),
       updatedAt: new Date(),
-      isActive: true,
+      isActive: true
     },
     {
       id: '2',
